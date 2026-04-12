@@ -1,0 +1,115 @@
+/* ============================================================
+   BASE — reset, typography, global elements
+   ============================================================ */
+
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  /* html gets the dark fallback color — visible before Three.js loads
+     and on pages that don't have the 3D canvas (about, projects, contact) */
+  background-color: var(--color-bg);
+}
+
+body {
+  /* transparent so the fixed Three.js canvas on index.html shows through
+     all sections as you scroll. Other pages see html's dark background. */
+  background-color: transparent;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-normal);
+  overflow-x: hidden;
+}
+
+/* ── Headings ────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--size-h1); }
+h2 { font-size: var(--size-h2); }
+h3 { font-size: var(--size-h3); }
+
+/* ── Links ───────────────────────────────────────────────── */
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+a:hover {
+  color: var(--color-text);
+}
+
+/* ── Images ──────────────────────────────────────────────── */
+
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── Layout wrapper ──────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* ── Page sections ───────────────────────────────────────── */
+
+.section {
+  padding: var(--space-xl) 0;
+  /* Must be above the fixed Three.js canvas (z-index: 0).
+     position: relative is required for z-index to take effect. */
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.section-title {
+  font-size: var(--size-h2);
+  margin-bottom: var(--space-md);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-dim);
+  border-radius: 3px;
+}
+
+/* ── Text selection ──────────────────────────────────────── */
+
+::selection {
+  background: rgba(106, 172, 206, 0.25);
+  color: var(--color-text);
+}

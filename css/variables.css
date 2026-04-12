@@ -1,0 +1,83 @@
+/* ============================================================
+   DESIGN TOKENS — change colors, fonts, and spacing here.
+   These variables are used everywhere. Edit once, updates everywhere.
+   ============================================================ */
+
+:root {
+
+  /* ── Colors ─────────────────────────────────────────────── */
+  --color-bg:           #080d18;
+  --color-surface:      #0f1824;
+  --color-surface-2:    #162030;
+
+  /* ── iOS 26 Liquid Glass System ─────────────────────────── */
+  /* The glass material is built from multiple layers:         */
+  /*  1. A very light, saturated backdrop blur                 */
+  /*  2. A bright top-edge specular highlight                  */
+  /*  3. A prismatic/rainbow inner border shimmer              */
+  /*  4. A deep drop shadow for elevation                      */
+
+  --glass-bg:           rgba(190, 218, 240, 0.07);
+  --glass-blur:         blur(52px) saturate(180%) brightness(1.08);
+  --glass-border:       rgba(255, 255, 255, 0.14);
+
+  /* specular highlight colours (top edge "sheen") */
+  --glass-shine-strong: rgba(255, 255, 255, 0.45);
+  --glass-shine-soft:   rgba(255, 255, 255, 0.08);
+  --glass-side-left:    rgba(255, 255, 255, 0.12);
+  --glass-side-right:   rgba(255, 255, 255, 0.04);
+
+  /* prismatic shimmer tones — cold icy prism */
+  --prism-1: rgba(140, 195, 230, 0.55);
+  --prism-2: rgba(200, 232, 255, 0.80);
+  --prism-3: rgba(160, 215, 250, 0.45);
+  --prism-4: rgba(100, 170, 220, 0.60);
+  --prism-5: rgba(220, 240, 255, 0.50);
+
+  --color-accent:       #6aacce;
+  --color-accent-dim:   #3d7a9e;
+  --color-text:         #d8e8f2;
+  --color-text-muted:   #5d7a90;
+  --color-text-faint:   #2e4558;
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-heading: 'Syne', sans-serif;
+  --font-body:    'Outfit', sans-serif;
+
+  --size-hero:    clamp(3rem, 9vw, 7.5rem);
+  --size-h1:      clamp(2rem, 5vw, 3.5rem);
+  --size-h2:      clamp(1.4rem, 3vw, 2rem);
+  --size-h3:      clamp(1.1rem, 2vw, 1.4rem);
+  --size-body:    1rem;
+  --size-small:   0.85rem;
+
+  --weight-bold:   700;
+  --weight-medium: 500;
+  --weight-normal: 400;
+
+  --leading-tight:  1.15;
+  --leading-normal: 1.6;
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  8rem;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --max-width:     1200px;
+  --nav-height:    70px;
+  --radius-sm:     6px;
+  --radius-md:     16px;
+  --radius-lg:     24px;
+  --radius-xl:     32px;
+
+  /* ── Transitions ─────────────────────────────────────────── */
+  --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out:     cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 300ms;
+  --duration-slow:   600ms;
+}

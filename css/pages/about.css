@@ -1,0 +1,196 @@
+/* ============================================================
+   ABOUT PAGE
+   ============================================================ */
+
+.about-hero {
+  padding-top: calc(var(--nav-height) + var(--space-xl));
+  padding-bottom: var(--space-lg);
+}
+
+/* ── Photo + intro layout ────────────────────────────────── */
+
+.about-intro {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+/* Photo frame with frosted glass border */
+.about-photo {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-md));
+}
+
+.about-photo__frame {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 1px 0 var(--color-glass-shine),
+    0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.about-photo__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder shown until photo is added */
+.about-photo__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-faint);
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.about-photo__name {
+  margin-top: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: var(--size-h3);
+  font-weight: var(--weight-bold);
+}
+
+.about-photo__role {
+  font-size: var(--size-small);
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Bio text ────────────────────────────────────────────── */
+
+.about-bio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.about-bio p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  font-size: 1.05rem;
+}
+
+/* ── Skills grid ─────────────────────────────────────────── */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.skill-card {
+  padding: var(--space-sm) var(--space-md);
+}
+
+.skill-card__label {
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  color: var(--color-accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+}
+
+.skill-card__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── Experience & Education items ────────────────────────── */
+
+.experience-list,
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.experience-item,
+.education-item {
+  padding: var(--space-md);
+}
+
+.experience-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
+}
+
+.experience-item__role {
+  font-size: 1rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.experience-item__org {
+  font-size: var(--size-small);
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  letter-spacing: 0.03em;
+}
+
+.experience-item__date {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.experience-item__points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.experience-item__points li {
+  font-size: var(--size-small);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  padding-left: var(--space-sm);
+  position: relative;
+}
+
+.experience-item__points li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-size: 0.7rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .about-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photo {
+    position: static;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}

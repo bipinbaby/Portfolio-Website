@@ -1,0 +1,108 @@
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+
+.contact-hero {
+  padding-top: calc(var(--nav-height) + var(--space-xl));
+  padding-bottom: var(--space-xl);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* ── Left: copy + socials ────────────────────────────────── */
+
+.contact-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.contact-copy p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: var(--leading-normal);
+  max-width: 380px;
+}
+
+.contact-email {
+  font-family: var(--font-heading);
+  font-size: var(--size-h3);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+.contact-email:hover {
+  color: var(--color-accent);
+}
+
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.contact-social-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.75rem var(--space-sm);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-glass-border);
+  transition:
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default),
+    background var(--duration-fast) var(--ease-default);
+}
+
+.contact-social-link:hover {
+  color: var(--color-accent);
+  border-color: rgba(106, 172, 206, 0.3);
+  background: rgba(106, 172, 206, 0.05);
+}
+
+.contact-social-link::before {
+  content: '→';
+  color: var(--color-accent);
+}
+
+/* ── Right: glass panel ──────────────────────────────────── */
+
+.contact-panel {
+  padding: var(--space-lg);
+}
+
+.contact-panel h3 {
+  margin-bottom: var(--space-md);
+  font-size: var(--size-h3);
+}
+
+.contact-panel p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-sm);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .contact-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}

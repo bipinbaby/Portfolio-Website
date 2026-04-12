@@ -1,0 +1,211 @@
+/* ============================================================
+   HOME PAGE — hero + scrollable sections below
+   ============================================================ */
+
+/* ── Hero ────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  z-index: 1;           /* above the fixed canvas */
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hero-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;           /* canvas layer — sections stack at z-index: 1+ */
+  pointer-events: none; /* scroll/click passes through to the page */
+}
+
+/* No fog gradient needed — the fixed Three.js canvas provides a
+   seamless dark background across all sections. A CSS gradient
+   here would create a hard seam at the hero/section boundary. */
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--space-md);
+  padding-top: var(--nav-height);
+  max-width: 700px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__name {
+  font-family: var(--font-heading);
+  font-size: var(--size-hero);
+  font-weight: 800;
+  line-height: 1.0;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 80px rgba(8, 13, 24, 0.85);
+  white-space: nowrap;
+}
+
+.hero__tagline {
+  margin-top: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.hero__desc {
+  margin-top: var(--space-sm);
+  max-width: 480px;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: var(--leading-normal);
+  text-align: center;
+}
+
+.hero__cta {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Centred section header (used on all home sections) ──────
+   Stacks label → title → optional CTA all centred.           */
+
+.home-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.home-section-header .section-title {
+  margin-bottom: 0;
+}
+
+/* ── Featured Work section ────────────────────────────────── */
+
+.featured {
+  padding: var(--space-xl) 0;
+}
+
+/* .featured__grid is now a .carousel__track — flex layout comes
+   from .carousel__track in components.css. No grid overrides needed. */
+
+/* ── Live Feed section ────────────────────────────────────── */
+
+.live-feed {
+  padding: var(--space-xl) 0;
+}
+
+.live-feed__tabs {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+  justify-content: center;   /* centred tabs */
+  flex-wrap: wrap;
+}
+
+/* .live-feed__grid is now a .carousel__track — layout from components.css */
+
+/* Loading skeleton — rendered inside the carousel track */
+.feed-skeleton {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 0%,
+    var(--color-surface-2) 50%,
+    var(--color-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  /* Match carousel card width */
+  flex: 0 0 var(--carousel-card-w, 270px);
+  width: var(--carousel-card-w, 270px);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.feed-error {
+  /* Error message spans a single "card" slot in the carousel */
+  flex: 0 0 min(520px, 80vw);
+  text-align: center;
+  color: var(--color-text-faint);
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  padding: var(--space-lg);
+  scroll-snap-align: center;
+}
+
+/* ── About teaser ─────────────────────────────────────────── */
+
+.about-teaser {
+  padding: var(--space-xl) 0;
+}
+
+/* Centred bio paragraph */
+.about-teaser__body {
+  max-width: 640px;
+  margin: 0 auto var(--space-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: var(--leading-normal);
+}
+
+/* Two glass cards side-by-side, centred */
+.about-teaser__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 420px));
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.about-teaser__panel {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+  text-align: center;
+}
+
+.about-teaser__panel h3 {
+  font-size: var(--size-h3);
+}
+
+.about-teaser__panel p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  font-size: var(--size-small);
+}
+
+.about-teaser__panel .section-label {
+  margin-bottom: 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .about-teaser__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Grid breakpoints removed — carousels handle mobile layout in components.css */

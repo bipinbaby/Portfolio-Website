@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Bipin Baby</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/contact.css" />
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({ duration: 1.25, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+        function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <nav class="nav"></nav>
+
+  <!-- ── Contact ────────────────────────────────────────── -->
+  <main class="contact-hero section">
+    <div class="container">
+      <div class="contact-inner">
+
+        <!-- ── Left: intro + socials ─────────────────────── -->
+        <div class="contact-copy">
+          <p class="section-label">Contact</p>
+          <h1 class="section-title">Let's make<br />something.</h1>
+          <p>
+            Open to creative technology roles, interactive installation
+            projects, digital twin commissions, and collaboration.
+          </p>
+
+          <!--
+            UPDATE YOUR EMAIL HERE and in js/config.js → SITE.email
+          -->
+          <a href="mailto:bipinbabyvarghese@gmail.com" class="contact-email">bipinbabyvarghese@gmail.com</a>
+
+          <!-- Social links (auto-generated from config.js) -->
+          <div class="contact-socials" id="contact-socials"></div>
+        </div>
+
+        <!-- ── Right: glass panel ─────────────────────────── -->
+        <div class="contact-panel glass-card">
+          <h3>Currently available for</h3>
+          <p>Creative technology roles and freelance work</p>
+          <p>Interactive installation projects</p>
+          <p>Digital twin and real-time visualisation</p>
+          <p>Collaboration and research</p>
+          <div style="margin-top: var(--space-md);">
+            <a href="mailto:bipinbabyvarghese@gmail.com" class="btn btn-primary">Send an Email ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"></footer>
+
+  <script type="module">
+    import { initNav, initFooter }  from './js/components/nav.js';
+    import { SOCIALS }              from './js/config.js';
+
+    initNav();
+    initFooter();
+
+    // Render social links in the contact section
+    const socialsEl = document.getElementById('contact-socials');
+    if (socialsEl) {
+      socialsEl.innerHTML = SOCIALS.map(s => `
+        <a href="${s.url}" target="_blank" rel="noopener" class="contact-social-link">
+          ${s.label}
+        </a>
+      `).join('');
+    }
+  </script>
+
+</body>
+</html>

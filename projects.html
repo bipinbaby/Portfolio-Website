@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Bipin Baby</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/projects.css" />
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({ duration: 1.25, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+        function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <nav class="nav"></nav>
+
+  <!-- ── Projects ───────────────────────────────────────── -->
+  <main class="projects-hero section">
+    <div class="container">
+
+      <p class="section-label">Work</p>
+      <h1 class="section-title">Selected Projects</h1>
+
+      <!-- ── Filter Tabs ───────────────────────────────── -->
+      <div class="projects-filters">
+        <div class="filter-tabs">
+          <!--
+            data-filter values must match the 'category' field
+            in data/projects.js
+          -->
+          <button class="filter-tab active"      data-filter="all">All</button>
+          <button class="filter-tab"  data-filter="creative-tech">Creative Tech</button>
+          <button class="filter-tab"  data-filter="3d-design">3D & Design</button>
+          <button class="filter-tab"  data-filter="photography">Photography</button>
+        </div>
+      </div>
+
+      <!-- ── Grid (filled by projectGrid.js) ──────────── -->
+      <div class="projects-grid"></div>
+
+    </div>
+  </main>
+
+  <!-- ── Video / Project Modal ──────────────────────────── -->
+  <!--
+    This overlay is hidden by default. projectGrid.js opens it
+    when a card is clicked. You don't need to edit this.
+  -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal" id="modal" style="position:relative;"></div>
+  </div>
+
+  <footer class="footer"></footer>
+
+  <script type="module">
+    import { initNav, initFooter }                         from './js/components/nav.js';
+    import { initProjectGrid, initFilters, initModal }     from './js/components/projectGrid.js';
+
+    initNav();
+    initFooter();
+    initProjectGrid();
+    initFilters();
+    initModal();
+  </script>
+
+</body>
+</html>

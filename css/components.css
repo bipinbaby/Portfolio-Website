@@ -1,0 +1,816 @@
+/* ============================================================
+   COMPONENTS — nav, liquid glass cards, buttons, modal, footer
+   ============================================================ */
+
+/* ── Navigation ──────────────────────────────────────────── */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-md);
+  justify-content: space-between;
+  background: rgba(8, 13, 24, 0.55);
+  backdrop-filter: blur(52px) saturate(180%);
+  -webkit-backdrop-filter: blur(52px) saturate(180%);
+  /* top specular sheen on nav bar */
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 0 rgba(150, 200, 240, 0.12);
+}
+
+.nav-logo {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+.nav-logo:hover { color: var(--color-accent); }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.nav-links a {
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-default);
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--color-text); }
+
+/* ── iOS 26 Liquid Glass Card ─────────────────────────────── */
+/*                                                             */
+/*  How it works:                                              */
+/*  - backdrop-filter creates the blur + saturation boost      */
+/*  - box-shadow layers simulate:                              */
+/*      • top specular (the "sheen" that sells glass)          */
+/*      • side edge highlights                                 */
+/*      • drop shadow for elevation                            */
+/*  - ::before adds the prismatic gradient shimmer inside      */
+/*  - ::after adds the outer prismatic border glow             */
+/*                                                             */
+
+.glass-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    /* top specular — the primary glass "sheen" */
+    inset 0 1.5px 0 var(--glass-shine-strong),
+    /* bottom inner edge */
+    inset 0 -1px 0 var(--glass-shine-soft),
+    /* left/right side lights */
+    inset 1px 0 0 var(--glass-side-left),
+    inset -1px 0 0 var(--glass-side-right),
+    /* elevation shadow */
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.28),
+    /* outer ambient glow — icy blue */
+    0 0 0 0.5px rgba(140, 195, 240, 0.1);
+  transition:
+    box-shadow var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-spring);
+  overflow: hidden;
+}
+
+/* Interior prismatic shimmer — diagonal light catch */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(180, 220, 255, 0.04) 25%,
+    transparent 50%,
+    rgba(140, 195, 240, 0.03) 75%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+/* Prismatic border glow on hover */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 210deg,
+    var(--prism-1),
+    var(--prism-2),
+    var(--prism-3),
+    var(--prism-4),
+    var(--prism-5),
+    var(--prism-1)
+  );
+  /* Mask trick: only shows on the border, not the fill */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset -1px 0 0 rgba(255, 255, 255, 0.06),
+    0 24px 60px rgba(0, 0, 0, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 0.5px rgba(140, 195, 240, 0.2);
+}
+
+.glass-card:hover::before {
+  opacity: 1.5; /* brightens the inner shimmer on hover */
+}
+
+.glass-card:hover::after {
+  opacity: 1; /* shows prismatic border on hover */
+}
+
+/* Ensure card content sits above the glass pseudo-elements */
+.glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Project Card ─────────────────────────────────────────── */
+
+.project-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Thumbnail wrapper — video hover happens here */
+.project-card__thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Static thumbnail image */
+.project-card__thumbnail img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out),
+              opacity var(--duration-normal) var(--ease-out);
+  position: absolute;
+  inset: 0;
+}
+
+/* ── Video-on-hover ───────────────────────────────────────── */
+/* The <video> element sits on top of the image.              */
+/* JS controls opacity: 0→1 on mouseenter, 1→0 on mouseleave  */
+
+.project-card__video-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+  pointer-events: none;
+}
+
+.project-card:hover .project-card__video-preview.playing {
+  opacity: 1;
+}
+
+.project-card:hover .project-card__thumbnail img {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+/* Play badge */
+.project-card__badge {
+  position: absolute;
+  bottom: var(--space-xs);
+  right: var(--space-xs);
+  background: rgba(8, 13, 24, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  z-index: 2;
+  /* inner specular on badge */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.project-card__body {
+  padding: var(--space-sm) var(--space-sm) var(--space-md);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.project-card__title {
+  font-size: 1rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.project-card__desc {
+  font-size: var(--size-small);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  flex: 1;
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-xs);
+}
+
+/* ── Tag pill ─────────────────────────────────────────────── */
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  border: 1px solid rgba(106, 172, 206, 0.25);
+  background: rgba(106, 172, 206, 0.06);
+  /* tiny inner specular */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition:
+    background var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-spring),
+    box-shadow var(--duration-fast) var(--ease-default);
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  box-shadow: 0 4px 16px rgba(106, 172, 206, 0.3),
+              inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.btn-primary:hover {
+  background: #88c6e0;
+  color: var(--color-bg);
+  box-shadow: 0 6px 24px rgba(106, 172, 206, 0.45),
+              inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.btn-ghost {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--color-text-muted);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+}
+.btn-ghost:hover {
+  color: var(--color-text);
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28),
+              0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* ── Category Filter Tabs ─────────────────────────────────── */
+
+.filter-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(190, 218, 240, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--color-text-muted);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  transition:
+    background var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+.filter-tab:hover {
+  color: var(--color-text);
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.25),
+              0 4px 12px rgba(0,0,0,0.2);
+}
+.filter-tab.active {
+  background: rgba(106, 172, 206, 0.14);
+  color: var(--color-accent);
+  border-color: rgba(106, 172, 206, 0.35);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.2),
+              0 0 12px rgba(106,172,206,0.15);
+}
+
+/* ── Project Modal ────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 8, 16, 0.78);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-xl);
+  transform: translateY(24px) scale(0.97);
+  transition: transform var(--duration-normal) var(--ease-spring);
+  /* modal is itself a liquid glass surface */
+  background: rgba(15, 24, 36, 0.7);
+  backdrop-filter: blur(52px) saturate(180%);
+  -webkit-backdrop-filter: blur(52px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.4),
+    inset 0 -1px 0 rgba(255,255,255,0.06),
+    0 32px 80px rgba(0,0,0,0.6),
+    0 0 0 0.5px rgba(140,195,240,0.12);
+}
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal__video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  overflow: hidden;
+}
+.modal__video iframe,
+.modal__video video {
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
+}
+
+.modal__body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  border-radius: 0;
+}
+/* override glass-card on modal body since modal is already glass */
+.modal__body.glass-card::before,
+.modal__body.glass-card::after { display: none; }
+
+.modal__title { font-size: var(--size-h3); }
+
+.modal__desc {
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+.modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: rgba(8, 13, 24, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: color var(--duration-fast) var(--ease-default),
+              background var(--duration-fast) var(--ease-default);
+}
+.modal__close:hover {
+  color: var(--color-text);
+  background: rgba(20, 35, 55, 0.8);
+}
+
+/* ── Social Feed Card ─────────────────────────────────────── */
+
+.feed-card {
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
+
+.feed-card__thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--color-surface-2);
+  overflow: hidden;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  position: relative;
+}
+
+.feed-card__thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+.feed-card:hover .feed-card__thumb img {
+  transform: scale(1.05);
+}
+
+.feed-card__source {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(8,13,24,0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 2px 7px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.feed-card__body {
+  padding: var(--space-xs) var(--space-sm) var(--space-sm);
+}
+
+.feed-card__title {
+  font-size: var(--size-small);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Carousel ─────────────────────────────────────────────── */
+/*                                                              */
+/*  Structure:                                                  */
+/*  .carousel                                                   */
+/*    .carousel__btn--prev                                      */
+/*    .carousel__track  ← your cards live here                 */
+/*    .carousel__btn--next                                      */
+/*    .carousel__dots                                           */
+/*                                                              */
+/*  Set --carousel-card-w on .carousel to control card width.  */
+
+.carousel {
+  position: relative;
+  /* Pull the track to the page edge so peek is visible on sides */
+  margin-inline: calc(-1 * var(--space-md));
+}
+
+.carousel__track {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding-block: 0.75rem 1rem;
+
+  /* ── Centre-snap padding trick ─────────────────────────────
+     padding = 50% of track width − half card width.
+     This means the first and last cards can scroll all the way
+     to the centre — not stuck at the left/right edge.         */
+  padding-inline: calc(50% - var(--carousel-card-w, 340px) / 2);
+}
+
+.carousel__track::-webkit-scrollbar { display: none; }
+
+/* Every direct child of the track is a carousel card */
+.carousel__track > * {
+  flex: 0 0 var(--carousel-card-w, 340px);
+  width: var(--carousel-card-w, 340px);
+  scroll-snap-align: center;
+}
+
+/* ── Dot indicators ────────────────────────────────────────── */
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding-block: 0.25rem 0;
+}
+
+.carousel__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent-dim);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background      0.25s var(--ease-default),
+    border-color    0.25s var(--ease-default),
+    transform       0.25s var(--ease-spring);
+}
+
+.carousel__dot.active {
+  background:    var(--color-accent);
+  border-color:  var(--color-accent);
+  transform:     scale(1.5);
+}
+
+/* ── Arrow buttons ─────────────────────────────────────────── */
+
+.carousel__btn {
+  position: absolute;
+  top: calc(50% - 1.5rem);   /* vertically centred, adjusted for dots */
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 4px 14px rgba(0,0,0,0.35);
+  transition:
+    color       0.2s var(--ease-default),
+    background  0.2s var(--ease-default),
+    transform   0.2s var(--ease-spring),
+    box-shadow  0.2s var(--ease-default);
+}
+
+.carousel__btn:hover {
+  color:      var(--color-text);
+  background: rgba(106, 172, 206, 0.14);
+  transform:  translateY(-50%) scale(1.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 6px 20px rgba(0,0,0,0.4);
+}
+
+.carousel__btn--prev { left:  0; }
+.carousel__btn--next { right: 0; }
+
+/* ── Responsive ────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* Hide arrows — swipe is intuitive on touch */
+  .carousel__btn { display: none; }
+
+  /* Full-bleed track — no centre-snap padding on mobile */
+  .carousel__track {
+    padding-inline: var(--space-md);
+  }
+
+  /* Cards fill ~88% of the viewport so adjacent ones peek in */
+  .carousel__track > * {
+    flex: 0 0 88vw;
+    width: 88vw;
+  }
+}
+
+/* ── Section-specific card widths ──────────────────────────── */
+
+.featured .carousel  { --carousel-card-w: 360px; }
+.live-feed .carousel { --carousel-card-w: 270px; }
+
+/* ── Infinite auto-scroll ribbon ──────────────────────────── */
+/*                                                              */
+/*  Applied by makeCarouselInfinite() in carousel.js.          */
+/*  Cards are cloned (2× or 3× for small sets). The track      */
+/*  animates translateX(0 → --carousel-loop-pct) continuously. */
+/*  Hover or focus-within pauses the ribbon.                    */
+
+.carousel--infinite {
+  overflow: hidden;
+}
+
+.carousel--infinite .carousel__track {
+  /* Switch off scroll-snap — animation drives movement */
+  overflow: visible;
+  scroll-snap-type: none;
+  padding-inline: var(--space-md);
+
+  /* Driven by JS-set custom properties */
+  animation: carousel-scroll var(--carousel-duration, 30s) linear infinite;
+  will-change: transform;
+}
+
+/* Pause when the user hovers or tabs into the ribbon */
+.carousel--infinite .carousel__track:hover,
+.carousel--infinite .carousel__track:focus-within {
+  animation-play-state: paused;
+}
+
+/* Navigation controls are not needed for auto-scroll */
+.carousel--infinite .carousel__btn,
+.carousel--infinite .carousel__dots {
+  display: none;
+}
+
+@keyframes carousel-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--carousel-loop-pct, -50%)); }
+}
+
+/* ── Section divider ─────────────────────────────────────────  */
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--glass-border) 30%,
+    var(--glass-border) 70%,
+    transparent
+  );
+  margin: var(--space-xl) 0;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+
+.footer {
+  padding: var(--space-lg) 0 var(--space-md);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  z-index: 1;
+}
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+.footer__socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+.footer__socials a {
+  font-family: var(--font-heading);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+.footer__socials a:hover { color: var(--color-accent); }
+.footer__copy {
+  font-size: var(--size-small);
+  color: var(--color-text-faint);
+}
+
+/* ── Scroll Indicator ────────────────────────────────────── */
+
+.scroll-indicator {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: scrollBounce 2.4s ease-in-out infinite;
+  z-index: 2;
+}
+.scroll-indicator::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .nav-links { gap: var(--space-sm); }
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bipin Baby — Creative Technologist</title>
+  <meta name="description" content="Portfolio of Bipin Baby — creative technology, 3D art, graphic design, and photography." />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/home.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <!-- Lenis smooth scroll — gives the site its Webflow-style buttery scroll feel -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three":         "https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ── Fixed 3D background canvas ────────────────────────
+       Lives outside all sections — position:fixed keeps it
+       visible as a background layer while the whole page scrolls.
+       Three.js renders the particles + glass mesh here.
+  ──────────────────────────────────────────────────────── -->
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- ── Navigation ─────────────────────────────────────── -->
+  <nav class="nav"></nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 1 — HERO
+       Full-viewport text overlay above the fixed 3D canvas.
+       ══════════════════════════════════════════════════════ -->
+  <section class="hero" id="top">
+
+    <div class="hero__content container">
+      <h1 class="hero__name">Bipin Baby</h1>
+      <p class="hero__tagline">Creative Technologist · Real-Time 3D · Virtual Production · AI Workflows</p>
+      <p class="hero__desc">
+        4+ years at the intersection of art and emerging technology —
+        real-time 3D production, virtual production, AI-assisted content,
+        and live data pipelines.
+      </p>
+      <div class="hero__cta">
+        <a href="projects.html" class="btn btn-primary">View Work</a>
+        <a href="contact.html" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">Scroll</div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 2 — FEATURED WORK
+       Shows projects marked featured:true in data/projects.js
+       ══════════════════════════════════════════════════════ -->
+  <section class="featured section">
+    <div class="container">
+
+      <div class="home-section-header" data-animate="fade-up">
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title">Featured Projects</h2>
+        <a href="projects.html" class="btn btn-ghost">All Projects →</a>
+      </div>
+
+      <!-- Carousel: JS renders cards into .featured__grid (the track) -->
+      <div class="carousel" id="featured-carousel">
+        <button class="carousel__btn carousel__btn--prev" aria-label="Previous">‹</button>
+        <div class="carousel__track featured__grid"></div>
+        <button class="carousel__btn carousel__btn--next" aria-label="Next">›</button>
+        <div class="carousel__dots"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 3 — ABOUT TEASER
+       Brief intro with a link to the full About page.
+       Edit the text directly in the HTML below.
+       ══════════════════════════════════════════════════════ -->
+  <section class="about-teaser section">
+    <div class="container">
+
+      <div class="home-section-header" data-animate="fade-up">
+        <p class="section-label">About</p>
+        <h2 class="section-title">Bridging the gap between<br />physical and digital.</h2>
+      </div>
+
+      <div class="about-teaser__body" data-animate="fade-up" data-delay="100">
+        <!-- ← EDIT YOUR BIO SUMMARY HERE -->
+        <p>
+          Creative Technologist with 4+ years spanning real-time 3D production,
+          virtual production, and AI-assisted content creation. Led a 15-person
+          team at UCL to deliver a VR cultural preservation experience in UE5.
+          Currently building advanced digital twin systems with live data pipelines
+          and computer vision.
+        </p>
+      </div>
+
+      <div class="about-teaser__cards" data-animate="stagger" data-delay="150">
+
+        <div class="about-teaser__panel glass-card">
+          <p class="section-label">Currently seeking</p>
+          <h3>Creative Technology Roles</h3>
+          <!-- ← EDIT WHAT YOU'RE AVAILABLE FOR HERE -->
+          <p>
+            Interactive installations · Digital twins ·
+            Real-time visualisation · Unreal Engine pipelines ·
+            TouchDesigner systems · Collaboration & research.
+          </p>
+          <a href="contact.html" class="btn btn-primary">Get in Touch →</a>
+        </div>
+
+        <div class="about-teaser__panel glass-card">
+          <p class="section-label">Background</p>
+          <h3>4+ Years of Experience</h3>
+          <p>
+            VR Production Manager at UCL · Graphic Designer at Bajaj Auto ·
+            Freelance 3D & VFX Artist · MA Game Arts, Manchester Metropolitan ·
+            BSc Animation, Amity University.
+          </p>
+          <a href="about.html" class="btn btn-ghost">Full Profile →</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 4 — LIVE SOCIAL FEED
+       Auto-pulls latest posts from ArtStation + Behance.
+       Instagram shows a fallback until API is connected
+       (see js/components/socialFeed.js for setup guide).
+       ══════════════════════════════════════════════════════ -->
+  <section class="live-feed section">
+    <div class="container">
+
+      <div class="home-section-header" data-animate="fade-up">
+        <p class="section-label">Live Feed</p>
+        <h2 class="section-title">Latest Posts</h2>
+      </div>
+
+      <!-- Feed source tabs — centred -->
+      <div class="live-feed__tabs filter-tabs">
+        <button class="filter-tab live-feed__tab active" data-source="artstation">ArtStation</button>
+        <button class="filter-tab live-feed__tab"        data-source="behance">Behance</button>
+        <button class="filter-tab live-feed__tab"        data-source="instagram">Instagram</button>
+      </div>
+
+      <!-- Carousel: socialFeed.js renders into .live-feed__grid (the track) -->
+      <div class="carousel" id="feed-carousel">
+        <button class="carousel__btn carousel__btn--prev" aria-label="Previous">‹</button>
+        <div class="carousel__track live-feed__grid"></div>
+        <button class="carousel__btn carousel__btn--next" aria-label="Next">›</button>
+        <div class="carousel__dots"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal for featured project cards -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal" id="modal" style="position:relative;"></div>
+  </div>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="footer"></footer>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCRIPTS
+       ══════════════════════════════════════════════════════ -->
+  <script type="module">
+    import { initNav, initFooter }              from './js/components/nav.js';
+    import { initScrollAnimations }             from './js/components/scrollAnimations.js';
+    import { initProjectGrid, initModal }       from './js/components/projectGrid.js';
+    import { initSocialFeed }                   from './js/components/socialFeed.js';
+    import { initCarousel }                     from './js/components/carousel.js';
+    import { initScene, startRenderLoop }       from './js/three/scene.js';
+    import { initParticles, updateParticles }   from './js/three/particles.js';
+    import { initHeroObject, updateHeroObject } from './js/three/heroObject.js';
+
+    // Nav + footer + scroll animations
+    initNav();
+    initFooter();
+    initScrollAnimations();
+
+    // Featured projects carousel
+    initProjectGrid('.featured__grid', true);
+    initModal();
+    initCarousel('#featured-carousel');
+
+    // Social feed carousel — MutationObserver in carousel.js
+    // rebuilds dots automatically once async cards arrive
+    initSocialFeed('artstation');
+    initCarousel('#feed-carousel');
+
+    // Feed tab switching
+    document.querySelectorAll('.live-feed__tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        initSocialFeed(tab.dataset.source);
+        const track = document.querySelector('.live-feed__grid');
+        if (track) track.scrollLeft = 0;
+      });
+    });
+
+    // Three.js hero
+    initScene('hero-canvas');
+    initParticles();
+    initHeroObject();
+    startRenderLoop([updateParticles, updateHeroObject]);
+  </script>
+
+</body>
+</html>

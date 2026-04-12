@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Bipin Baby</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/about.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <nav class="nav"></nav>
+
+  <main class="about-hero section">
+    <div class="container">
+
+      <!-- ── Page label ──────────────────────────────────── -->
+      <p class="section-label" data-animate="fade-up">About</p>
+
+      <!-- ── Two-column layout ───────────────────────────── -->
+      <div class="about-intro">
+
+        <!-- ── Photo ─────────────────────────────────────── -->
+        <div class="about-photo" data-animate="fade-left">
+          <div class="about-photo__frame">
+            <!--
+              TO ADD YOUR PHOTO:
+              1. Drop your image into: assets/images/about/portrait.jpg
+              2. Delete the placeholder div below
+              3. Uncomment the <img> tag
+            -->
+            <!-- <img src="assets/images/about/portrait.jpg" alt="Bipin Baby" /> -->
+            <div class="about-photo__placeholder">Photo coming soon</div>
+          </div>
+          <h2 class="about-photo__name">Bipin Baby</h2>
+          <p class="about-photo__role">Creative Technologist</p>
+        </div>
+
+        <!-- ── Bio & content ─────────────────────────────── -->
+        <div class="about-bio">
+
+          <h1 class="section-title" data-animate="fade-up">
+            4+ years at the intersection<br />of art and emerging technology.
+          </h1>
+
+          <div data-animate="fade-up" data-delay="100">
+            <p>
+              I'm a creative technologist spanning real-time 3D production, virtual production,
+              AI-assisted content creation, and technical art. I have a proven ability to rapidly
+              prototype and implement next-generation workflows that bridge creative intent and
+              technical execution.
+            </p>
+          </div>
+
+          <div data-animate="fade-up" data-delay="150">
+            <p>
+              Most recently I led a 15-person cross-functional team at University College London
+              to deliver a VR cultural preservation experience built in Unreal Engine 5 —
+              leveraging photogrammetry, Metahumans, and generative AI for real-time storytelling.
+            </p>
+          </div>
+
+          <div data-animate="fade-up" data-delay="200">
+            <p>
+              Currently building advanced digital twin systems, demonstrating hands-on expertise
+              in live data pipelines, computer vision, and 3D content creation.
+            </p>
+          </div>
+
+          <!-- ── Experience timeline ───────────────────────── -->
+          <div data-animate="fade-up" data-delay="100" style="margin-top: var(--space-lg);">
+            <p class="section-label">Experience</p>
+          </div>
+
+          <div class="experience-list" data-animate="stagger" data-delay="150">
+
+            <div class="experience-item glass-card">
+              <div class="experience-item__header">
+                <div>
+                  <h3 class="experience-item__role">VR Production Manager</h3>
+                  <p class="experience-item__org">University College London — Multimedia Anthropology Lab · London</p>
+                </div>
+                <span class="experience-item__date">May 2024 – Jul 2025</span>
+              </div>
+              <ul class="experience-item__points">
+                <li>Directed end-to-end virtual production pipeline for a VR cultural preservation project in Unreal Engine 5, leading a cross-functional team of 15 artists and delivering on time and within budget.</li>
+                <li>Implemented photogrammetry-based 3D scanning workflows to digitise sacred cultural artefacts and environments, optimising assets for real-time rendering within strict performance budgets.</li>
+                <li>Pioneered AI-assisted content creation using generative AI (Gemini) to interpret and visualise indigenous mythology, translating cultural concepts into immersive real-time 3D scenes.</li>
+                <li>Integrated Metahumans, advanced foliage systems, and procedural 3D assets into a unified production pipeline.</li>
+              </ul>
+            </div>
+
+            <div class="experience-item glass-card">
+              <div class="experience-item__header">
+                <div>
+                  <h3 class="experience-item__role">Graphic Designer</h3>
+                  <p class="experience-item__org">Bajaj Auto Ltd · India</p>
+                </div>
+                <span class="experience-item__date">Jul 2021 – Jul 2022</span>
+              </div>
+              <ul class="experience-item__points">
+                <li>Produced video, motion design, and visual content for internal communications and event marketing, reaching an audience of 10,000+ employees.</li>
+                <li>Introduced innovative digital video formats and post-production workflows for event marketing, improving audience engagement and content quality.</li>
+              </ul>
+            </div>
+
+            <div class="experience-item glass-card">
+              <div class="experience-item__header">
+                <div>
+                  <h3 class="experience-item__role">3D / VFX Artist</h3>
+                  <p class="experience-item__org">Freelance · Remote</p>
+                </div>
+                <span class="experience-item__date">Dec 2020 – Jul 2022</span>
+              </div>
+              <ul class="experience-item__points">
+                <li>Delivered real-time VFX assets and 3D content for independent game developers, building particle systems and Blueprint scripting within Unreal Engine pipelines.</li>
+                <li>Created procedural 3D models, textures, and shaders in Houdini and Substance Designer — integrating assets into cross-platform real-time workflows.</li>
+                <li>Developed modular, reusable Blueprint tool systems with full documentation, enabling non-technical developers to integrate complex assets independently.</li>
+              </ul>
+            </div>
+
+          </div><!-- /experience-list -->
+
+          <!-- ── Education ──────────────────────────────────── -->
+          <div data-animate="fade-up" style="margin-top: var(--space-lg);">
+            <p class="section-label">Education</p>
+          </div>
+
+          <div class="education-list" data-animate="stagger" data-delay="100">
+
+            <div class="glass-card education-item">
+              <div class="experience-item__header">
+                <div>
+                  <h3 class="experience-item__role">MA Game Arts</h3>
+                  <p class="experience-item__org">Manchester Metropolitan University · Manchester</p>
+                </div>
+                <span class="experience-item__date">Sep 2022 – Sep 2023</span>
+              </div>
+              <p style="color:var(--color-text-muted); font-size:var(--size-small); line-height:var(--leading-normal); margin-top:var(--space-xs);">
+                Procedural generation (Houdini, Substance Designer), C++ and Blueprint scripting,
+                real-time engines (UE5, Unity), Motion Capture, advanced technical art workflows,
+                and cross-platform production pipelines.
+              </p>
+            </div>
+
+            <div class="glass-card education-item">
+              <div class="experience-item__header">
+                <div>
+                  <h3 class="experience-item__role">BSc Animation & Visual Graphic</h3>
+                  <p class="experience-item__org">Amity University · Mumbai</p>
+                </div>
+                <span class="experience-item__date">May 2018 – May 2021</span>
+              </div>
+              <p style="color:var(--color-text-muted); font-size:var(--size-small); line-height:var(--leading-normal); margin-top:var(--space-xs);">
+                3D modelling, animation, and rigging (Autodesk Maya, 3DS Max).
+                Minor in Photography, visual composition, and visual communication.
+              </p>
+            </div>
+
+          </div><!-- /education-list -->
+
+        </div><!-- /about-bio -->
+      </div><!-- /about-intro -->
+
+      <!-- ── Skills (full width below) ──────────────────────── -->
+      <div style="margin-top: var(--space-xl);">
+        <p class="section-label" data-animate="fade-up">Skills</p>
+        <div class="skills-grid" data-animate="stagger" data-delay="100">
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">Real-Time 3D & Rendering</p>
+            <div class="skill-card__items">
+              <span class="tag">Unreal Engine 5</span>
+              <span class="tag">Blueprints</span>
+              <span class="tag">Lumen</span>
+              <span class="tag">Nanite</span>
+              <span class="tag">Blender</span>
+              <span class="tag">Maya</span>
+              <span class="tag">Remote Control API</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">Video & Motion Design</p>
+            <div class="skill-card__items">
+              <span class="tag">TouchDesigner</span>
+              <span class="tag">After Effects</span>
+              <span class="tag">Video Production</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">3D Tools</p>
+            <div class="skill-card__items">
+              <span class="tag">Houdini</span>
+              <span class="tag">Substance Designer</span>
+              <span class="tag">Unity</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">AI & Computer Vision</p>
+            <div class="skill-card__items">
+              <span class="tag">YOLOv8</span>
+              <span class="tag">OpenCV</span>
+              <span class="tag">MediaPipe</span>
+              <span class="tag">Gemini</span>
+              <span class="tag">Claude API</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">Programming & Scripting</p>
+            <div class="skill-card__items">
+              <span class="tag">Python</span>
+              <span class="tag">C++</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">OSC</span>
+              <span class="tag">Blueprint</span>
+              <span class="tag">JSON</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">Virtual Production & Capture</p>
+            <div class="skill-card__items">
+              <span class="tag">Photogrammetry</span>
+              <span class="tag">3D Scanning</span>
+              <span class="tag">Metahumans</span>
+              <span class="tag">Motion Capture</span>
+              <span class="tag">VR Production</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">Data & Live Pipelines</p>
+            <div class="skill-card__items">
+              <span class="tag">Live Data Pipelines</span>
+              <span class="tag">IoT Simulation</span>
+              <span class="tag">OpenWeatherMap</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
+            <p class="skill-card__label">Collaboration & Production</p>
+            <div class="skill-card__items">
+              <span class="tag">Team Leadership (15)</span>
+              <span class="tag">Project Management</span>
+              <span class="tag">Pipeline Documentation</span>
+            </div>
+          </div>
+
+        </div><!-- /skills-grid -->
+      </div>
+
+    </div><!-- /container -->
+  </main>
+
+  <footer class="footer"></footer>
+
+  <script type="module">
+    import { initNav, initFooter }    from './js/components/nav.js';
+    import { initScrollAnimations }   from './js/components/scrollAnimations.js';
+    initNav();
+    initFooter();
+    initScrollAnimations();
+  </script>
+
+</body>
+</html>
