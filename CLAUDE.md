@@ -69,6 +69,13 @@ Personal portfolio targeting employers/clients in the creative technology space.
 - [ ] Update real email address in `config.js` / `contact.html`
 - [ ] Push to GitHub and deploy to Vercel or GitHub Pages
 
+## File Map (updated)
+| File | Purpose |
+|---|---|
+| `project.html` | Single template for all project detail pages — URL: `project.html?slug=your-slug` |
+| `js/components/projectDetail.js` | Reads ?slug from URL, finds project in projects.js, renders detail page |
+| `css/pages/project.css` | Styles for the project detail page |
+
 ## Session Log
 - **Session 1 [2026-04-12]:** Vision locked in. Stack, hosting, design direction decided. Full site built.
 - **Session 2 [2026-04-12]:** iOS 26 Liquid Glass CSS, homepage scroll restructure, social feed component.
@@ -80,3 +87,4 @@ Personal portfolio targeting employers/clients in the creative technology space.
 - **Session 8 [2026-04-13]:** Scroll speed dialled down (multiplier 0.0012→0.00022, MAX 0.06→0.018, decay 0.92→0.87). Warp streak speed reduced. carousel.js created — CSS scroll-snap, centre-snap padding trick, dot indicators with MutationObserver for async feed, arrow buttons. Featured projects + social feed both converted to carousel on homepage. Grid CSS overrides removed. Cards 360px (featured) and 270px (feed).
 - **Session 9 [2026-04-13]:** All homepage sections centred. Section order: Hero → Latest Posts → Featured Projects → About. .home-section-header utility class (flex column, align-items:center). Feed tabs centred. About teaser redesigned: centred bio paragraph + two glass cards side by side (currently seeking + background), both centred with text-align:center.
 - **Session 10 [2026-04-13]:** Section order changed to Hero → Featured Projects → About → Latest Posts (user confirmed). Both carousels converted to infinite auto-scroll ribbons (makeCarouselInfinite). carousel.js: clones cards 2× or 3×, CSS translateX(0 → --carousel-loop-pct) animation, hover/focus pauses, MutationObserver for async feed, class removed + re-added on re-setup for clean animation restart. components.css: .carousel--infinite block (overflow:hidden, @keyframes carousel-scroll, pause on hover, hides buttons/dots). socialFeed.js: proxy fallback chain (allorigins.win → corsproxy.io), AbortSignal.timeout(8s), improved image extraction with getElementsByTagNameNS for media: namespace + content:encoded fallback.
+- **Session 11 [2026-04-13]:** Project detail pages added. Single template `project.html` reads `?slug=` from URL and renders full project detail (hero video/image, meta, long description, image gallery, external link). `data/projects.js` extended with `slug`, `year`, `role`, `longDescription[]`, `images[]` fields. `projectGrid.js` updated — card clicks navigate to `project.html?slug=...` instead of opening modal. Modal code preserved as fallback for slug-less projects.

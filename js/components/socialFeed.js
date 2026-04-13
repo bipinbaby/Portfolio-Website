@@ -45,6 +45,11 @@ const FEEDS = {
     rss:   'https://feeds.behance.net/feeds/user?username=bipinbabyvarghese',
     link:  'https://www.behance.net/bipinbabyvarghese',
   },
+    instagram_creative: {
+    label: 'Instagram',
+    rss:   'https://rss.app/feed/PidYslG3yGJCwDOC',
+    link:  'https://www.instagram.com/madebybipin',
+  },
 };
 
 // ── Fetch raw XML text through the proxy chain ────────────

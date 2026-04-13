@@ -32,8 +32,9 @@ Then open `http://localhost:8000` in your browser.
 | `css/variables.css` | Colors, fonts, spacing — edit once, updates everywhere |
 | `about.html` | Your bio text and skills list |
 | `contact.html` | Email address and availability blurb |
+| `project.html` | Project detail page template — do not edit; it's driven by `data/projects.js` |
 | `assets/models/hero.glb` | Drop your custom 3D model here |
-| `assets/images/projects/` | Project thumbnail images |
+| `assets/images/projects/` | Project thumbnail images + extra gallery images |
 | `assets/images/about/` | Your portrait photo |
 | `assets/videos/projects/` | Local video files for projects |
 
@@ -45,16 +46,36 @@ Open `data/projects.js` and add an object to the `PROJECTS` array:
 
 ```js
 {
+  slug:        "my-project",           // unique URL ID — lowercase, hyphens only, no spaces
   title:       "Your Project Title",
+  featured:    false,                  // true = also shows on the homepage carousel
   category:    "creative-tech",        // "creative-tech" | "3d-design" | "photography"
-  description: "What it is and how you made it.",
+  year:        "2024",                 // shown on detail page, or null to hide
+  role:        "Developer",            // shown on detail page, or null to hide
+  description: "Short one-liner shown on the project card.",
+  longDescription: [
+    // Each string is one paragraph on the detail page.
+    // Add as many as you like. If you leave this empty ([]),
+    // the short 'description' above is used instead.
+    "First paragraph about what it is and why you made it.",
+    "Second paragraph about tools, process, or outcome.",
+  ],
+  images:      [
+    // Extra images shown as a gallery on the detail page.
+    // Drop files into assets/images/projects/ and list them here.
+    // "assets/images/projects/my-project-1.jpg",
+    // "assets/images/projects/my-project-2.jpg",
+  ],
   thumbnail:   "assets/images/projects/your-thumb.jpg",
   videoEmbed:  null,    // YouTube: "https://www.youtube.com/embed/VIDEO_ID"
   videoFile:   null,    // Local:   "assets/videos/projects/demo.mp4"
-  link:        "https://...",           // or null
+  link:        "https://...",  // optional external link shown on detail page, or null
   tags:        ["Unreal Engine", "Python"],
 },
 ```
+
+Clicking the card on the projects page will now take visitors to a dedicated detail page at:
+`project.html?slug=my-project`
 
 ### Getting a YouTube embed URL
 Take a normal YouTube URL like:
@@ -62,6 +83,27 @@ Take a normal YouTube URL like:
 
 The embed URL is:
 `https://www.youtube.com/embed/ABC123`
+
+---
+
+## Filling in project detail pages
+
+Each project has its own detail page at `project.html?slug=your-slug`. The page is generated automatically — you only edit `data/projects.js`.
+
+**On the detail page you can show:**
+- A full-width hero video (local `.mp4` or YouTube/Vimeo embed) or image
+- Year, Role, and Type metadata
+- Long-form description (multiple paragraphs via `longDescription[]`)
+- An image gallery (via `images[]`)
+- An optional "View on External Site ↗" button (via `link`)
+
+**To write up a project:**
+1. Open `data/projects.js`
+2. Find the project by its `slug`
+3. Fill in `longDescription` with as many paragraphs as you need
+4. Add extra images to `assets/images/projects/` and list the paths in `images[]`
+5. Set `year` and `role` — or set either to `null` to hide it
+6. Set `link` to an external URL if you want a reference button, or `null` to remove it
 
 ---
 
@@ -179,11 +221,88 @@ git push -u origin main
 
 ---
 
+---
+
+## Connecting Instagram to the Live Feed
+
+Instagram doesn't have a public RSS feed, but a free third-party service can generate one for you. This takes about 5 minutes.
+
+### Step 1 — Generate an RSS URL for your Instagram
+
+1. Go to [rss.app](https://rss.app) and sign up for a free account
+2. Click **Create RSS Feed**
+3. Paste your Instagram profile URL, e.g. `https://www.instagram.com/madebybipin`
+4. RSS.app generates a feed URL — copy it (looks like `https://rss.app/feeds/xxxxxxxxxxxxxxxx.xml`)
+5. Repeat for your second account (`by_a_baby`) if you want both
+
+> **Note:** RSS.app's free plan limits you to a few feeds. If you only want one Instagram tab, pick whichever account you post to most.
+
+---
+
+### Step 2 — Add Instagram to `js/components/socialFeed.js`
+
+Open `js/components/socialFeed.js`. Find the `FEEDS` object near the top (around line 37) and add an Instagram entry:
+
+```js
+const FEEDS = {
+  artstation: { ... },  // existing
+  behance:    { ... },  // existing
+
+  // ← ADD THIS:
+  instagram_creative: {
+    label: 'Instagram',
+    rss:   'https://rss.app/feeds/PASTE_YOUR_URL_HERE.xml',
+    link:  'https://www.instagram.com/madebybipin',
+  },
+};
+```
+
+If you want both accounts as separate tabs, add two entries with different keys:
+
+```js
+  instagram_creative: {
+    label: '@madebybipin',
+    rss:   'https://rss.app/feeds/FIRST_FEED_ID.xml',
+    link:  'https://www.instagram.com/madebybipin',
+  },
+  instagram_photo: {
+    label: '@by_a_baby',
+    rss:   'https://rss.app/feeds/SECOND_FEED_ID.xml',
+    link:  'https://www.instagram.com/by_a_baby',
+  },
+```
+
+---
+
+### Step 3 — Add the tab button in `index.html`
+
+Find the Live Feed section in `index.html` — look for `live-feed__tabs`. Add a button for each Instagram feed you defined:
+
+```html
+<button class="live-feed__tab" data-source="instagram_creative">@madebybipin</button>
+```
+
+The `data-source` value must exactly match the key you used in the `FEEDS` object.
+
+---
+
+### Step 4 — Test it locally
+
+1. Open Live Server in VS Code
+2. Navigate to the homepage → scroll to **Latest Posts**
+3. Click your new Instagram tab — posts should load within a few seconds
+
+If no posts appear, open the browser console (F12 → Console) and look for `[socialFeed]` warnings. The most common issue is the RSS URL being wrong — double-check the URL copied from RSS.app.
+
+---
+
 ### Common content updates
 
 | What you want to do | Where to edit |
 |---|---|
 | Add a project | `data/projects.js` — copy an existing entry, fill in your details |
+| Write up a project detail page | `data/projects.js` → fill in `longDescription[]`, `images[]`, `year`, `role` |
+| Add gallery images to a detail page | Drop files in `assets/images/projects/`, add paths to `images[]` in `data/projects.js` |
 | Edit bio text | `about.html` — find the text and change it directly |
 | Change hero tagline | `index.html` — look for `hero__tagline` |
 | Update "currently seeking" | `index.html` — look for `Currently seeking` comment |

@@ -22,8 +22,14 @@ export function initProjectGrid(containerSelector = '.projects-grid', featuredOn
   grid.querySelectorAll('.project-card').forEach((card, index) => {
     const project = list[index];
 
-    // Click → open modal
-    card.addEventListener('click', () => openModal(project));
+    // Click → go to project detail page (if slug exists) or open modal
+    card.addEventListener('click', () => {
+      if (project.slug) {
+        window.location.href = `project.html?slug=${project.slug}`;
+      } else {
+        openModal(project);
+      }
+    });
 
     // Video-on-hover (only for local videoFile — YouTube can't autoplay this way)
     const video = card.querySelector('.project-card__video-preview');
