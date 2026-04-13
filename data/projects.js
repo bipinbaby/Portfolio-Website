@@ -46,7 +46,7 @@ export const PROJECTS = [
   // ── CREATIVE TECHNOLOGY ─────────────────────────────────────
   {
     slug:        "mediapipe-touchdesigner",
-    title:       "TOuchDesigner: Mediapipe Experiment",
+    title:       "TouchDesigner: Mediapipe Experiment",
     featured:    false,   // ← shows on homepage. Set to false to hide from homepage.
     category:    "creative-tech",
     year:        "2026",

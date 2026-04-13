@@ -312,6 +312,7 @@ If no posts appear, open the browser console (F12 → Console) and look for `[so
 | Add your photo | Put image at `assets/images/about/portrait.jpg`, then in `about.html` delete the placeholder div and uncomment the `<img>` tag |
 
 add this if need of live feed 
+<div class="section-divider container"></div>
  <div class="section-divider container"></div>
 
   <!-- ══════════════════════════════════════════════════════
