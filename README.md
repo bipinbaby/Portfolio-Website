@@ -310,3 +310,38 @@ If no posts appear, open the browser console (F12 → Console) and look for `[so
 | Update contact email | `js/config.js` → `SITE.email` AND `contact.html` |
 | Swap 3D model | Replace `assets/models/hero.glb` with your new export |
 | Add your photo | Put image at `assets/images/about/portrait.jpg`, then in `about.html` delete the placeholder div and uncomment the `<img>` tag |
+
+add this if need of live feed 
+ <div class="section-divider container"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 4 — LIVE SOCIAL FEED
+       Auto-pulls latest posts from ArtStation + Behance.
+       Instagram shows a fallback until API is connected
+       (see js/components/socialFeed.js for setup guide).
+       ══════════════════════════════════════════════════════ -->
+  <section class="live-feed section">
+    <div class="container">
+
+      <div class="home-section-header" data-animate="fade-up">
+        <p class="section-label">Live Feed</p>
+        <h2 class="section-title">Latest Posts</h2>
+      </div>
+
+      <!-- Feed source tabs — centred -->
+      <div class="live-feed__tabs filter-tabs">
+        <button class="filter-tab live-feed__tab active" data-source="artstation">ArtStation</button>
+        <button class="filter-tab live-feed__tab"        data-source="behance">Behance</button>
+        <button class="filter-tab live-feed__tab" data-source="instagram_creative">Instagram</button>
+      </div>
+
+      <!-- Carousel: socialFeed.js renders into .live-feed__grid (the track) -->
+      <div class="carousel" id="feed-carousel">
+        <button class="carousel__btn carousel__btn--prev" aria-label="Previous">‹</button>
+        <div class="carousel__track live-feed__grid"></div>
+        <button class="carousel__btn carousel__btn--next" aria-label="Next">›</button>
+        <div class="carousel__dots"></div>
+      </div>
+
+    </div>
+  </section>

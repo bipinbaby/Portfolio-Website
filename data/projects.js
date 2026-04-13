@@ -44,6 +44,31 @@
 export const PROJECTS = [
 
   // ── CREATIVE TECHNOLOGY ─────────────────────────────────────
+  {
+    slug:        "mediapipe-touchdesigner",
+    title:       "TOuchDesigner: Mediapipe Experiment",
+    featured:    false,   // ← shows on homepage. Set to false to hide from homepage.
+    category:    "creative-tech",
+    year:        "2026",
+    role:        "Developer",
+    description: "An experiment using Googles Mediapipe content with custom python code in TouchDesigner",
+    longDescription: [
+      // Each string is one paragraph on the detail page.
+      // Replace these with your actual project write-up.
+      "This time, I am testing out the Google Mediapipe algorithm in Derivative's TouchDesigner with the help of Claude Code! I am aware that there is a plugin that allows access to Mediapipe, but I wanted to test sending OSC signals from Python into TouchDesigner directly, so I can send those signals in other software like Unreal Engine with relative ease (hopefully).", 
+      "There is a slight delay in the video because of recording from 2 different video sources. Also, please ignore my frowny face; I'm just camera shy.",
+      "FYI, this work was inspired by that scene from Project Hail Mary (how good was that movie?)"
+
+      
+    ],
+    images:      [],   // e.g. ["assets/images/projects/twin-1.jpg", "assets/images/projects/twin-2.jpg"]
+    thumbnail:   "assets/images/projects/opencv-td.jpg",
+    videoEmbed:  null,   // e.g. "https://www.youtube.com/embed/your_id"
+    videoFile:   "assets/videos/projects/opencv-touchdesigner (1).mp4",
+    link:        "https://www.linkedin.com/feed/update/urn:li:activity:7446268376974307328/",
+    tags:        ["TouchDesigner", "Python", "OpenCV", "Real-time Data", "Claude Code"],
+  },
+
 
   {
     slug:        "building-twin",
@@ -64,18 +89,18 @@ export const PROJECTS = [
     thumbnail:   "assets/images/projects/twin-thumb.jpg",
     videoEmbed:  null,   // e.g. "https://www.youtube.com/embed/your_id"
     videoFile:   "assets/videos/projects/Building Twin Demo.mp4",
-    link:        "https://www.linkedin.com/in/bipin-baby-7436a7196/",
-    tags:        ["Unreal Engine 5", "Python", "Digital Twin", "Real-time Data"],
+    link:        "https://www.linkedin.com/feed/update/urn:li:activity:7444446600787230720/",
+    tags:        ["Unreal Engine 5", "Python", "Digital Twin", "Real-time Data", "Blender"],
   },
 
   {
     slug:        "td-installation",
-    title:       "TouchDesigner OSC Sensor Simulation",
+    title:       "TouchDesigner: OSC Sensor Simulation",
     featured:    true,
     category:    "creative-tech",
     year:        "2026",
     role:        "Artist / Developer",
-    description: "Generative audiovisual system that responds to crowd movement using computer vision and OSC. Built for live performance environments.",
+    description: "Generative system that responds to  OSC values . Built for live performance environments.",
     longDescription: [
       // Replace with your actual project write-up.
       "I tried to work with Python, and coming from a C++ background, it was really intuitive! That being said, I haven't written code in ages and barely have my groove back!",
@@ -86,10 +111,72 @@ export const PROJECTS = [
     thumbnail:   "assets/images/projects/td-thumb.jpg",
     videoEmbed:  null,
     videoFile:   "assets/videos/projects/tempscale_render.mp4",
-    link:        "https://www.instagram.com/madebybipin",
+    link:        "https://www.linkedin.com/feed/update/urn:li:activity:7438996850969354241/",
     tags:        ["TouchDesigner", "Python", "OSC"],
   },
 
+    {
+    slug:        "td-audio-reactive",
+    title:       "TouchDesigner: Audio Reactive",
+    featured:    true,
+    category:    "creative-tech",
+    year:        "2026",
+    role:        "Artist / Developer",
+    description: "An audio visual syetem that moves according to the music",
+    longDescription: [
+      // Replace with your actual project write-up.
+      "The Concept A series of visual experiments exploring the intersection of sound and motion. This project marks the beginning of my journey into creative technology, focusing on real-time data visualization and procedural animation.",
+      "Technical Details * Audio-Reactive System: Developed using TouchDesigners CHOPs to analyze frequency spectrums, mapping low-end transients to scale and high-end peaks to particle turbulence.",
+      "Animation: A secondary study in noise-based displacement and feedback loops to create organic, non-reactive motion.",
+      "Soundtrack Mario Piu - The Vision (Suncraft Remix)"
+    ],
+    images:      [],
+    thumbnail:   "assets/images/projects/Audio Reactive 1.jpg",
+    videoEmbed:  null,
+    videoFile:   "assets/videos/projects/audio reactive (1).mp4",
+    link:        "https://www.linkedin.com/feed/update/urn:li:activity:7434885481055776768/",
+    tags:        ["TouchDesigner"],
+  },
+
+
+  {
+    slug:        "td-simple-reactive",
+    title:       "TouchDesigner: Interactive Flower",
+    featured:    false,
+    category:    "creative-tech",
+    year:        "2026",
+    role:        "Artist / Developer",
+    description: "A simple 3D interactive Gem Flower what moves towards the direction of the mouse ",
+    longDescription: [
+      // Replace with your actual project write-up.
+      "The Concept",
+      "An exploration into procedural growth and interactive geometry. The goal was to create a Gem Flower that responds to user input using a mouse, blending organic forms with crystalline structures.",
+
+      "The Process & Pivot",
+
+      "Initial Approach: Due to a lack of experieience python couldnt get a real-time workflow set up so I had to pivot  ",
+
+      "The Solution: Transitioned to a purely node-based, non-destructive workflow. Drawing on my experience with Houdini, I rebuilt the logic using CHOPs (Channel Operators) and SOPs (Surface Operators)",
+
+      "Result: This shift eliminated the overhead of script execution, ensuring 60fps performance and a fully 'live' environment where every parameter remains tweakable in real-time.",
+
+      "Technical Highlights",
+
+      "Procedural Modeling: Geometric growth patterns driven by noise-weighted attributes.",
+
+      "Interactive Logic: Zero-code implementation using Feedback loops and Math CHOPs for state management and works with mouse movement.",
+
+      "Performance: Optimized for real-time rendering without the need for external scripting.",
+    ],
+    images:      [],
+    thumbnail:   "assets/images/projects/Flower.jpg",
+    videoEmbed:  null,
+    videoFile:   "assets/videos/projects/flower.mp4",
+    link:        "https://www.linkedin.com/feed/update/urn:li:activity:7435774621443833857/",
+    tags:        ["TouchDesigner", "Interactive"],
+  },
+
+  
   // ── 3D ART & DESIGN ─────────────────────────────────────────
 
   {
