@@ -45,6 +45,30 @@ export const PROJECTS = [
 
   // ── CREATIVE TECHNOLOGY ─────────────────────────────────────
   {
+    slug:        "mediapipe-unreal",
+    title:       "Interactive robot arm in Unreal Engine using Mediapipe and Python",
+    featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
+    category:    "creative-tech",
+    year:        "2026",
+    role:        "Developer",
+    description: "An interactive piece cominbining Python and Unreal Engine using Mediapipe and OSC signals",
+    longDescription: [
+      // Each string is one paragraph on the detail page.
+      // Replace these with your actual project write-up.
+      "This uses Google's OpenCV library to run the hand tracking using Python to drive the animation of a robot arm in Unreal Engine. I had to brush up on my 3D modelling skills and modelled the robot in Blender and used Unreal Engine's control rig to create an IK rig, and honestly, that was the easy part! When I brought this model in blueprints, the control rig was not animating at all. It took me a day and a half to figure out that it was one button in the control rig menu, and almost no documentation I could find. I also wanted to add sounds for each joint movement, and I kind of got it to work, but I found out my skills were abhorrent and my ears were going deaf, hearing servo sounds going haywire. If anyone knows how I can tackle sound design cleanly, please do let me know!!!! I tried to ask Claude to help me out wherever I lacked the knowledge, but it doesn't seem to work well with Unreal, so this was mostly me, and I used Claude to keep track of my progress and for documentation.", 
+      "Well, for updates, since my right hand does the movement of the body, I was thinking of using my left hand to animate the gripper."
+
+      
+    ],
+    images:      [],   // e.g. ["assets/images/projects/twin-1.jpg", "assets/images/projects/twin-2.jpg"]
+    thumbnail:   "assets/images/projects/Robot Interactive.jpg",
+    videoEmbed:  null,   // e.g. "https://www.youtube.com/embed/your_id"
+    videoFile:   "assets/videos/projects/robot hand tracking (1).mp4",
+    link:        "https://www.linkedin.com/feed/update/urn:li:activity:7449871730875006976/",
+    tags:        ["Unreal Engine", "Python", "OpenCV", "Real-time Data", "OSC"],
+  },
+
+  {
     slug:        "mediapipe-touchdesigner",
     title:       "TouchDesigner: Mediapipe Experiment",
     featured:    false,   // ← shows on homepage. Set to false to hide from homepage.
