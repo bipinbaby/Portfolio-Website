@@ -61,7 +61,7 @@ export const PROJECTS = [
     images:      [],   // e.g. ["assets/images/projects/twin-1.jpg", "assets/images/projects/twin-2.jpg"]
     thumbnail:   "assets/images/projects/three_js.jpg",
     videoEmbed:  null,   // e.g. "https://www.youtube.com/embed/your_id"
-    videoFile:   "assets/videos/projects/audvis.mp4",
+    videoFile:   "assets/videos/projects/audiovisualizer.mp4",
     link:        "https://3daudiovis.netlify.app/",
     tags:        ["Three.JS", "Shaders", "GLSL", "Interactive", "Audio VIsualiser"],
   },
