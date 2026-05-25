@@ -44,6 +44,27 @@
 export const PROJECTS = [
 
   // ── CREATIVE TECHNOLOGY ─────────────────────────────────────
+   {
+    slug:        "threejs",
+    title:       "Three.JS Audio Visualizer",
+    featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
+    category:    "creative-tech",
+    year:        "2026",
+    role:        "Developer",
+    description: "An interactive piece cominbining Python and Unreal Engine using Mediapipe and OSC signals",
+    longDescription: [
+      "This project focuses on transitioning generative installation concepts from TouchDesigner over to the web browser. The core system relies on the Web Audio API to capture and analyze live audio, splitting the frequencies into distinct bands (bass, mids, and highs) to dynamically drive real-time web visuals.",
+      "While my 3D background made setting up the initial Three.js ecosystem intuitive, I used this project to dive deep into custom GLSL shader programming. The visuals leverage vertex and fragment shaders, utilizing Signed Distance Fields (SDFs) and procedural palette generation heavily inspired by the technical work of Inigo Quilez.",
+      "Throughout development, I partnered with Claude Code as an interactive learning mentor. Rather than using it to write the code for me, it helped break down complex WebGL rendering bottlenecks, debug shader logic, and ensure a grounded understanding of the math behind the procedural visuals.",
+      "The final application is optimized for desktop PC browsers and allows users to route system audio or live microphone inputs to generate fully interactive, hardware-accelerated soundscapes."
+    ],
+    images:      [],   // e.g. ["assets/images/projects/twin-1.jpg", "assets/images/projects/twin-2.jpg"]
+    thumbnail:   "assets/images/projects/three_js.jpg",
+    videoEmbed:  null,   // e.g. "https://www.youtube.com/embed/your_id"
+    videoFile:   "assets/videos/projects/audvis.mp4",
+    link:        "https://3daudiovis.netlify.app/",
+    tags:        ["Three.JS", "Shaders", "GLSL", "Interactive", "Audio VIsualiser"],
+  },
   {
     slug:        "mediapipe-unreal",
     title:       "Interactive robot arm in Unreal Engine using Mediapipe and Python",
