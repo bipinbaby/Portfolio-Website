@@ -16,7 +16,7 @@ export const SOCIALS = [
   { label: "ArtStation",  url: "https://bipinbabyvarghese.artstation.com/" },
   { label: "Behance",     url: "https://www.behance.net/bipinbabyvarghese" },
   { label: "LinkedIn",    url: "https://www.linkedin.com/in/bipin-baby-7436a7196/" },
-  { label: "Instagram ✦", url: "https://www.instagram.com/madebybipin" },
+  { label: "GitHub",      url: "https://github.com/bipinbaby" },
   { label: "Photography", url: "https://www.instagram.com/by_a_baby" },
 ];
 
