@@ -51,7 +51,7 @@ export const PROJECTS = [
     category:    "creative-tech",
     year:        "2026",
     role:        "Developer",
-    description: "An interactive piece cominbining Python and Unreal Engine using Mediapipe and OSC signals",
+    description: "An interactive, real-time web audio visualizer built using Three.js and custom GLSL shaders",
     longDescription: [
       "This project focuses on transitioning generative installation concepts from TouchDesigner over to the web browser. The core system relies on the Web Audio API to capture and analyze live audio, splitting the frequencies into distinct bands (bass, mids, and highs) to dynamically drive real-time web visuals.",
       "While my 3D background made setting up the initial Three.js ecosystem intuitive, I used this project to dive deep into custom GLSL shader programming. The visuals leverage vertex and fragment shaders, utilizing Signed Distance Fields (SDFs) and procedural palette generation heavily inspired by the technical work of Inigo Quilez.",
