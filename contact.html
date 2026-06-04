@@ -50,16 +50,33 @@
           <div class="contact-socials" id="contact-socials"></div>
         </div>
 
-        <!-- ── Right: glass panel ─────────────────────────── -->
+        <!-- ── Right: contact form ───────────────────────── -->
         <div class="contact-panel glass-card">
-          <h3>Currently available for</h3>
-          <p>Creative technology roles and freelance work</p>
-          <p>Interactive installation projects</p>
-          <p>Digital twin and real-time visualisation</p>
-          <p>Collaboration and research</p>
-          <div style="margin-top: var(--space-md);">
-            <a href="mailto:bipinbabyvarghese@gmail.com" class="btn btn-primary">Send an Email ↗</a>
-          </div>
+          <h3>Send a message</h3>
+          <form id="contact-form" novalidate>
+            <!-- Replace YOUR_WEB3FORMS_KEY with your key from web3forms.com -->
+            <input type="hidden" name="access_key" value="ec0c80e8-a9fd-4d7f-bd39-af594dc7a369" />
+            <input type="hidden" name="subject" value="Portfolio Contact — Bipin Baby" />
+            <input type="checkbox" name="botcheck" style="display:none" />
+
+            <div class="form-group">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="your@email.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" placeholder="Tell me about your project or role..." rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="form-submit">Send Message →</button>
+            <p id="form-status" class="form-status" aria-live="polite"></p>
+          </form>
         </div>
 
       </div>
@@ -84,6 +101,49 @@
         </a>
       `).join('');
     }
+
+    // ── Contact form submission ───────────────────────────────
+    const form      = document.getElementById('contact-form');
+    const statusEl  = document.getElementById('form-status');
+    const submitBtn = document.getElementById('form-submit');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic client-side validation
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Sending...';
+      statusEl.textContent  = '';
+      statusEl.className    = 'form-status';
+
+      try {
+        const res    = await fetch('https://api.web3forms.com/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          statusEl.textContent = 'Message sent — I\'ll get back to you soon.';
+          statusEl.className   = 'form-status form-status--success';
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch {
+        statusEl.textContent = 'Something went wrong. Email me directly at bipinbabyvarghese@gmail.com';
+        statusEl.className   = 'form-status form-status--error';
+      } finally {
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Send Message →';
+      }
+    });
   </script>
 
 </body>

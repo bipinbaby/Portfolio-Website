@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects — Bipin Baby</title>
+  <title>Projects — Bipin Baby | Creative Technologist</title>
+  <meta name="description" content="Projects by Bipin Baby — Creative Technologist specialising in real-time 3D, Unreal Engine 5, TouchDesigner, Python, digital twins, generative AI, and interactive installations." />
 
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
@@ -49,7 +50,96 @@
       </div>
 
       <!-- ── Grid (filled by projectGrid.js) ──────────── -->
-      <div class="projects-grid"></div>
+      <!-- Static project listings below are pre-rendered for ATS and non-JS crawlers.
+           projectGrid.js replaces this content at runtime for interactive users. -->
+      <div class="projects-grid">
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">Three.JS Audio Visualizer</h3>
+            <p class="project-card__desc">An interactive, real-time web audio visualizer built using Three.js and custom GLSL shaders. Uses the Web Audio API to capture live audio and drive real-time visuals procedurally.</p>
+            <p>Technologies: Three.JS, Shaders, GLSL, Web Audio API, Interactive</p>
+            <a href="https://3daudiovis.netlify.app/" target="_blank" rel="noopener">View Live Project ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">Interactive Robot Arm — Unreal Engine + MediaPipe</h3>
+            <p class="project-card__desc">A self-modelled robot arm in Blender rigged with a UE5 IK Control Rig, driven by live 21-landmark hand tracking via Google MediaPipe and Python. Streamed in real time via OSC.</p>
+            <p>Technologies: Unreal Engine 5, Python, MediaPipe, OpenCV, OSC, Blender, Control Rig</p>
+            <a href="https://github.com/bipinbaby/robot-interactive-with-unreal-and-mediapipe" target="_blank" rel="noopener">View on GitHub ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">TouchDesigner: MediaPipe Experiment</h3>
+            <p class="project-card__desc">Hand tracking via Google MediaPipe streamed into TouchDesigner using custom Python OSC signals, enabling real-time gesture-driven generative visuals.</p>
+            <p>Technologies: TouchDesigner, Python, OpenCV, MediaPipe, OSC</p>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">Digital Twin — Office Floor Twin</h3>
+            <p class="project-card__desc">Real-time digital twin of a commercial building built in Unreal Engine 5. Live sensor data — temperature, occupancy, energy usage — piped via a Python backend and visualised as interactive 3D overlays.</p>
+            <p>Technologies: Unreal Engine 5, Python, Digital Twin, REST API, Real-time Data, Blender</p>
+            <a href="https://github.com/bipinbaby/smart-building-digital-twin" target="_blank" rel="noopener">View on GitHub ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">TouchDesigner: OSC Sensor Simulation</h3>
+            <p class="project-card__desc">Generative system driven by OSC sensor values built in TouchDesigner with Python. Simulates real-time temperature, humidity, and power data; threshold-triggered colour shifts for live data visualisation.</p>
+            <p>Technologies: TouchDesigner, Python, OSC</p>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">TouchDesigner: Audio Reactive Visuals</h3>
+            <p class="project-card__desc">Audio-reactive visual system built in TouchDesigner using CHOPs to analyse frequency spectrums. Maps bass transients to scale and high-end peaks to particle turbulence in real time.</p>
+            <p>Technologies: TouchDesigner, Audio-Reactive, CHOPs</p>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="creative-tech">
+          <div class="project-card__body">
+            <h3 class="project-card__title">TouchDesigner: Interactive Flower</h3>
+            <p class="project-card__desc">Procedural gem-flower geometry that responds to mouse movement in real time. Built using a node-based workflow with CHOPs and SOPs, achieving 60fps with zero external scripting.</p>
+            <p>Technologies: TouchDesigner, Interactive, Procedural, SOPs, CHOPs</p>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="3d-design">
+          <div class="project-card__body">
+            <h3 class="project-card__title">Procedural 3D Technical Art</h3>
+            <p class="project-card__desc">A collection of procedural 3D technical art spanning real-time shaders, material networks, and generative geometry using Blender, Unreal Engine, Houdini, and Substance Painter.</p>
+            <p>Technologies: Blender, Unreal Engine 5, Houdini, Substance Painter</p>
+            <a href="https://bipinbabyvarghese.artstation.com/" target="_blank" rel="noopener">View on ArtStation ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="3d-design">
+          <div class="project-card__body">
+            <h3 class="project-card__title">Graphic Design</h3>
+            <p class="project-card__desc">A collection of graphic design work including video, motion design, and visual content produced during a professional role at Bajaj Auto Ltd and freelance projects.</p>
+            <p>Technologies: Graphic Design, Motion Design</p>
+            <a href="https://www.behance.net/bipinbabyvarghese" target="_blank" rel="noopener">View on Behance ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card glass-card" data-category="photography">
+          <div class="project-card__body">
+            <h3 class="project-card__title">Photography — Complete Collection</h3>
+            <p class="project-card__desc">Full photography portfolio published on Instagram.</p>
+            <a href="https://www.instagram.com/by_a_baby" target="_blank" rel="noopener">View on Instagram ↗</a>
+          </div>
+        </article>
+
+      </div>
 
     </div>
   </main>

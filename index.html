@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bipin Baby — Creative Technologist</title>
-  <meta name="description" content="Portfolio of Bipin Baby — creative technology, 3D art, graphic design, and photography." />
+  <meta name="description" content="Bipin Baby — Creative Technologist with 4+ years in real-time 3D, Unreal Engine 5, TouchDesigner, Python, digital twins, generative AI, and interactive installations. VR Production Manager at UCL Multimedia Anthropology Lab." />
 
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
@@ -74,9 +74,65 @@
       </div>
 
       <!-- Carousel: JS renders cards into .featured__grid (the track) -->
+      <!-- Static cards below are pre-rendered for ATS and non-JS crawlers.
+           carousel.js and projectGrid.js replace this content at runtime. -->
       <div class="carousel" id="featured-carousel">
         <button class="carousel__btn carousel__btn--prev" aria-label="Previous">‹</button>
-        <div class="carousel__track featured__grid"></div>
+        <div class="carousel__track featured__grid">
+
+          <article class="project-card glass-card" data-category="creative-tech">
+            <div class="project-card__body">
+              <h3 class="project-card__title">Three.JS Audio Visualizer</h3>
+              <p class="project-card__desc">Interactive real-time web audio visualizer built with Three.js and GLSL shaders, driven by the Web Audio API.</p>
+              <p>Three.JS · GLSL · Shaders · Web Audio API</p>
+              <a href="https://3daudiovis.netlify.app/" target="_blank" rel="noopener">View Live ↗</a>
+            </div>
+          </article>
+
+          <article class="project-card glass-card" data-category="creative-tech">
+            <div class="project-card__body">
+              <h3 class="project-card__title">Interactive Robot Arm — Unreal Engine + MediaPipe</h3>
+              <p class="project-card__desc">Robot arm in Blender rigged with UE5 IK Control Rig, driven by live hand tracking via MediaPipe and Python over OSC.</p>
+              <p>Unreal Engine 5 · Python · MediaPipe · OSC · Blender</p>
+              <a href="https://github.com/bipinbaby/robot-interactive-with-unreal-and-mediapipe" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </article>
+
+          <article class="project-card glass-card" data-category="creative-tech">
+            <div class="project-card__body">
+              <h3 class="project-card__title">Digital Twin — Office Floor Twin</h3>
+              <p class="project-card__desc">Real-time digital twin in UE5 visualising live temperature, occupancy, and energy data via a Python backend as interactive 3D overlays.</p>
+              <p>Unreal Engine 5 · Python · REST API · Digital Twin · Blender</p>
+              <a href="https://github.com/bipinbaby/smart-building-digital-twin" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </article>
+
+          <article class="project-card glass-card" data-category="creative-tech">
+            <div class="project-card__body">
+              <h3 class="project-card__title">TouchDesigner: OSC Sensor Simulation</h3>
+              <p class="project-card__desc">Generative system driven by OSC sensor values with threshold-triggered colour shifts for live data visualisation.</p>
+              <p>TouchDesigner · Python · OSC</p>
+            </div>
+          </article>
+
+          <article class="project-card glass-card" data-category="creative-tech">
+            <div class="project-card__body">
+              <h3 class="project-card__title">TouchDesigner: Audio Reactive Visuals</h3>
+              <p class="project-card__desc">Audio-reactive visual system mapping frequency bands to real-time particle and geometry behaviour using TouchDesigner CHOPs.</p>
+              <p>TouchDesigner · Audio-Reactive · CHOPs</p>
+            </div>
+          </article>
+
+          <article class="project-card glass-card" data-category="3d-design">
+            <div class="project-card__body">
+              <h3 class="project-card__title">Procedural 3D Technical Art</h3>
+              <p class="project-card__desc">Procedural shaders, material networks, and generative geometry using Blender, Unreal Engine, Houdini, and Substance Painter.</p>
+              <p>Blender · Unreal Engine 5 · Houdini · Substance Painter</p>
+              <a href="https://bipinbabyvarghese.artstation.com/" target="_blank" rel="noopener">View on ArtStation ↗</a>
+            </div>
+          </article>
+
+        </div>
         <button class="carousel__btn carousel__btn--next" aria-label="Next">›</button>
         <div class="carousel__dots"></div>
       </div>
