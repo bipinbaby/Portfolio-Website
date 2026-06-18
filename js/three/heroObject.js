@@ -26,16 +26,22 @@ import { HERO_OBJECT as CFG } from '../config.js';
 let heroMesh = null;
 
 // ── Scroll velocity ───────────────────────────────────────
-// Tracks wheel scroll speed and converts it to a rotation
-// impulse. Damped each frame so rotation fades back to idle.
+// Single velocity drives rotation speed/direction on scroll.
+// idleDirection flips each time scroll direction changes,
+// reversing the baseline idle spin.
 
 let scrollVelocity = 0;
+let lastScrollDir  = 0;   // 1 = down, -1 = up
+let idleDirection  = -1;  // flips on direction change
 
 window.addEventListener('wheel', (e) => {
-  // deltaY is pixels scrolled — scale down to rotation radians
-  // Keep this small: a single mouse notch (~100px) should give a
-  // gentle nudge, not a full spin.
-  scrollVelocity += e.deltaY * 0.00022;
+  const dir = e.deltaY > 0 ? 1 : -1;
+  if (lastScrollDir !== 0 && dir !== lastScrollDir) {
+    idleDirection *= -1;
+  }
+  lastScrollDir = dir;
+
+  scrollVelocity -= e.deltaY * 0.00018;
 }, { passive: true });
 
 // ── Realistic Glass Material ──────────────────────────────
@@ -176,21 +182,19 @@ function useFallback(glassMat) {
 export function updateHeroObject(delta, elapsed) {
   if (!heroMesh) return;
 
-  // ── Scroll velocity → rotation ────────────────────────────
-  // Decay the velocity each frame (simulates inertia).
-  // 0.92 = fast decay (snappy stop), 0.97 = slow decay (floaty).
+  // Decay
   scrollVelocity *= 0.87;
 
-  // Clamp — cap at a gentle per-frame nudge, not a full spin
-  const MAX = 0.018;
+  // Clamp — high ceiling so sustained scrolling keeps accelerating
+  const MAX = 0.12;
   if (scrollVelocity >  MAX) scrollVelocity =  MAX;
   if (scrollVelocity < -MAX) scrollVelocity = -MAX;
 
-  // Idle rotation + scroll boost on Y axis
-  // X tilts slightly on scroll for a more 3D feel
-  heroMesh.rotation.y += CFG.rotationSpeed.y + scrollVelocity;
-  heroMesh.rotation.x += CFG.rotationSpeed.x + scrollVelocity * 0.3;
+  // Idle rotation — inverts each time scroll direction switches
+  // Scroll velocity adds a boost on top in whichever direction is active
+  heroMesh.rotation.y += CFG.rotationSpeed.y * idleDirection + scrollVelocity;
+  heroMesh.rotation.x += CFG.rotationSpeed.x * idleDirection + scrollVelocity * 0.3;
 
-  // Subtle float
+  // Subtle float on Y
   heroMesh.position.y = Math.sin(elapsed * 0.5) * 0.18;
 }

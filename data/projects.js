@@ -44,7 +44,28 @@
 export const PROJECTS = [
 
   // ── CREATIVE TECHNOLOGY ─────────────────────────────────────
-   {
+{
+    slug:        "gaussian-splat-tool",
+    title:       "Gaussian Splat Tool For Unreal Engine",
+    featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
+    category:    "creative-tech",
+    year:        "2026",
+    role:        "Developer",
+    description: "A custom pipeline designed to export photorealistic, highly optimized 4 MB Gaussian Splats from Unreal Engine for real-time web embedding.",
+    longDescription: [
+      "This project focuses on bridging the gap between high-end desktop rendering environments and lightweight web deployment. The developed tool streamlines the process of extracting scene data and camera positions directly from Unreal Engine, creating a seamless asset export pipeline optimized for the web.",
+      "The workflow captures high-fidelity images along with a clean COLMAP-compatible camera tracking output straight out of the Unreal Engine viewport. These assets are then trained using Nerfstudio, an open-source radiance field framework, to generate a highly compressed, interactive 3D scene.",
+      "The final output dramatically slashes traditional web 3D file sizes down to a mere 4 MB while preserving complex lighting, reflections, and global illumination. From a commercial standpoint, this offers immense value for architecture and real estate firms, allowing them to showcase premium, photorealistic interactive previz scenes directly in a client's web browser without heavy loading times."
+    ],
+    images:      [],   // e.g. ["assets/images/projects/twin-1.jpg", "assets/images/projects/twin-2.jpg"]
+    thumbnail:   "assets/images/projects/Gaussian Splat.jpg",
+    videoEmbed:  null,   // e.g. "https://www.youtube.com/embed/your_id"
+    videoFile:   null,
+    link:        "https://gaussiansplattver1.netlify.app/",
+    tags:        ["Gaussian Splatting", "Unreal Engine", "Nerfstudio", "ArchViz", "Web3D"],
+  },
+ 
+  {
     slug:        "threejs",
     title:       "Three.JS Audio Visualizer",
     featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
