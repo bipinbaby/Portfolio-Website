@@ -2,8 +2,8 @@
    BASE — reset, typography, global elements
    ============================================================ */
 
-/* Google Fonts import */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap');
+/* Google Fonts — Karantina (headlines) + JetBrains Mono (everything else) */
+@import url('https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=JetBrains+Mono:wght@400;700;800&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -14,15 +14,11 @@
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
-  /* html gets the dark fallback color — visible before Three.js loads
-     and on pages that don't have the 3D canvas (about, projects, contact) */
-  background-color: var(--color-bg);
+  background: var(--color-bg);
 }
 
 body {
-  /* transparent so the fixed Three.js canvas on index.html shows through
-     all sections as you scroll. Other pages see html's dark background. */
-  background-color: transparent;
+  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--size-body);
@@ -31,11 +27,11 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Headings ────────────────────────────────────────────── */
+/* ── Headings (Karantina, very tight like the Figma) ─────── */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: var(--weight-bold);
+  font-weight: 400;
   line-height: var(--leading-tight);
   color: var(--color-text);
 }
@@ -47,14 +43,12 @@ h3 { font-size: var(--size-h3); }
 /* ── Links ───────────────────────────────────────────────── */
 
 a {
-  color: var(--color-accent);
+  color: var(--color-yellow);
   text-decoration: none;
   transition: color var(--duration-fast) var(--ease-default);
 }
 
-a:hover {
-  color: var(--color-text);
-}
+a:hover { color: var(--color-orange); }
 
 /* ── Images ──────────────────────────────────────────────── */
 
@@ -77,39 +71,40 @@ img {
 
 .section {
   padding: var(--space-xl) 0;
-  /* Must be above the fixed Three.js canvas (z-index: 0).
-     position: relative is required for z-index to take effect. */
   position: relative;
   z-index: 1;
 }
 
+/* Small mono label above a title */
 .section-label {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-size: var(--size-small);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.2em;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-yellow);
   margin-bottom: var(--space-sm);
 }
 
+/* Big Karantina section title — "About me", "Selected Works" */
 .section-title {
   font-size: var(--size-h2);
+  line-height: var(--leading-display);
   margin-bottom: var(--space-md);
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-accent-dim);
-  border-radius: 3px;
+  background: var(--color-yellow);
+  border-radius: 4px;
 }
 
 /* ── Text selection ──────────────────────────────────────── */
 
 ::selection {
-  background: rgba(106, 172, 206, 0.25);
-  color: var(--color-text);
+  background: var(--color-yellow);
+  color: var(--color-ink);
 }

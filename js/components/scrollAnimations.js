@@ -42,6 +42,7 @@ export function initScrollAnimations() {
       wheelMultiplier:    1.0,
       touchMultiplier:    2.0,
     });
+    window.__lenis = lenis;   // lets components (e.g. the project wheel) scroll smoothly
 
     // Wire into rAF — Lenis needs to tick every frame
     function raf(time) {

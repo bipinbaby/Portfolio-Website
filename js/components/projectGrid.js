@@ -5,16 +5,19 @@
 // ============================================================
 
 import { PROJECTS } from '../../data/projects.js';
+import { loadShorts, buildWork, pillarbox, openShort } from './shorts.js';
 
 // ── Render the grid ───────────────────────────────────────
 
-export function initProjectGrid(containerSelector = '.projects-grid', featuredOnly = false) {
+export async function initProjectGrid(containerSelector = '.projects-grid', featuredOnly = false) {
   const grid = document.querySelector(containerSelector);
   if (!grid) return;
 
+  // Full Projects page: your projects + recent YouTube Shorts that
+  // aren't linked to a project (js/components/shorts.js)
   const list = featuredOnly
     ? PROJECTS.filter(p => p.featured)
-    : PROJECTS;
+    : buildWork(PROJECTS, await loadShorts());
 
   grid.innerHTML = list.map((project, index) => buildCard(project, index)).join('');
 
@@ -22,9 +25,16 @@ export function initProjectGrid(containerSelector = '.projects-grid', featuredOn
   grid.querySelectorAll('.project-card').forEach((card, index) => {
     const project = list[index];
 
-    // Click → go to project detail page (if slug exists) or open modal
+    // Short-only card: portrait thumbnail on a blurred 16:9 backdrop
+    if (project.isShort) {
+      pillarbox(project.thumbnail).then(src => { card.querySelector('.project-card__thumbnail img').src = src; });
+    }
+
+    // Click → Short player, project detail page (if slug exists), or modal
     card.addEventListener('click', () => {
-      if (project.slug) {
+      if (project.isShort) {
+        openShort(project.shortItems[0]);
+      } else if (project.slug) {
         window.location.href = `project.html?slug=${project.slug}`;
       } else {
         openModal(project);
@@ -72,10 +82,12 @@ function buildCard(project) {
        ></video>`
     : '';
 
-  // Badge: "▶ Video" for embed, "▶ Preview" for local hover
-  const badge = hasVideo
-    ? `<span class="project-card__badge">${hasLocalVideo ? '▶ Preview' : '▶ Video'}</span>`
-    : '';
+  // Badge: "▶ Short" for YouTube Shorts, "▶ Video" for embed, "▶ Preview" for local hover
+  const badge = project.isShort
+    ? `<span class="project-card__badge">▶ Short</span>`
+    : hasVideo
+      ? `<span class="project-card__badge">${hasLocalVideo ? '▶ Preview' : '▶ Video'}</span>`
+      : '';
 
   return `
     <article class="project-card glass-card" data-category="${project.category}">
@@ -155,6 +167,7 @@ function openModal(project) {
     ? `<a href="${project.link}" target="_blank" rel="noopener" class="btn btn-primary">View Project ↗</a>`
     : '';
 
+  modal.className = 'modal';
   modal.innerHTML = `
     <button class="modal__close" id="modal-close" aria-label="Close">✕</button>
     ${videoHTML}
@@ -174,13 +187,27 @@ function openModal(project) {
   document.getElementById('modal-close').addEventListener('click', closeModal);
 }
 
+// Open the shared modal with any HTML (used by the Shorts ring).
+// `variant` is an extra class on .modal, e.g. 'modal--reel'.
+export function openCustomModal(innerHTML, variant = '') {
+  const overlay = document.getElementById('modal-overlay');
+  const modal   = document.getElementById('modal');
+  if (!overlay || !modal) return;
+  modal.className = `modal ${variant}`.trim();
+  modal.innerHTML = `<button class="modal__close" id="modal-close" aria-label="Close">✕</button>${innerHTML}`;
+  overlay.classList.add('open');
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+}
+
 function closeModal() {
   const overlay = document.getElementById('modal-overlay');
+  if (!overlay) return;
   overlay.classList.remove('open');
   const video  = overlay.querySelector('video');
   if (video) video.pause();
-  const iframe = overlay.querySelector('iframe');
-  if (iframe) { const s = iframe.src; iframe.src = ''; iframe.src = s; }
+  // Remove embeds outright — reloading them (the old trick) would
+  // restart autoplaying videos invisibly behind the closed modal.
+  overlay.querySelectorAll('iframe').forEach(f => f.remove());
 }
 
 export function initModal() {

@@ -60,7 +60,7 @@ export function initParticles() {
 
     // Initial colour (overwritten each frame by twinkle logic)
     colors[i3]     = 0.6;
-    colors[i3 + 1] = 0.8;
+    colors[i3 + 1] = 0.5;
     colors[i3 + 2] = 1.0;
   }
 
@@ -146,9 +146,10 @@ export function updateParticles(delta, elapsed) {
 
     // Permanent warm/cold bias per star (from static phase)
     const warmth   = (Math.sin(twinklePhase[i] * 3.7) + 1) * 0.5;
-    colArr[i3]     = brightness * (0.50 + warmth * 0.50);
-    colArr[i3 + 1] = brightness * (0.72 + warmth * 0.28);
-    colArr[i3 + 2] = brightness * 1.0;
+    // Orbit palette: indigo (#605dff) ↔ violet (#d58eed)
+    colArr[i3]     = brightness * (0.38 + warmth * 0.45);
+    colArr[i3 + 1] = brightness * (0.36 + warmth * 0.20);
+    colArr[i3 + 2] = brightness * (1.00 - warmth * 0.07);
   }
 
   points.geometry.attributes.position.needsUpdate = true;

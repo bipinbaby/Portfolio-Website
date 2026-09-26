@@ -1,0 +1,44 @@
+# Pulls the latest YouTube Shorts into data/social.json once a day.
+# If anything changed it commits the update, and Vercel redeploys
+# the site automatically from the new commit.
+#
+# Run it by hand: GitHub → Actions → "Sync social" → Run workflow.
+
+name: Sync social
+
+on:
+  schedule:
+    - cron: "17 6 * * *"      # every day at 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-social
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch latest Shorts
+        run: node scripts/sync-social.mjs
+
+      - name: Commit if changed
+        run: |
+          git add data/social.json assets/social
+          if git diff --cached --quiet; then
+            echo "Nothing new."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: sync latest Shorts"
+          git push

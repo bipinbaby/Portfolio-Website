@@ -2,13 +2,6 @@
    CONTACT PAGE
    ============================================================ */
 
-.contact-hero {
-  padding-top: calc(var(--nav-height) + var(--space-xl));
-  padding-bottom: var(--space-xl);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-}
 
 .contact-inner {
   display: grid;
@@ -23,6 +16,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+}
+
+.contact-lead {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  line-height: 0.9;
+  color: var(--color-yellow);
 }
 
 .contact-copy p {

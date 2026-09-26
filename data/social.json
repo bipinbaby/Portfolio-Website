@@ -1,0 +1,88 @@
+{
+  "updated": "2026-09-25T18:54:52.631Z",
+  "source": "shorts",
+  "channelId": "UCuiD_quHBSP3BjCEiO0qFTg",
+  "items": [
+    {
+      "id": "SwsGbn0EbLg",
+      "title": "Joystick Conttoller #touchdesigner #arduino #coding #immersiveart #interactive",
+      "date": "2026-09-17T08:40:17+00:00",
+      "description": "Continuing the work on my custom controller, I added a Joystick to keep creating more interactive and immersive art pieces. I do need to package it into an enclosure so I don't shock myself (maybe one day). Made using @arduino.cc's UNO and @touchdesigner. The joystick controls the movement of the sphere, the dials control the size and spacing of objects the sphere is attracting, and the button controls the pixelation effect.\n\nMusic: by Dmitrii Kolesnikov \n\n#touchdesigner #arduino #electronics #interactiveart #immersiveart",
+      "url": "https://www.youtube.com/shorts/SwsGbn0EbLg",
+      "embedUrl": "https://www.youtube.com/embed/SwsGbn0EbLg",
+      "thumb": "assets/social/SwsGbn0EbLg.jpg"
+    },
+    {
+      "id": "eUU04eWG9D4",
+      "title": "Arduino Controller for TouchDesigner #arduino #touchdesigner #creativecoding #creativetech",
+      "date": "2026-08-24T11:22:41+00:00",
+      "description": "I made myself a controller!! I used 3 potentiometers knobs to change colours  of the visual and a switch to change the visuals!! I made it using @arduino.cc and @touchdesigner  #creativetechnology #touchdesigner #creative #arduinoproject #electronic",
+      "url": "https://www.youtube.com/shorts/eUU04eWG9D4",
+      "embedUrl": "https://www.youtube.com/embed/eUU04eWG9D4",
+      "thumb": "assets/social/eUU04eWG9D4.jpg"
+    },
+    {
+      "id": "rvZu1Kh1XTQ",
+      "title": "Ultrasonic Sensor in TouchDesigner pt.2 #touchdesigner #arduino",
+      "date": "2026-08-20T15:06:55+00:00",
+      "description": "Continuing what I made last time here's the final visual made in @touchdesigner I didn't show the final output properly, I will try and work on from here on out.\n#touchdesigner #arduino #creative #technology #creativetech",
+      "url": "https://www.youtube.com/shorts/rvZu1Kh1XTQ",
+      "embedUrl": "https://www.youtube.com/embed/rvZu1Kh1XTQ",
+      "thumb": "assets/social/rvZu1Kh1XTQ.jpg"
+    },
+    {
+      "id": "osYN-zHobtM",
+      "title": "Ultrasonic Sensor in TouchDesigner pt.1 #arduino #arduinoproject #programming",
+      "date": "2026-08-17T13:16:37+00:00",
+      "description": "Eyyy it’s my first attempt to getting into social media posting with my voice. So just working for the first time with an @arduino.cc with @touchdesigner #touchdesigner #arduino #creativetechnology #creativecoding #electronic",
+      "url": "https://www.youtube.com/shorts/osYN-zHobtM",
+      "embedUrl": "https://www.youtube.com/embed/osYN-zHobtM",
+      "thumb": "assets/social/osYN-zHobtM.jpg"
+    },
+    {
+      "id": "RioX8ykLVUw",
+      "title": "Trying out concert visuals #touchdesigner #electronicmusic #generativeart #techno #livevisuals",
+      "date": "2026-04-24T14:13:38+00:00",
+      "description": "So I have been trying to create visuals in  @touchdes  for a wide format and came up with 2 iterations that could be used in a concert setting. And I always had a thing for fractal patterns, so here's my take on it, and do let me know your thoughts :)\n\nMusic: AtlasAudio from Pixabay\n\n#touchdesigner   \n#generativeart  \n#realtimevisuals  \n#fractalart  \n#vjing  \n#concertvisuals  \n#stagedesign \n#livevisuals",
+      "url": "https://www.youtube.com/shorts/RioX8ykLVUw",
+      "embedUrl": "https://www.youtube.com/embed/RioX8ykLVUw",
+      "thumb": "assets/social/RioX8ykLVUw.jpg"
+    },
+    {
+      "id": "drVLMImH1AY",
+      "title": "Interactive Robot Arm with Unreal Engine and Python",
+      "date": "2026-04-14T19:38:39+00:00",
+      "description": "Not going to lie, this took me more time than I'd like, but it's done!! Well, sort of got more ideas to do with it as I am uploading. This uses Google's OpenCV library to run the hand tracking using Python to drive the animation of a robot arm in Unreal Engine. I had to brush up on my 3D modelling skills and modelled the robot in Blender and used Unreal Engine's control rig to create an IK rig, and honestly, that was the easy part! When I brought this model in blueprints, the control rig was not animating at all. It took me a day and a half to figure out that it was one button in the control rig menu, and almost no documentation I could find. I also wanted to add sounds for each joint movement, and I kind of got it to work, but I found out my skills were abhorrent and my ears were going deaf, hearing servo sounds going haywire. If anyone knows how I can tackle sound design cleanly, please do let me know!!!! I tried to ask Claude to help me out wherever I lacked the knowledge, but it doesn't seem to work well with Unreal, so this was mostly me, and I used Claude to keep track of my progress and for documentation. \nWell, for updates, since my right hand does the movement of the body, I was thinking of using my left hand to animate the gripper. It should be an easy enough task to tackle, and I will update the file on my GitHub (https://lnkd.in/gTGrD_er) \n\nPlease do share your thoughts!!!\n\n#UnrealEngine #MediaPipe #Python #ComputerVision #ControlRig #MachineLearning #RealTime #HandTracking #Robotics #CreativeCoding #OpenCV #OSC #GameDev #ProcuduralAnimation #TechArt",
+      "url": "https://www.youtube.com/shorts/drVLMImH1AY",
+      "embedUrl": "https://www.youtube.com/embed/drVLMImH1AY",
+      "thumb": "assets/social/drVLMImH1AY.jpg"
+    },
+    {
+      "id": "gZWL1lJ7Lso",
+      "title": "Starry  (#touchdesigner#3)",
+      "date": "2026-03-11T09:50:46+00:00",
+      "description": "Still practising with audio TouchDesigner, but I think I should also start building a 3D scene, so that will be the next step, finally integrating with Unreal Engine! I am also learning Python, and hopefully can show off something soon\n\n\n#touchdesigner #audioreactive #madewithtouchdesigner #creativecoding #generativeart #audiovisualart #realtimevisuals #livevisuals #generativedesign",
+      "url": "https://www.youtube.com/shorts/gZWL1lJ7Lso",
+      "embedUrl": "https://www.youtube.com/embed/gZWL1lJ7Lso",
+      "thumb": "assets/social/gZWL1lJ7Lso.jpg"
+    },
+    {
+      "id": "47nclvrWHko",
+      "title": "Gem Flower",
+      "date": "2026-03-06T21:34:09+00:00",
+      "description": "So I tried to do an interactive gem flower piece for my second try in TouchDesigner. I tried to vibe code it using Claude blew up on me, though. I think it worked out quite all right, knowing Houdini made it a lot easier #touchdesigner #interactiveart #immersiveart",
+      "url": "https://www.youtube.com/shorts/47nclvrWHko",
+      "embedUrl": "https://www.youtube.com/embed/47nclvrWHko",
+      "thumb": "assets/social/47nclvrWHko.jpg"
+    },
+    {
+      "id": "cUrWYEEgbFk",
+      "title": "Audio Visualiser #1",
+      "date": "2026-03-04T10:04:45+00:00",
+      "description": "Played and lost too many ranked Dota and Valorant matches and figured I need to do something better with my life so I learned touchdesigner and made 2 different audiovisual with it!\n\nMusic: Mario Piu - The Vision (Suncraft Remix)\n#touchdesigner #audiovisual #creativetechnology",
+      "url": "https://www.youtube.com/shorts/cUrWYEEgbFk",
+      "embedUrl": "https://www.youtube.com/embed/cUrWYEEgbFk",
+      "thumb": "assets/social/cUrWYEEgbFk.jpg"
+    }
+  ]
+}

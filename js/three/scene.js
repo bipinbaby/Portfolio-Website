@@ -33,11 +33,11 @@ export function initScene(canvasId) {
 
   // Background matches CSS --color-bg exactly — makes canvas
   // look like it's part of the page while enabling glass refraction
-  scene.background = new THREE.Color(0x080d18);
+  scene.background = new THREE.Color(0x0c0c11);
 
   // Volumetric fog — Iceland/mist depth effect
   // Fog(color, near, far) — increase 'far' to reduce fog density
-  scene.fog = new THREE.FogExp2(0x080d18, 0.025);
+  scene.fog = new THREE.FogExp2(0x0c0c11, 0.025);
 
   // ── Camera ─────────────────────────────────────────────────
   camera = new THREE.PerspectiveCamera(

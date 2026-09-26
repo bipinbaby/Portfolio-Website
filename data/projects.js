@@ -36,9 +36,26 @@
 //  YEAR / ROLE:
 //    Shown as metadata on the detail page. Set to null to hide.
 //
+//  DATE (optional, "YYYY-MM-DD" or "YYYY-MM"):
+//    When the project was finished. The homepage wheel and the
+//    Projects page list everything newest first (projects and
+//    YouTube Shorts mixed). Without a date, a project uses its
+//    newest linked Short's date, then its year, and projects with
+//    none of those go last.
+//
 //  LINK (optional):
 //    External URL shown as a secondary button on the detail page.
 //    Set to null if there's no external link.
+//
+//  SHORTS (optional):
+//    YouTube Shorts that belong to this project, e.g.
+//      shorts: ["PASTE_ID_HERE"],
+//    The ID is the part after /shorts/ in the Short's link
+//    (youtube.com/shorts/AbCdEfGhIjK → "AbCdEfGhIjK").
+//    Linked Shorts get a "Watch the Short" button on the homepage
+//    wheel and play in portrait on the project page. Shorts you
+//    DON'T link here still appear on the wheel as their own
+//    Short-only projects (see YOUTUBE.maxAutoShorts in js/config.js).
 // ============================================================
 
 export const PROJECTS = [
@@ -50,6 +67,7 @@ export const PROJECTS = [
     featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-06-18",
     role:        "Developer",
     description: "A custom pipeline designed to export photorealistic, highly optimized 4 MB Gaussian Splats from Unreal Engine for real-time web embedding.",
     longDescription: [
@@ -71,6 +89,7 @@ export const PROJECTS = [
     featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-05-25",
     role:        "Developer",
     description: "An interactive, real-time web audio visualizer built using Three.js and custom GLSL shaders",
     longDescription: [
@@ -92,6 +111,7 @@ export const PROJECTS = [
     featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-04-14",   // YouTube Short date
     role:        "Developer",
     description: "An interactive piece cominbining Python and Unreal Engine using Mediapipe and OSC signals",
     longDescription: [
@@ -108,6 +128,30 @@ export const PROJECTS = [
     videoFile:   "assets/videos/projects/robot hand tracking (1).mp4",
     link:        "https://www.linkedin.com/feed/update/urn:li:activity:7449871730875006976/",
     tags:        ["Unreal Engine", "Python", "OpenCV", "Real-time Data", "OSC"],
+    shorts:      ["drVLMImH1AY"],   // "Interactive Robot Arm with Unreal Engine and Python"
+  },
+
+  {
+    slug:        "ultrasonic-touchdesigner",
+    title:       "Ultrasonic Sensor × TouchDesigner",
+    featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
+    category:    "creative-tech",
+    year:        "2026",
+    date:        "2026-08-20",   // pt.2 Short date
+    role:        "Developer",
+    description: "My first Arduino build: an HC-SR04 ultrasonic sensor on an Arduino UNO R4 WiFi, streaming live distance readings into TouchDesigner to drive a real-time visual.",
+    longDescription: [
+      "My first time working with an Arduino alongside TouchDesigner, and my first attempt at posting about my work in my own voice. An HC-SR04 ultrasonic sensor sits on a breadboard wired to an Arduino UNO R4 WiFi, measuring the distance to whatever is in front of it many times a second.",
+      "The board streams those readings over serial into TouchDesigner's Serial DAT, where they drive the transforms in the network, so moving closer or further away changes the visual in real time. I also tried sending the data over Wi-Fi with OSC, but serial proved more reliable and easier to debug, since every incoming reading is visible right in the DAT.",
+      "In part two I carried on from there and built out the final visual in TouchDesigner. I didn't show the final output properly in that post, so this is the piece I'm building on from here on out.",
+    ],
+    images:      [],
+    thumbnail:   "assets/images/projects/ultrasonic-td.jpg",
+    videoEmbed:  null,
+    videoFile:   null,
+    link:        null,
+    tags:        ["Arduino", "TouchDesigner", "HC-SR04", "Serial", "Physical Computing"],
+    shorts:      ["osYN-zHobtM", "rvZu1Kh1XTQ"],   // "Ultrasonic Sensor in TouchDesigner" pt.1 + pt.2
   },
 
   {
@@ -116,6 +160,7 @@ export const PROJECTS = [
     featured:    false,   // ← shows on homepage. Set to false to hide from homepage.
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-04",      // approx — on the site by 13 Apr 2026
     role:        "Developer",
     description: "An experiment using Googles Mediapipe content with custom python code in TouchDesigner",
     longDescription: [
@@ -142,6 +187,7 @@ export const PROJECTS = [
     featured:    true,   // ← shows on homepage. Set to false to hide from homepage.
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-04",      // approx — on the site by 13 Apr 2026
     role:        "Developer",
     description: "Real-time digital twin built in Unreal Engine 5 with simulated live data feeds via Python. Visualises operational metrics as interactive 3D overlays.",
     longDescription: [
@@ -165,6 +211,7 @@ export const PROJECTS = [
     featured:    true,
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-04",      // approx — on the site by 13 Apr 2026
     role:        "Artist / Developer",
     description: "Generative system that responds to  OSC values . Built for live performance environments.",
     longDescription: [
@@ -187,6 +234,7 @@ export const PROJECTS = [
     featured:    true,
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-03-04",   // "Audio Visualiser #1" Short date
     role:        "Artist / Developer",
     description: "An audio visual syetem that moves according to the music",
     longDescription: [
@@ -202,6 +250,7 @@ export const PROJECTS = [
     videoFile:   "assets/videos/projects/audio reactive (1).mp4",
     link:        "https://www.linkedin.com/feed/update/urn:li:activity:7434885481055776768/",
     tags:        ["TouchDesigner"],
+    shorts:      ["cUrWYEEgbFk"],   // "Audio Visualiser #1"
   },
 
 
@@ -211,6 +260,7 @@ export const PROJECTS = [
     featured:    false,
     category:    "creative-tech",
     year:        "2026",
+    date:        "2026-03-06",   // "Gem Flower" Short date
     role:        "Artist / Developer",
     description: "A simple 3D interactive Gem Flower what moves towards the direction of the mouse ",
     longDescription: [
@@ -240,6 +290,7 @@ export const PROJECTS = [
     videoFile:   "assets/videos/projects/flower.mp4",
     link:        "https://www.linkedin.com/feed/update/urn:li:activity:7435774621443833857/",
     tags:        ["TouchDesigner", "Interactive"],
+    shorts:      ["47nclvrWHko"],   // "Gem Flower"
   },
 
   

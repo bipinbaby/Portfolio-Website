@@ -29,11 +29,13 @@
   <nav class="nav"></nav>
 
   <!-- ── Projects ───────────────────────────────────────── -->
-  <main class="projects-hero section">
+  <main class="page projects-page">
+    <!-- Page title + wave (Figma: iPhone 17 - 4/5/6 and the 1440 frames) -->
+    <header class="page-head">
+      <h1 class="section-title">Projects</h1>
+      <div class="wave" aria-hidden="true"></div>
+    </header>
     <div class="container">
-
-      <p class="section-label">Work</p>
-      <h1 class="section-title">Selected Projects</h1>
 
       <!-- ── Filter Tabs ───────────────────────────────── -->
       <div class="projects-filters">
@@ -156,11 +158,16 @@
   <footer class="footer"></footer>
 
   <script type="module">
-    import { initNav, initFooter }                         from './js/components/nav.js';
+    import { initNav, initFooter, initFaces }              from './js/components/nav.js';
     import { initProjectGrid, initFilters, initModal }     from './js/components/projectGrid.js';
+    import { initScene }                                   from './js/components/scene.js';
+    import { initWaves }                                   from './js/components/wave.js';
 
     initNav();
     initFooter();
+    initFaces();
+    initScene('projects');            // the fox, fixed in the lower-right corner
+    initWaves();
     initProjectGrid();
     initFilters();
     initModal();

@@ -1,168 +1,373 @@
 /* ============================================================
-   COMPONENTS — nav, liquid glass cards, buttons, modal, footer
+   COMPONENTS — menu pill, face divider, framed cards, chips,
+   buttons, modal, footer.  Style: Figma "PORTFOLIO".
    ============================================================ */
 
-/* ── Navigation ──────────────────────────────────────────── */
+/* ── Navigation: the red pill ─────────────────────────────
+   The red pill at the top of every Figma frame is the menu.
+   Closed: a 64 × 33 pill. Click it and it stretches sideways
+   into a full nav bar (like the old glass bar), links fading
+   in one by one. The toggle sits at the bar's right end.
+   Tuning: --nav-open-w (bar width) and --nav-open-h below.   */
 
 .nav {
+  --nav-open-w: min(620px, calc(100vw - 24px));
+  --nav-open-h: 52px;
+  --pill-w: 64px;                 /* Figma phone: 64 × 33 at y=40 */
+  --pill-h: 33px;
   position: fixed;
-  top: 0; left: 0; right: 0;
-  height: var(--nav-height);
-  z-index: 100;
+  top: var(--pill-top, 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 150;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+
+.nav-bar {
+  position: relative;
+  width: var(--pill-w);  height: var(--pill-h);
+  border-radius: var(--radius-pill);
+  background: var(--color-red);
+  overflow: hidden;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  /* Stretch sideways first, then grow taller — reads as "unrolling" */
+  transition:
+    width  520ms cubic-bezier(0.65, 0, 0.2, 1.25),
+    height 260ms var(--ease-out) 0ms,
+    top    260ms var(--ease-out),
+    box-shadow var(--duration-normal);
+}
+.nav.is-open .nav-bar {
+  width: var(--nav-open-w);
+  height: var(--nav-open-h);
+  margin-top: calc((var(--pill-h) - var(--nav-open-h)) / 2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  /* Same curve as closing (see .nav:not(.is-open) .nav-bar): a smooth
+     ease-in-out that settles with a small overshoot at the end */
+  transition:
+    width  520ms cubic-bezier(0.65, 0, 0.2, 1.25),
+    height 260ms var(--ease-out) 120ms,
+    margin 260ms var(--ease-out) 120ms,
+    box-shadow var(--duration-normal);
+}
+/* Clickable hints on the closed pill:
+   - it breathes (a slow pulse every few seconds — nav.js)
+   - hover lifts it a little (uses `scale`, so it layers on the breathing)
+   - press eases into a squish and springs back (nav.js), and the eyes
+     watch it (initFaces) */
+.nav:not(.is-open) .nav-bar {
+  transition: width 520ms cubic-bezier(0.65, 0, 0.2, 1.25), height 260ms var(--ease-out),
+              box-shadow var(--duration-normal), scale 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav:not(.is-open) .nav-bar:hover { scale: 1.08; }
+
+/* Toggle — fills the pill when closed, sits at the right end when open */
+.nav-pill {
+  position: absolute;
+  top: 0; right: 0;
+  width: var(--pill-w); height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+.nav-pill:focus-visible { outline: 3px solid var(--color-yellow); outline-offset: -5px; border-radius: var(--radius-pill); }
+
+/* Two bars → × */
+.nav-pill span {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 22px; height: 3px;
+  border-radius: 2px;
+  background: #fff;
+  transform: translate(-50%, calc(-50% - 4px));
+  transition: transform var(--duration-normal) var(--ease-out), opacity var(--duration-fast);
+}
+.nav-pill span + span { transform: translate(-50%, calc(-50% + 4px)); }
+.nav:not(.is-open) .nav-pill span { opacity: 0; }   /* closed: a plain red pill (Figma) */
+.nav.is-open .nav-pill span       { transform: translate(-50%, -50%) rotate(45deg); }
+.nav.is-open .nav-pill span + span { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* Contents of the open bar */
+.nav-inner {
+  position: absolute;
+  inset: 0 var(--pill-w) 0 0;
   display: flex;
   align-items: center;
-  padding: 0 var(--space-md);
-  justify-content: space-between;
-  background: rgba(8, 13, 24, 0.55);
-  backdrop-filter: blur(52px) saturate(180%);
-  -webkit-backdrop-filter: blur(52px) saturate(180%);
-  /* top specular sheen on nav bar */
-  box-shadow:
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
-    0 1px 0 rgba(150, 200, 240, 0.12);
+  gap: var(--space-sm);
+  padding-left: 1.4rem;
+  width: calc(var(--nav-open-w) - var(--pill-w));   /* laid out at full size, revealed by the growing bar */
+  white-space: nowrap;
+  pointer-events: none;
 }
+.nav.is-open .nav-inner { pointer-events: auto; }
 
 .nav-logo {
   font-family: var(--font-heading);
-  font-weight: var(--weight-bold);
-  font-size: 1.1rem;
-  color: var(--color-text);
-  letter-spacing: 0.02em;
-  transition: color var(--duration-fast) var(--ease-default);
+  font-size: 2rem;
+  line-height: 1;
+  padding-top: 0.15em;
+  color: #fff;
+  margin-right: auto;
 }
-.nav-logo:hover { color: var(--color-accent); }
+.nav-logo:hover { color: var(--color-yellow); }
 
 .nav-links {
   display: flex;
   list-style: none;
-  gap: var(--space-md);
-  align-items: center;
+  gap: 2px;
 }
 
 .nav-links a {
-  font-family: var(--font-heading);
-  font-size: var(--size-small);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  transition: color var(--duration-fast) var(--ease-default);
+  display: block;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-bold);
+  font-size: 0.8rem;
+  color: #fff;
+  transition: background var(--duration-fast), color var(--duration-fast);
 }
-.nav-links a:hover,
-.nav-links a.active { color: var(--color-text); }
+.nav-links a:hover { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.nav-links a.active { background: var(--color-yellow); color: var(--color-ink); }
 
-/* ── iOS 26 Liquid Glass Card ─────────────────────────────── */
-/*                                                             */
-/*  How it works:                                              */
-/*  - backdrop-filter creates the blur + saturation boost      */
-/*  - box-shadow layers simulate:                              */
-/*      • top specular (the "sheen" that sells glass)          */
-/*      • side edge highlights                                 */
-/*      • drop shadow for elevation                            */
-/*  - ::before adds the prismatic gradient shimmer inside      */
-/*  - ::after adds the outer prismatic border glow             */
-/*                                                             */
+/* Staggered fade/slide-in of the logo + links as the bar opens */
+.nav-logo,
+.nav-links li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.nav.is-open .nav-logo,
+.nav.is-open .nav-links li {
+  opacity: 1;
+  transform: none;
+  transition: opacity 260ms var(--ease-out), transform 360ms var(--ease-spring);
+}
+.nav.is-open .nav-logo              { transition-delay: 200ms; }
+.nav.is-open .nav-links li:nth-child(1) { transition-delay: 250ms; }
+.nav.is-open .nav-links li:nth-child(2) { transition-delay: 300ms; }
+.nav.is-open .nav-links li:nth-child(3) { transition-delay: 350ms; }
+.nav.is-open .nav-links li:nth-child(4) { transition-delay: 400ms; }
 
-.glass-card {
-  position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    /* top specular — the primary glass "sheen" */
-    inset 0 1.5px 0 var(--glass-shine-strong),
-    /* bottom inner edge */
-    inset 0 -1px 0 var(--glass-shine-soft),
-    /* left/right side lights */
-    inset 1px 0 0 var(--glass-side-left),
-    inset -1px 0 0 var(--glass-side-right),
-    /* elevation shadow */
-    0 16px 48px rgba(0, 0, 0, 0.45),
-    0 4px 12px rgba(0, 0, 0, 0.28),
-    /* outer ambient glow — icy blue */
-    0 0 0 0.5px rgba(140, 195, 240, 0.1);
-  transition:
-    box-shadow var(--duration-normal) var(--ease-out),
-    border-color var(--duration-normal) var(--ease-out),
-    transform var(--duration-normal) var(--ease-spring);
+/* Phones: no room for the name — just the four links */
+@media (max-width: 520px) {
+  .nav-logo { display: none; }
+  .nav-inner { padding-left: 0.4rem; gap: 0; justify-content: space-between; }
+  .nav-links a { padding: 0.35rem 0.55rem; font-size: 0.74rem; }
+}
+
+/* Desktop (Figma 1440 frames): a bigger pill, lower down */
+@media (min-width: 900px) {
+  .nav { --pill-w: 94px; --pill-h: 49px; --pill-top: 62px; }
+}
+
+/* ── The face (yellow bar + two eyes) ─────────────────────
+   Fixed to the top edge of the screen on every page, like the
+   Figma frames: the bar tucked half off-screen, one eye each
+   side, the red pill hanging just under it (the "mouth").
+   The black pupils blink at random and follow the cursor
+   (js/components/nav.js → initFaces).
+   Figma sizes — phone: bar 294 × 45, eye 54 (in the corners),
+                 desktop: bar 434 × 66, eye 80 (at the bar ends). */
+
+.face {
+  --bar-w: min(294px, calc(100vw - 2 * var(--eye) - 8px));   /* never runs into the eyes */
+  --bar-h: 45px;
+  --bar-y: 0px;                  /* centre of the bar (half off-screen) */
+  --eye: 54px;
+  --eye-y: 28px;                 /* centre of the eyes */
+  --pupil: 24px;
+  position: fixed;
+  inset: 0;
+  z-index: 140;                  /* just under the nav pill (150) */
+  pointer-events: none;
+}
+
+.face__bar {
+  position: absolute;
+  left: 50%;
+  top: var(--bar-y);
+  width: var(--bar-w);
+  height: var(--bar-h);
+  border-radius: var(--radius-xl);
+  background: var(--color-yellow);
+  transform: translate(-50%, -50%);
+}
+
+.face__eye {
+  position: absolute;
+  top: calc(var(--eye-y) - var(--eye) / 2);
+  width: var(--eye); height: var(--eye);
+}
+.face__eye--l { left: 0; }
+.face__eye--r { right: 0; }
+
+@media (min-width: 900px) {
+  .face {
+    --bar-w: 434px;
+    --bar-h: 66px;
+    --bar-y: 7px;
+    --eye: 80px;
+    --eye-y: 48px;
+    --pupil: 35px;
+  }
+  /* Eyes sit on the ends of the bar, not in the screen corners */
+  .face__eye--l { left:  calc(50% - 257px - var(--eye) / 2); }
+  .face__eye--r { right: calc(50% - 257px - var(--eye) / 2); }
+}
+
+/* The yellow eyeball (stays open) */
+.face__ball {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-yellow);
   overflow: hidden;
 }
 
-/* Interior prismatic shimmer — diagonal light catch */
-.glass-card::before {
-  content: '';
+/* Pupil = follows the cursor; the black iris inside it blinks (scaleY) */
+.face__pupil {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: var(--pupil); height: var(--pupil);
+  margin: calc(var(--pupil) / -2) 0 0 calc(var(--pupil) / -2);
+  transition: transform 120ms linear;
+}
+.face__iris {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.09) 0%,
-    rgba(180, 220, 255, 0.04) 25%,
-    transparent 50%,
-    rgba(140, 195, 240, 0.03) 75%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  border-radius: 50%;
+  background: var(--color-ink);
 }
 
-/* Prismatic border glow on hover */
-.glass-card::after {
+/* Once the page scrolls, content fades out under the face
+   instead of showing through between the bar and the eyes */
+.face::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from 210deg,
-    var(--prism-1),
-    var(--prism-2),
-    var(--prism-3),
-    var(--prism-4),
-    var(--prism-5),
-    var(--prism-1)
-  );
-  /* Mask trick: only shows on the border, not the fill */
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1px;
+  inset: 0 0 auto;
+  height: calc(var(--eye-y) + var(--eye) / 2 + 40px);
+  background: linear-gradient(var(--color-bg) 55%, transparent);
   opacity: 0;
-  pointer-events: none;
-  z-index: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
 }
+.face.is-scrolled::before { opacity: 1; }
 
-.glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  transform: translateY(-4px);
-  box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-    inset 1px 0 0 rgba(255, 255, 255, 0.18),
-    inset -1px 0 0 rgba(255, 255, 255, 0.06),
-    0 24px 60px rgba(0, 0, 0, 0.5),
-    0 8px 20px rgba(0, 0, 0, 0.3),
-    0 0 0 0.5px rgba(140, 195, 240, 0.2);
+/* Hidden before JS runs */
+.face:not(.is-open) .face__bar,
+.face:not(.is-open) .face__eye { visibility: hidden; }
+
+/* ── Scene: each page's creature in the lower-right corner ──
+   Fixed to the screen, so it stays put while the page scrolls
+   over it. Built by js/components/scene.js from
+   assets/shapes/scene-<page>.svg (exported from the Figma
+   frames). Sized like the Figma frame: 1440 wide on desktop,
+   402 on phones, and shrunk if the screen is short so the
+   creature's head never goes off the top.                     */
+
+.scene {
+  --s: min(calc(100vw / 1440), calc((100svh - 100px) / (var(--h) + var(--b))));
+  position: fixed;
+  right:  calc(var(--r) * var(--s));
+  bottom: calc(var(--b) * var(--s));
+  width:  calc(var(--w) * var(--s));
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 500ms var(--ease-out), translate 700ms var(--ease-out);
+}
+.scene svg { display: block; width: 100%; height: auto; }
+@media (max-width: 899px) {
+  .scene {
+    --s: calc(var(--ms) * min(calc(100vw / 402), calc(100svh / 874)));
+    right:  calc(var(--mr) * var(--s) / var(--ms));
+    bottom: calc(var(--mb) * var(--s) / var(--ms));
+  }
+}
+.scene.is-away { opacity: 0; translate: 0 30%; }
+
+/* About: the yellow ground strip is cut flat at the Figma frame's
+   left edge — carry it on to the screen edge on wide screens
+   (55.5 of the art's 701 px height, Vector 27) */
+.scene--about::before {
+  content: '';
+  position: absolute;
+  right: calc(100% - 1px);
+  bottom: 0;
+  width: 100vw;
+  height: calc(55.5 / 701 * 100%);
+  background: var(--color-yellow);
 }
 
-.glass-card:hover::before {
-  opacity: 1.5; /* brightens the inner shimmer on hover */
+/* Page content scrolls over the scene */
+body > main, body > section, body > footer { position: relative; z-index: 1; }
+
+/* Three yellow bars down the top-left edge (Figma desktop frames),
+   animated like an equaliser by js/components/equalizer.js */
+.side-bars {
+  position: fixed;
+  left: 33px;
+  top: 40px;
+  width: 79px;
+  height: 452px;
+  z-index: 145;                  /* above the face's fade band */
+  pointer-events: none;
+}
+.side-bars span {
+  position: absolute;
+  top: 0;
+  width: 23px;
+  height: 40px;
+  border-radius: 11.5px;
+  background: var(--color-yellow);
+  will-change: height;
+}
+@media (max-width: 899px) { .side-bars { display: none; } }
+
+/* ── Inner pages (about / projects / contact) ─────────────
+   Figma iPhone 17 - 4/5/6: the title at the top left under the
+   face, the wave under it, then the content. The bottom padding
+   leaves the page's creature (.scene) uncovered at the end.   */
+
+.page {
+  padding: 96px 0 clamp(12rem, 42svh, 26rem);
+}
+.page-head { padding-left: var(--edge); margin-bottom: var(--space-lg); }
+.page-head .section-title { margin: 0; }
+.page-head .wave { width: 100vw; margin-left: calc(-1 * var(--edge)); }   /* full-bleed */
+.page .container {
+  max-width: calc(var(--edge) + 1040px);
+  margin: 0;
+  padding: 0 clamp(1rem, 5vw, 5rem) 0 var(--edge);
+}
+@media (min-width: 900px) {
+  .page { padding-top: 124px; }     /* under the bigger desktop pill */
 }
 
-.glass-card:hover::after {
-  opacity: 1; /* shows prismatic border on hover */
-}
+/* ── Wave (orange line under a section heading) ───────────
+   Drawn + animated by js/components/wave.js. Sits in the flow
+   under the heading; margin-top = the space from the heading. */
 
-/* Ensure card content sits above the glass pseudo-elements */
-.glass-card > * {
+.wave {
+  display: block;
+  height: 44px;
+  margin-top: 22px;
+  pointer-events: none;
+}
+.wave svg { display: block; overflow: visible; }
+
+/* ── Framed card (replaces the old glass card) ─────────── */
+
+.glass-card {
   position: relative;
-  z-index: 1;
+  background: var(--color-bg-deep);
+  border: var(--frame-width) solid var(--color-yellow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--duration-normal) var(--ease-spring);
 }
+.glass-card:hover { transform: translateY(-4px) rotate(-0.4deg); }
+.glass-card > * { position: relative; z-index: 1; }
 
 /* ── Project Card ─────────────────────────────────────────── */
 
@@ -172,18 +377,15 @@
   flex-direction: column;
 }
 
-/* Thumbnail wrapper — video hover happens here */
 .project-card__thumbnail {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: var(--color-surface-2);
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--color-placeholder);
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
 }
 
-/* Static thumbnail image */
 .project-card__thumbnail img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -193,10 +395,7 @@
   inset: 0;
 }
 
-/* ── Video-on-hover ───────────────────────────────────────── */
-/* The <video> element sits on top of the image.              */
-/* JS controls opacity: 0→1 on mouseenter, 1→0 on mouseleave  */
-
+/* Video-on-hover: <video> sits on the image, JS fades it in */
 .project-card__video-preview {
   position: absolute;
   inset: 0;
@@ -206,35 +405,20 @@
   transition: opacity var(--duration-normal) var(--ease-out);
   pointer-events: none;
 }
+.project-card:hover .project-card__video-preview.playing { opacity: 1; }
+.project-card:hover .project-card__thumbnail img { opacity: 0; transform: scale(1.04); }
 
-.project-card:hover .project-card__video-preview.playing {
-  opacity: 1;
-}
-
-.project-card:hover .project-card__thumbnail img {
-  opacity: 0;
-  transform: scale(1.04);
-}
-
-/* Play badge */
 .project-card__badge {
   position: absolute;
   bottom: var(--space-xs);
   right: var(--space-xs);
-  background: rgba(8, 13, 24, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: var(--radius-sm);
-  padding: 3px 8px;
-  font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  text-transform: uppercase;
+  background: var(--color-red);
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  font-size: 0.7rem;
+  font-weight: var(--weight-bold);
+  color: #fff;
   z-index: 2;
-  /* inner specular on badge */
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 .project-card__body {
@@ -246,9 +430,9 @@
 }
 
 .project-card__title {
-  font-size: 1rem;
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
+  font-size: 2.2rem;
+  line-height: 0.9;
+  color: #fff;
 }
 
 .project-card__desc {
@@ -265,22 +449,16 @@
   margin-top: var(--space-xs);
 }
 
-/* ── Tag pill ─────────────────────────────────────────────── */
+/* ── Tag chip ────────────────────────────────────────────── */
 
 .tag {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-family: var(--font-heading);
-  font-size: 0.7rem;
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  border: 1px solid rgba(106, 172, 206, 0.25);
-  background: rgba(106, 172, 206, 0.06);
-  /* tiny inner specular */
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
+  background: var(--color-yellow);
 }
 
 /* ── Buttons ──────────────────────────────────────────────── */
@@ -289,51 +467,32 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: 0.65rem 1.4rem;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-heading);
-  font-size: var(--size-small);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: var(--weight-bold);
   cursor: pointer;
-  border: none;
+  border: 3px solid transparent;
   transition:
     background var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default),
-    transform var(--duration-fast) var(--ease-spring),
-    box-shadow var(--duration-fast) var(--ease-default);
+    transform var(--duration-fast) var(--ease-spring);
 }
-
-.btn:hover { transform: translateY(-1px); }
+.btn:hover { transform: translateY(-2px) rotate(-1deg); }
 
 .btn-primary {
-  background: var(--color-accent);
-  color: var(--color-bg);
-  box-shadow: 0 4px 16px rgba(106, 172, 206, 0.3),
-              inset 0 1px 0 rgba(255,255,255,0.25);
+  background: var(--color-yellow);
+  color: var(--color-ink);
 }
-.btn-primary:hover {
-  background: #88c6e0;
-  color: var(--color-bg);
-  box-shadow: 0 6px 24px rgba(106, 172, 206, 0.45),
-              inset 0 1px 0 rgba(255,255,255,0.3);
-}
+.btn-primary:hover { background: var(--color-orange); color: var(--color-ink); }
 
 .btn-ghost {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--color-text-muted);
-  border: 1px solid var(--glass-border);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+  background: transparent;
+  color: #fff;
+  border-color: var(--color-yellow);
 }
-.btn-ghost:hover {
-  color: var(--color-text);
-  border-color: rgba(255,255,255,0.22);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28),
-              0 4px 16px rgba(0,0,0,0.2);
-}
+.btn-ghost:hover { background: var(--color-yellow); color: var(--color-ink); }
 
 /* ── Category Filter Tabs ─────────────────────────────────── */
 
@@ -344,48 +503,26 @@
 }
 
 .filter-tab {
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
-  font-family: var(--font-heading);
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
   font-size: var(--size-small);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-weight: var(--weight-bold);
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(190, 218, 240, 0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  color: var(--color-text-muted);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    color var(--duration-normal) var(--ease-out),
-    border-color var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out);
+  border: 3px solid var(--color-yellow);
+  background: transparent;
+  color: #fff;
+  transition: background var(--duration-fast), color var(--duration-fast);
 }
-.filter-tab:hover {
-  color: var(--color-text);
-  border-color: rgba(255,255,255,0.2);
-  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.25),
-              0 4px 12px rgba(0,0,0,0.2);
-}
-.filter-tab.active {
-  background: rgba(106, 172, 206, 0.14);
-  color: var(--color-accent);
-  border-color: rgba(106, 172, 206, 0.35);
-  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.2),
-              0 0 12px rgba(106,172,206,0.15);
-}
+.filter-tab:hover { background: rgba(255, 204, 0, 0.15); }
+.filter-tab.active { background: var(--color-yellow); color: var(--color-ink); }
 
-/* ── Project Modal ────────────────────────────────────────── */
+/* ── Modal ────────────────────────────────────────────────── */
 
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 8, 16, 0.78);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  background: rgba(14, 42, 36, 0.92);
   z-index: 200;
   display: flex;
   align-items: center;
@@ -395,39 +532,25 @@
   pointer-events: none;
   transition: opacity var(--duration-normal) var(--ease-out);
 }
-.modal-overlay.open {
-  opacity: 1;
-  pointer-events: all;
-}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
 
 .modal {
   width: 100%;
   max-width: 760px;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: var(--radius-xl);
-  transform: translateY(24px) scale(0.97);
+  border-radius: var(--radius-lg);
+  border: var(--frame-width) solid var(--color-yellow);
+  background: var(--color-bg);
+  transform: translateY(24px) scale(0.96);
   transition: transform var(--duration-normal) var(--ease-spring);
-  /* modal is itself a liquid glass surface */
-  background: rgba(15, 24, 36, 0.7);
-  backdrop-filter: blur(52px) saturate(180%);
-  -webkit-backdrop-filter: blur(52px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow:
-    inset 0 1.5px 0 rgba(255,255,255,0.4),
-    inset 0 -1px 0 rgba(255,255,255,0.06),
-    0 32px 80px rgba(0,0,0,0.6),
-    0 0 0 0.5px rgba(140,195,240,0.12);
 }
-.modal-overlay.open .modal {
-  transform: translateY(0) scale(1);
-}
+.modal-overlay.open .modal { transform: translateY(0) scale(1); }
 
 .modal__video {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: var(--color-surface);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: #000;
   overflow: hidden;
 }
 .modal__video iframe,
@@ -442,17 +565,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  background: none;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  border-radius: 0;
 }
-/* override glass-card on modal body since modal is already glass */
-.modal__body.glass-card::before,
-.modal__body.glass-card::after { display: none; }
 
-.modal__title { font-size: var(--size-h3); }
+.modal__title { font-size: 3rem; line-height: 0.85; }
 
 .modal__desc {
   color: var(--color-text-muted);
@@ -472,26 +587,29 @@
   position: absolute;
   top: var(--space-sm);
   right: var(--space-sm);
-  background: rgba(8, 13, 24, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 50%;
-  width: 36px; height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 3;
+  width: 64px; height: 33px;
+  border-radius: var(--radius-pill);
+  background: var(--color-red);
+  border: none;
   cursor: pointer;
-  color: var(--color-text-muted);
+  color: #fff;
   font-size: 1rem;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
-  transition: color var(--duration-fast) var(--ease-default),
-              background var(--duration-fast) var(--ease-default);
+  font-weight: var(--weight-bold);
 }
-.modal__close:hover {
-  color: var(--color-text);
-  background: rgba(20, 35, 55, 0.8);
+.modal__close:hover { transform: scale(1.08); }
+
+/* ── YouTube Short player (js/components/shorts.js) ─────── */
+.modal--reel { max-width: 420px; }
+.modal__video--reel { aspect-ratio: 9 / 16; max-height: 70vh; margin: 0 auto; }
+.short__date {
+  font-size: 0.75rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
 }
+.short__also { font-size: 0.8rem; color: var(--color-text-muted); }
 
 /* ── Social Feed Card ─────────────────────────────────────── */
 
@@ -747,7 +865,8 @@
 
 .footer {
   padding: var(--space-lg) 0 var(--space-md);
-  border-top: 1px solid rgba(255,255,255,0.06);
+  background: var(--color-yellow);
+  color: var(--color-ink);
   position: relative;
   z-index: 1;
 }
@@ -766,17 +885,16 @@
 }
 .footer__socials a {
   font-family: var(--font-heading);
-  font-size: var(--size-small);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.06em;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--color-ink);
   transition: color var(--duration-fast) var(--ease-default);
 }
-.footer__socials a:hover { color: var(--color-accent); }
+.footer__socials a:hover { color: var(--color-red); }
 .footer__copy {
   font-size: var(--size-small);
-  color: var(--color-text-faint);
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
 }
 
 /* ── Scroll Indicator ────────────────────────────────────── */
@@ -790,10 +908,11 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  color: var(--color-text-muted);
-  font-family: var(--font-heading);
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   animation: scrollBounce 2.4s ease-in-out infinite;
   z-index: 2;
@@ -802,7 +921,8 @@
   content: '';
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--color-accent), transparent);
+  background: var(--color-yellow);
+  width: 3px;
 }
 @keyframes scrollBounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -811,6 +931,3 @@
 
 /* ── Mobile ───────────────────────────────────────────────── */
 
-@media (max-width: 640px) {
-  .nav-links { gap: var(--space-sm); }
-}

@@ -2,10 +2,6 @@
    PROJECTS PAGE
    ============================================================ */
 
-.projects-hero {
-  padding-top: calc(var(--nav-height) + var(--space-xl));
-  padding-bottom: var(--space-lg);
-}
 
 /* ── Filter bar ──────────────────────────────────────────── */
 

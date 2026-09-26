@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bipin Baby — Creative Technologist</title>
-  <meta name="description" content="Bipin Baby — Creative Technologist with 4+ years in real-time 3D, Unreal Engine 5, TouchDesigner, Python, digital twins, generative AI, and interactive installations. VR Production Manager at UCL Multimedia Anthropology Lab." />
+  <meta name="description" content="Bipin Baby — Creative Technologist with 4+ years in real-time 3D, Unreal Engine 5, TouchDesigner, Python, digital twins, generative AI, interactive installations and microelectronics (Arduino, ESP32). VR Production Manager at UCL Multimedia Anthropology Lab." />
+  <meta name="theme-color" content="#114339" />
 
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
@@ -27,178 +28,104 @@
 </head>
 <body>
 
-  <!-- ── Fixed 3D background canvas ────────────────────────
-       Lives outside all sections — position:fixed keeps it
-       visible as a background layer while the whole page scrolls.
-       Three.js renders the particles + glass mesh here.
-  ──────────────────────────────────────────────────────── -->
-  <canvas id="hero-canvas"></canvas>
-
-  <!-- ── Navigation ─────────────────────────────────────── -->
+  <!-- ── Navigation — the red pill (menu) ───────────────── -->
   <nav class="nav"></nav>
 
   <!-- ══════════════════════════════════════════════════════
-       SECTION 1 — HERO
-       Full-viewport text overlay above the fixed 3D canvas.
+       SECTION 1 — HERO   (Figma: "iPhone 17 - 1")
+       Yellow corner shape, yellow rounded frame, huge
+       Karantina name, roles + years in JetBrains Mono.
        ══════════════════════════════════════════════════════ -->
-  <section class="hero" id="top">
+  <section class="hero" id="top" data-face>
+    <img class="hero__shape" src="assets/shapes/hero-top.svg" alt="" aria-hidden="true" />
+    <div class="hero__frame" aria-hidden="true"></div>
 
-    <div class="hero__content container">
-      <h1 class="hero__name">Bipin Baby</h1>
-      <p class="hero__tagline">Creative Technologist · Real-Time 3D · VR Production · Technical Artist · AI Workflows · Photography</p>
-      <p class="hero__desc">
-        4+ years at the intersection of art and emerging technology —
-        real-time 3D production, virtual production, AI-assisted content,
-        and live data pipelines.
+    <div class="hero__content">
+      <h1 class="hero__name"><span>BIPIN</span> <span>BABY</span></h1>
+
+      <!-- ← EDIT YOUR ROLES HERE -->
+      <p class="hero__roles">
+        Creative Technologist<br />
+        Technical Artist<br />
+        XR Production Manager<br />
+        AI Workflows Specialist
       </p>
-      <div class="hero__cta">
-        <a href="projects.html" class="btn btn-primary">View Work</a>
-        <a href="contact.html" class="btn btn-ghost">Get in Touch</a>
-      </div>
-    </div>
 
-    <div class="scroll-indicator">Scroll</div>
+      <p class="hero__years">
+        <strong>4+</strong>
+        <span>years experience</span>
+      </p>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════════
-       SECTION 2 — FEATURED WORK
-       Shows projects marked featured:true in data/projects.js
+       SECTION 2 — ABOUT ME   (Figma: "iPhone 17 - 2")
+       Title + orange wave + bio. The long-necked creature is
+       the fixed page scene (js/components/scene.js).
        ══════════════════════════════════════════════════════ -->
-  <section class="featured section">
-    <div class="container">
+  <section class="about-me" id="about">
+    <h2 class="section-title about-me__title">About me</h2>
+    <div class="wave about-me__wave" aria-hidden="true"></div>
 
-      <div class="home-section-header" data-animate="fade-up">
-        <p class="section-label">Selected Work</p>
-        <h2 class="section-title">Featured Projects</h2>
-        <a href="projects.html" class="btn btn-ghost">All Projects →</a>
+    <!-- Portrait (desktop) — fills the space between the bio and the creature -->
+    <figure class="about-me__portrait">
+      <img src="assets/images/about/portrait.jpeg" alt="Bipin Baby" loading="lazy" />
+    </figure>
+
+    <div class="about-me__body">
+      <!-- ← EDIT YOUR BIO HERE -->
+      <p>
+        I am a Creative Technologist and a Multimedia Artist with 4+ years spanning from
+        real-time 3D production, VR production, AI-assisted content creation, graphic design
+        and Photography. I have led a 15-person team at UCL to deliver a VR cultural
+        preservation experience in UE5. Currently building audio reactive systems, digital
+        twin systems with live data pipelines and computer vision using Python,
+        TouchDesigner and Unreal Engine 5. I also work with microelectronics like
+        Arduino and ESP32 to bring physical sensors and controllers into those visuals.
+      </p>
+      <div class="about-me__cta">
+        <a href="about.html" class="btn btn-primary">Full profile</a>
+        <a href="contact.html" class="btn btn-ghost">Get in touch</a>
       </div>
-
-      <!-- Carousel: JS renders cards into .featured__grid (the track) -->
-      <!-- Static cards below are pre-rendered for ATS and non-JS crawlers.
-           carousel.js and projectGrid.js replace this content at runtime. -->
-      <div class="carousel" id="featured-carousel">
-        <button class="carousel__btn carousel__btn--prev" aria-label="Previous">‹</button>
-        <div class="carousel__track featured__grid">
-
-          <article class="project-card glass-card" data-category="creative-tech">
-            <div class="project-card__body">
-              <h3 class="project-card__title">Three.JS Audio Visualizer</h3>
-              <p class="project-card__desc">Interactive real-time web audio visualizer built with Three.js and GLSL shaders, driven by the Web Audio API.</p>
-              <p>Three.JS · GLSL · Shaders · Web Audio API</p>
-              <a href="https://3daudiovis.netlify.app/" target="_blank" rel="noopener">View Live ↗</a>
-            </div>
-          </article>
-
-          <article class="project-card glass-card" data-category="creative-tech">
-            <div class="project-card__body">
-              <h3 class="project-card__title">Interactive Robot Arm — Unreal Engine + MediaPipe</h3>
-              <p class="project-card__desc">Robot arm in Blender rigged with UE5 IK Control Rig, driven by live hand tracking via MediaPipe and Python over OSC.</p>
-              <p>Unreal Engine 5 · Python · MediaPipe · OSC · Blender</p>
-              <a href="https://github.com/bipinbaby/robot-interactive-with-unreal-and-mediapipe" target="_blank" rel="noopener">View on GitHub ↗</a>
-            </div>
-          </article>
-
-          <article class="project-card glass-card" data-category="creative-tech">
-            <div class="project-card__body">
-              <h3 class="project-card__title">Digital Twin — Office Floor Twin</h3>
-              <p class="project-card__desc">Real-time digital twin in UE5 visualising live temperature, occupancy, and energy data via a Python backend as interactive 3D overlays.</p>
-              <p>Unreal Engine 5 · Python · REST API · Digital Twin · Blender</p>
-              <a href="https://github.com/bipinbaby/smart-building-digital-twin" target="_blank" rel="noopener">View on GitHub ↗</a>
-            </div>
-          </article>
-
-          <article class="project-card glass-card" data-category="creative-tech">
-            <div class="project-card__body">
-              <h3 class="project-card__title">TouchDesigner: OSC Sensor Simulation</h3>
-              <p class="project-card__desc">Generative system driven by OSC sensor values with threshold-triggered colour shifts for live data visualisation.</p>
-              <p>TouchDesigner · Python · OSC</p>
-            </div>
-          </article>
-
-          <article class="project-card glass-card" data-category="creative-tech">
-            <div class="project-card__body">
-              <h3 class="project-card__title">TouchDesigner: Audio Reactive Visuals</h3>
-              <p class="project-card__desc">Audio-reactive visual system mapping frequency bands to real-time particle and geometry behaviour using TouchDesigner CHOPs.</p>
-              <p>TouchDesigner · Audio-Reactive · CHOPs</p>
-            </div>
-          </article>
-
-          <article class="project-card glass-card" data-category="3d-design">
-            <div class="project-card__body">
-              <h3 class="project-card__title">Procedural 3D Technical Art</h3>
-              <p class="project-card__desc">Procedural shaders, material networks, and generative geometry using Blender, Unreal Engine, Houdini, and Substance Painter.</p>
-              <p>Blender · Unreal Engine 5 · Houdini · Substance Painter</p>
-              <a href="https://bipinbabyvarghese.artstation.com/" target="_blank" rel="noopener">View on ArtStation ↗</a>
-            </div>
-          </article>
-
-        </div>
-        <button class="carousel__btn carousel__btn--next" aria-label="Next">›</button>
-        <div class="carousel__dots"></div>
-      </div>
-
     </div>
   </section>
-
-  
 
   <!-- ══════════════════════════════════════════════════════
-       SECTION 3 — ABOUT TEASER
-       Brief intro with a link to the full About page.
-       Edit the text directly in the HTML below.
+       SECTION 3 — SELECTED WORKS   (Figma: "iPhone 17 - 3"
+       + "carousel" frame)
+       Featured projects (featured:true in data/projects.js) on
+       the 3D Blender carousel. Scroll turns the wheel.
+       js/components/projectWheel.js builds the list below —
+       the static items here are for search engines / no-JS.
        ══════════════════════════════════════════════════════ -->
-  <section class="about-teaser section">
-    <div class="container">
+  <section class="orbit" id="work" aria-label="Selected works">
+    <div class="orbit__sticky">
 
-      <div class="home-section-header" data-animate="fade-up">
-        <p class="section-label">About</p>
-        <h2 class="section-title">Bridging the gap between<br />physical and digital.</h2>
-      </div>
+      <canvas class="orbit__canvas" aria-hidden="true"></canvas>
 
-      <div class="about-teaser__body" data-animate="fade-up" data-delay="100">
-        <!-- ← EDIT YOUR BIO SUMMARY HERE -->
-        <p>
-          Creative Technologist and Multimedia Artist with 4+ years spanning real-time 3D production,
-          VR production, AI-assisted content creation, graphic design and Photography. Led a 15-person
-          team at UCL to deliver a VR cultural preservation experience in UE5.
-          Currently building digital twin systems with live data pipelines
-          and computer vision using Python, TouchDesigner and Unreal Engine 5.
-        </p>
-      </div>
+      <header class="orbit__header">
+        <h2 class="section-title">Selected Works</h2>
+        <a href="projects.html" class="orbit__all">All projects <span aria-hidden="true">→</span></a>
+        <span class="orbit__count">01 / 07</span>
+        <div class="wave orbit__wave" aria-hidden="true"></div>
+      </header>
 
-      <div class="about-teaser__cards" data-animate="stagger" data-delay="150">
-
-        <div class="about-teaser__panel glass-card">
-          <p class="section-label">Currently seeking</p>
-          <h3>Creative Technology Roles</h3>
-          <!-- ← EDIT WHAT YOU'RE AVAILABLE FOR HERE -->
-          <p>
-            Interactive installations · Digital twins ·
-            Real-time visualisation · Unreal Engine pipelines ·
-            TouchDesigner systems · Collaboration & research. Graphic Design · Photography 
-          </p>
-          <a href="contact.html" class="btn btn-primary">Get in Touch →</a>
-        </div>
-
-        <div class="about-teaser__panel glass-card">
-          <p class="section-label">Background</p>
-          <h3>4+ Years of Experience</h3>
-          <p>
-            VR Production Manager at UCL · Graphic Designer at Bajaj Auto ·
-            Freelance 3D & VFX Artist · MA Game Arts, Manchester Metropolitan ·
-            BSc Animation, Amity University.
-          </p>
-          <a href="about.html" class="btn btn-ghost">Full Profile →</a>
-        </div>
-
+      <div class="orbit__rail">
+        <ol class="orbit__list">
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=gaussian-splat-tool"><h3 class="orbit__title">Gaussian Splat Tool For Unreal Engine</h3><p class="orbit__desc">A custom pipeline exporting photorealistic 4 MB Gaussian Splats from Unreal Engine for real-time web embedding.</p></a></li>
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=threejs"><h3 class="orbit__title">Three.JS Audio Visualizer</h3><p class="orbit__desc">Interactive real-time web audio visualizer built with Three.js and GLSL shaders, driven by the Web Audio API.</p></a></li>
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=mediapipe-unreal"><h3 class="orbit__title">Interactive Robot Arm — Unreal Engine + MediaPipe</h3><p class="orbit__desc">Robot arm rigged with UE5 IK Control Rig, driven by live hand tracking via MediaPipe and Python over OSC.</p></a></li>
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=building-twin"><h3 class="orbit__title">Digital Twin — Office Floor Twin</h3><p class="orbit__desc">Real-time digital twin in UE5 visualising live temperature, occupancy and energy data via a Python backend.</p></a></li>
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=td-installation"><h3 class="orbit__title">TouchDesigner: OSC Sensor Simulation</h3><p class="orbit__desc">Generative system driven by OSC sensor values with threshold-triggered colour shifts.</p></a></li>
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=td-audio-reactive"><h3 class="orbit__title">TouchDesigner: Audio Reactive</h3><p class="orbit__desc">Audio-reactive visuals mapping frequency bands to real-time particle and geometry behaviour.</p></a></li>
+          <li class="orbit__item"><a class="orbit__link" href="project.html?slug=procedural-3d"><h3 class="orbit__title">Procedural 3D Technical Art</h3><p class="orbit__desc">Procedural shaders, material networks and generative geometry in Blender, Unreal Engine, Houdini and Substance.</p></a></li>
+        </ol>
       </div>
 
     </div>
   </section>
 
- 
-
-  <!-- Modal for featured project cards -->
+  <!-- Modal (project videos + Shorts) -->
   <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal" id="modal" style="position:relative;"></div>
   </div>
@@ -210,44 +137,24 @@
        SCRIPTS
        ══════════════════════════════════════════════════════ -->
   <script type="module">
-    import { initNav, initFooter }              from './js/components/nav.js';
-    import { initScrollAnimations }             from './js/components/scrollAnimations.js';
-    import { initProjectGrid, initModal }       from './js/components/projectGrid.js';
-    import { initSocialFeed }                   from './js/components/socialFeed.js';
-    import { initCarousel }                     from './js/components/carousel.js';
-    import { initScene, startRenderLoop }       from './js/three/scene.js';
-    import { initParticles, updateParticles }   from './js/three/particles.js';
-    import { initHeroObject, updateHeroObject } from './js/three/heroObject.js';
+    import { initNav, initFooter, initFaces } from './js/components/nav.js';
+    import { initScene }                      from './js/components/scene.js';
+    import { initScrollAnimations }           from './js/components/scrollAnimations.js';
+    import { initModal }                      from './js/components/projectGrid.js';
+    import { initProjectWheel }               from './js/components/projectWheel.js';
+    import { initWaves }                      from './js/components/wave.js';
 
-    // Nav + footer + scroll animations
+    // Nav (red pill) + footer + the face (bar + eyes) + page scene + scroll animations
     initNav();
     initFooter();
+    initFaces();
+    initScene('home', { awayWhile: '.hero' });   // lower-right creature (hidden behind the hero on phones)
     initScrollAnimations();
-
-    // Featured projects carousel
-    initProjectGrid('.featured__grid', true);
     initModal();
-    initCarousel('#featured-carousel');
+    initWaves();          // the moving orange line under each heading
 
-    // Social feed carousel — MutationObserver in carousel.js
-    // rebuilds dots automatically once async cards arrive
-    initSocialFeed('artstation');
-    initCarousel('#feed-carousel');
-
-    // Feed tab switching
-    document.querySelectorAll('.live-feed__tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        initSocialFeed(tab.dataset.source);
-        const track = document.querySelector('.live-feed__grid');
-        if (track) track.scrollLeft = 0;
-      });
-    });
-
-    // Three.js hero
-    initScene('hero-canvas');
-    initParticles();
-    initHeroObject();
-    startRenderLoop([updateParticles, updateHeroObject]);
+    // Selected Works — projects + YouTube Shorts on the Blender ring rig
+    initProjectWheel('#work');
   </script>
 
 </body>

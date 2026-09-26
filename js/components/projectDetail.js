@@ -8,6 +8,7 @@
 // ============================================================
 
 import { PROJECTS } from '../../data/projects.js';
+import { loadShorts, openShort, fmtDate, escapeHtml, cleanTitle, postParagraphs } from './shorts.js';
 
 export function initProjectDetail() {
   const slug    = new URLSearchParams(window.location.search).get('slug');
@@ -100,6 +101,15 @@ export function initProjectDetail() {
        </a>`
     : '';
 
+  // ── Linked YouTube Shorts (project.shorts = [video IDs]) ────
+  // Filled in after the page renders, once data/social.json loads.
+  const shortsHTML = (project.shorts && project.shorts.length)
+    ? `<section class="project-shorts" aria-label="Process clips">
+         <h2 class="project-shorts__title">Process clips</h2>
+         <div class="project-shorts__grid"></div>
+       </section>`
+    : '';
+
   // ── Assemble page ──────────────────────────────────────────
   main.innerHTML = `
     <div class="project-detail__hero">${heroHTML}</div>
@@ -119,6 +129,7 @@ export function initProjectDetail() {
 
         <div class="project-detail__body">
           <div class="project-detail__description">${descHTML}</div>
+          ${shortsHTML}
           ${galleryHTML}
           ${linkHTML}
         </div>
@@ -126,4 +137,33 @@ export function initProjectDetail() {
       </div>
     </div>
   `;
+
+  if (shortsHTML) renderProjectShorts(project, main.querySelector('.project-shorts__grid'));
+}
+
+// Portrait cards for the project's Shorts — click to play in the modal
+async function renderProjectShorts(project, grid) {
+  const byId  = new Map((await loadShorts()).map(s => [s.id, s]));
+  const items = project.shorts.map(id => byId.get(id) ?? {
+    // Not synced yet — still playable straight from YouTube
+    id, title: project.title, date: '',
+    url: `https://www.youtube.com/shorts/${id}`,
+    embedUrl: `https://www.youtube.com/embed/${id}`,
+    thumb: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+  });
+  // Each clip: portrait card on the left, the text you wrote for the post beside it
+  grid.innerHTML = items.map((it, i) => `
+    <article class="project-clip">
+      <button class="project-short" type="button" data-i="${i}" aria-label="Play: ${escapeHtml(cleanTitle(it.title))}">
+        <img src="${it.thumb}" alt="" loading="lazy" />
+        <span class="project-short__play" aria-hidden="true">▶</span>
+      </button>
+      <div class="project-clip__text">
+        <p class="project-clip__meta">${it.date ? fmtDate(it.date) + ' · ' : ''}YouTube Short</p>
+        <h3 class="project-clip__title">${escapeHtml(cleanTitle(it.title))}</h3>
+        ${postParagraphs(it.description).map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+      </div>
+    </article>`).join('');
+  grid.querySelectorAll('.project-short').forEach(b =>
+    b.addEventListener('click', () => openShort(items[+b.dataset.i])));
 }

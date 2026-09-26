@@ -2,10 +2,6 @@
    ABOUT PAGE
    ============================================================ */
 
-.about-hero {
-  padding-top: calc(var(--nav-height) + var(--space-xl));
-  padding-bottom: var(--space-lg);
-}
 
 /* ── Photo + intro layout ────────────────────────────────── */
 
@@ -74,6 +70,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+}
+
+.about-bio__lead {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: var(--size-h3);
+  line-height: 0.95;
+  color: var(--color-yellow);
 }
 
 .about-bio p {

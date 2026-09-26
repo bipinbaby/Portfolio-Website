@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Bipin Baby | Creative Technologist</title>
-  <meta name="description" content="Bipin Baby — Creative Technologist. VR Production Manager at UCL Multimedia Anthropology Lab (May 2024–Present). Skills: Unreal Engine 5, TouchDesigner, Python, MediaPipe, digital twins, generative AI. MA Game Arts, Manchester Metropolitan University." />
+  <meta name="description" content="Bipin Baby — Creative Technologist. VR Production Manager at UCL Multimedia Anthropology Lab (May 2024–Present). Skills: Unreal Engine 5, TouchDesigner, Python, MediaPipe, digital twins, generative AI, microelectronics (Arduino, ESP32). MA Game Arts, Manchester Metropolitan University." />
 
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
@@ -20,11 +20,13 @@
 
   <nav class="nav"></nav>
 
-  <main class="about-hero section">
+  <main class="page about-page">
+    <!-- Page title + wave (Figma: iPhone 17 - 4/5/6 and the 1440 frames) -->
+    <header class="page-head">
+      <h1 class="section-title">About</h1>
+      <div class="wave" aria-hidden="true"></div>
+    </header>
     <div class="container">
-
-      <!-- ── Page label ──────────────────────────────────── -->
-      <p class="section-label" data-animate="fade-up">About</p>
 
       <!-- ── Two-column layout ───────────────────────────── -->
       <div class="about-intro">
@@ -48,9 +50,9 @@
         <!-- ── Bio & content ─────────────────────────────── -->
         <div class="about-bio">
 
-          <h1 class="section-title" data-animate="fade-up">
+          <h2 class="about-bio__lead" data-animate="fade-up">
             4+ years at the intersection<br />of art and emerging technology.
-          </h1>
+          </h2>
 
           <div data-animate="fade-up" data-delay="100">
             <p>
@@ -73,6 +75,14 @@
             <p>
               Currently building advanced digital twin systems, demonstrating hands-on expertise
               in live data pipelines, computer vision, and 3D content creation.
+            </p>
+          </div>
+
+          <div data-animate="fade-up" data-delay="250">
+            <p>
+              I also work with microelectronics: Arduino and ESP32 boards, sensors and
+              controllers, wiring physical input straight into real-time visuals in
+              TouchDesigner and Unreal Engine.
             </p>
           </div>
 
@@ -251,6 +261,17 @@
           </div>
 
           <div class="skill-card glass-card">
+            <p class="skill-card__label">Microelectronics & Physical Computing</p>
+            <div class="skill-card__items">
+              <span class="tag">Arduino (UNO R4 WiFi)</span>
+              <span class="tag">ESP32</span>
+              <span class="tag">Sensors (ultrasonic, joystick)</span>
+              <span class="tag">Serial &amp; OSC</span>
+              <span class="tag">PlatformIO / C++</span>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card">
             <p class="skill-card__label">Collaboration & Production</p>
             <div class="skill-card__items">
               <span class="tag">Team Leadership (15)</span>
@@ -268,10 +289,15 @@
   <footer class="footer"></footer>
 
   <script type="module">
-    import { initNav, initFooter }    from './js/components/nav.js';
+    import { initNav, initFooter, initFaces } from './js/components/nav.js';
     import { initScrollAnimations }   from './js/components/scrollAnimations.js';
+    import { initScene }              from './js/components/scene.js';
+    import { initWaves }              from './js/components/wave.js';
     initNav();
     initFooter();
+    initFaces();
+    initScene('about');               // the rabbit, fixed in the lower-right corner
+    initWaves();
     initScrollAnimations();
   </script>
 

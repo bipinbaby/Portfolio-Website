@@ -1,77 +1,80 @@
 /* ============================================================
    DESIGN TOKENS — change colors, fonts, and spacing here.
    These variables are used everywhere. Edit once, updates everywhere.
+
+   Source: Figma "PORTFOLIO" (file XRj5AKP3PuU4Kkj8sEzpnJ)
+   Bold, flat and playful — deep green stage, yellow frames
+   and "creature" shapes, orange waves, one red pill.
+   Headlines: Karantina · Everything else: JetBrains Mono
    ============================================================ */
 
 :root {
+  /* Left page gutter. Desktop clears the yellow side bars (33 + 79 px). */
+  --edge: clamp(1rem, 5vw, 5rem);
 
-  /* ── Colors ─────────────────────────────────────────────── */
-  --color-bg:           #080d18;
-  --color-surface:      #0f1824;
-  --color-surface-2:    #162030;
+  /* ── Colors (exact Figma values) ────────────────────────── */
+  --color-bg:           #114339;   /* the green stage */
+  --color-bg-deep:      #0e2a24;   /* darker green (alt hero frame) */
+  --color-yellow:       #ffcc00;   /* frames, eyes, creature */
+  --color-orange:       #ff8d28;   /* waves, blobs */
+  --color-red:          #ff383c;   /* the pill (menu button) */
+  --color-ink:          #000000;   /* pupils */
+  --color-text:         #ffffff;
+  --color-text-muted:   rgba(255, 255, 255, 0.72);
+  --color-text-faint:   rgba(255, 255, 255, 0.4);
+  --color-placeholder:  #d9d9d9;   /* empty card (Figma placeholder) */
 
-  /* ── iOS 26 Liquid Glass System ─────────────────────────── */
-  /* The glass material is built from multiple layers:         */
-  /*  1. A very light, saturated backdrop blur                 */
-  /*  2. A bright top-edge specular highlight                  */
-  /*  3. A prismatic/rainbow inner border shimmer              */
-  /*  4. A deep drop shadow for elevation                      */
+  /* Older component names → mapped onto the new palette
+     (about / projects / contact pages still use these) */
+  --color-surface:      #0e2a24;
+  --color-surface-2:    #185446;
+  --color-accent:       var(--color-yellow);
+  --color-accent-soft:  var(--color-yellow);
+  --color-accent-dim:   #b38f00;
+  --color-line:         rgba(255, 204, 0, 0.35);
+  --glass-bg:           #0e2a24;
+  --glass-blur:         none;
+  --glass-border:       var(--color-yellow);
 
-  --glass-bg:           rgba(190, 218, 240, 0.07);
-  --glass-blur:         blur(52px) saturate(180%) brightness(1.08);
-  --glass-border:       rgba(255, 255, 255, 0.14);
-
-  /* specular highlight colours (top edge "sheen") */
-  --glass-shine-strong: rgba(255, 255, 255, 0.45);
-  --glass-shine-soft:   rgba(255, 255, 255, 0.08);
-  --glass-side-left:    rgba(255, 255, 255, 0.12);
-  --glass-side-right:   rgba(255, 255, 255, 0.04);
-
-  /* prismatic shimmer tones — cold icy prism */
-  --prism-1: rgba(140, 195, 230, 0.55);
-  --prism-2: rgba(200, 232, 255, 0.80);
-  --prism-3: rgba(160, 215, 250, 0.45);
-  --prism-4: rgba(100, 170, 220, 0.60);
-  --prism-5: rgba(220, 240, 255, 0.50);
-
-  --color-accent:       #6aacce;
-  --color-accent-dim:   #3d7a9e;
-  --color-text:         #d8e8f2;
-  --color-text-muted:   #5d7a90;
-  --color-text-faint:   #2e4558;
+  /* ── Frames ─────────────────────────────────────────────── */
+  --frame-width:        6px;       /* yellow outline on panels (Figma: 6) */
+  --frame-radius:       87px;      /* hero frame corner (Figma: 87) */
 
   /* ── Typography ─────────────────────────────────────────── */
-  --font-heading: 'Syne', sans-serif;
-  --font-body:    'Outfit', sans-serif;
+  --font-heading: 'Karantina', 'Arial Narrow', sans-serif;
+  --font-body:    'JetBrains Mono', ui-monospace, monospace;
 
-  --size-hero:    clamp(3rem, 9vw, 7.5rem);
-  --size-h1:      clamp(2rem, 5vw, 3.5rem);
-  --size-h2:      clamp(1.4rem, 3vw, 2rem);
-  --size-h3:      clamp(1.1rem, 2vw, 1.4rem);
+  --size-hero:    clamp(12rem, 22vw, 26rem);   /* BIPIN BABY (Figma: 256px on a 402 frame) */
+  --size-h1:      clamp(4rem, 9vw, 8rem);
+  --size-h2:      clamp(4rem, min(8vw, 13svh), 7.5rem);    /* section titles (Figma: 64px on phone) */
+  --size-h3:      clamp(1.8rem, 3vw, 2.6rem);
   --size-body:    1rem;
-  --size-small:   0.85rem;
+  --size-lead:    clamp(1.05rem, 1.6vw, 1.25rem);  /* bio text (Figma: 20px) */
+  --size-small:   0.8rem;
 
-  --weight-bold:   700;
-  --weight-medium: 500;
+  --weight-bold:   800;
+  --weight-medium: 700;
   --weight-normal: 400;
 
-  --leading-tight:  1.15;
-  --leading-normal: 1.6;
+  --leading-display: 0.737;   /* Karantina line height from Figma */
+  --leading-tight:   0.85;
+  --leading-normal:  1.53;    /* body line height from Figma */
 
   /* ── Spacing ─────────────────────────────────────────────── */
   --space-xs:  0.5rem;
   --space-sm:  1rem;
   --space-md:  2rem;
   --space-lg:  4rem;
-  --space-xl:  8rem;
+  --space-xl:  7rem;
 
   /* ── Layout ──────────────────────────────────────────────── */
   --max-width:     1200px;
-  --nav-height:    70px;
-  --radius-sm:     6px;
-  --radius-md:     16px;
-  --radius-lg:     24px;
-  --radius-xl:     32px;
+  --nav-height:    80px;
+  --radius-sm:     10px;
+  --radius-md:     28px;       /* card corner (Figma: 28) */
+  --radius-lg:     44px;
+  --radius-xl:     84px;
+  --radius-pill:   999px;
 
   /* ── Transitions ─────────────────────────────────────────── */
   --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -80,4 +83,8 @@
   --duration-fast:   150ms;
   --duration-normal: 300ms;
   --duration-slow:   600ms;
+}
+
+@media (min-width: 900px) {
+  :root { --edge: max(140px, 5vw); }
 }

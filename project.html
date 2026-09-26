@@ -36,14 +36,24 @@
   -->
   <main id="project-detail-main" class="project-detail"></main>
 
+  <!-- Modal — plays the project's YouTube Shorts -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal" id="modal" style="position:relative;"></div>
+  </div>
+
   <footer class="footer"></footer>
 
   <script type="module">
-    import { initNav, initFooter }  from './js/components/nav.js';
+    import { initNav, initFooter, initFaces } from './js/components/nav.js';
     import { initProjectDetail }    from './js/components/projectDetail.js';
+    import { initScene }            from './js/components/scene.js';
+    import { initModal }            from './js/components/projectGrid.js';
 
     initNav();
     initFooter();
+    initFaces();
+    initScene('projects');
+    initModal();
     initProjectDetail();
   </script>
 

@@ -1,211 +1,484 @@
 /* ============================================================
-   HOME PAGE — hero + scrollable sections below
+   HOME PAGE — hero → about me → selected works → latest posts
+   Built from the Figma "PORTFOLIO" phone frames (402 × 874).
+   Positions are converted to % of that frame so the same
+   composition scales up on desktop.
    ============================================================ */
 
-/* ── Hero ────────────────────────────────────────────────── */
+/* ============================================================
+   HERO   (Figma: iPhone 17 - 1)
+   ============================================================ */
 
 .hero {
   position: relative;
-  z-index: 1;           /* above the fixed canvas */
-  width: 100%;
-  height: 100vh;
-  min-height: 600px;
+  min-height: max(100svh, 680px);
+  overflow: hidden;
   display: flex;
-  align-items: center;
   justify-content: center;
+  padding: 9.5svh 1rem 13svh;     /* name starts at y=83 of 874 */
 }
 
-#hero-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+/* Yellow corner shape at the top (Vector 3) */
+.hero__shape {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
-  height: 100%;
-  z-index: 0;           /* canvas layer — sections stack at z-index: 1+ */
-  pointer-events: none; /* scroll/click passes through to the page */
+  height: min(62vw, 34svh);        /* 249 / 402 on phones, capped on desktop */
+  object-fit: fill;
+  pointer-events: none;
 }
 
-/* No fog gradient needed — the fixed Three.js canvas provides a
-   seamless dark background across all sections. A CSS gradient
-   here would create a hard seam at the hero/section boundary. */
+/* Yellow rounded outline behind the text (Rectangle 2: 6px, r=87) */
+.hero__frame {
+  position: absolute;
+  top: 19svh;                      /* y=167 of 874 */
+  bottom: 11svh;                   /* 874 - 777 */
+  left:  max(15px, calc((100% - 1100px) / 2));
+  right: max(15px, calc((100% - 1100px) / 2));
+  border: var(--frame-width) solid var(--color-yellow);
+  border-radius: var(--frame-radius);
+  background: var(--color-bg);     /* the page scene (creature + wave) passes behind the card */
+  pointer-events: none;
+}
 
 .hero__content {
   position: relative;
-  z-index: 2;
-  padding: 0 var(--space-md);
-  padding-top: var(--nav-height);
-  max-width: 700px;
-  text-align: center;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
+/* BIPIN / BABY — Karantina 256px on the 402 frame */
 .hero__name {
   font-family: var(--font-heading);
-  font-size: var(--size-hero);
-  font-weight: 800;
-  line-height: 1.0;
-  color: var(--color-text);
-  letter-spacing: -0.02em;
-  text-shadow: 0 0 80px rgba(8, 13, 24, 0.85);
-  white-space: nowrap;
+  font-weight: 400;
+  font-size: min(63.7vw, 32svh);
+  line-height: var(--leading-display);
+  letter-spacing: 0;
+  color: #fff;
+}
+.hero__name span { display: block; }
+
+/* Roles — JetBrains Mono ExtraBold 20px */
+.hero__roles {
+  margin-top: 1.9rem;
+  font-weight: var(--weight-bold);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  line-height: 1.3;
+  color: #fff;
 }
 
-.hero__tagline {
-  margin-top: var(--space-sm);
-  font-family: var(--font-heading);
-  font-size: clamp(0.85rem, 2vw, 1.1rem);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-}
-
-.hero__desc {
-  margin-top: var(--space-sm);
-  max-width: 480px;
-  color: var(--color-text-muted);
-  font-size: 1rem;
-  line-height: var(--leading-normal);
-  text-align: center;
-}
-
-.hero__cta {
+/* 4+ years experience */
+.hero__years {
+  margin-top: 0.6rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: var(--weight-bold);
+  color: #fff;
+}
+.hero__years strong {
+  font-size: clamp(3.4rem, 5vw, 4.5rem);   /* Figma: 64px */
+  line-height: 1.05;
+}
+.hero__years span {
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem); /* Figma: 24px, tight leading */
+  line-height: 0.85;
+  max-width: 9ch;
+}
+
+/* ============================================================
+   ABOUT ME   (Figma: iPhone 17 - 2)
+   Title + wave + bio. The creature is the fixed page scene
+   (.scene in components.css), so this section only has to keep
+   the text clear of its neck on the right.
+   ============================================================ */
+
+.about-me {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  padding: 72px 0 0;
+}
+
+.about-me__title {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 0 28px;              /* Figma: x=28 */
+}
+
+/* Orange wave under the title (animated, js/components/wave.js) */
+.about-me__wave {
+  position: relative;
+  width: 100%;
+}
+
+/* Bio — JetBrains Mono Regular 20px, line-height 1.53 */
+.about-me__body {
+  position: relative;
+  z-index: 2;
+  padding: 34px 14% 5rem 24px;     /* right: clears the creature's neck */
+  max-width: 100%;
+}
+.about-me__body p {
+  font-size: var(--size-lead);
+  line-height: var(--leading-normal);
+  color: #fff;
+}
+.about-me__cta {
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-sm);
   margin-top: var(--space-md);
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
-/* ── Centred section header (used on all home sections) ──────
-   Stacks label → title → optional CTA all centred.           */
-
-.home-section-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+@media (max-width: 480px) {
+  .about-me__body p { font-size: 0.86rem; line-height: 1.5; }
+  .about-me__cta { gap: 0.6rem; }
+  .about-me__cta .btn { padding: 0.6rem 1rem; font-size: 0.8rem; }
 }
 
-.home-section-header .section-title {
-  margin-bottom: 0;
-}
+/* Portrait: desktop only (phones have no spare room) */
+.about-me__portrait { display: none; }
 
-/* ── Featured Work section ────────────────────────────────── */
-
-.featured {
-  padding: var(--space-xl) 0;
-}
-
-/* .featured__grid is now a .carousel__track — flex layout comes
-   from .carousel__track in components.css. No grid overrides needed. */
-
-/* ── Live Feed section ────────────────────────────────────── */
-
-.live-feed {
-  padding: var(--space-xl) 0;
-}
-
-.live-feed__tabs {
-  display: flex;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
-  justify-content: center;   /* centred tabs */
-  flex-wrap: wrap;
-}
-
-/* .live-feed__grid is now a .carousel__track — layout from components.css */
-
-/* Loading skeleton — rendered inside the carousel track */
-.feed-skeleton {
-  aspect-ratio: 1;
+.about-me__portrait {
+  --portrait-w: clamp(240px, 19vw, 360px);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  width: var(--portrait-w);
+  aspect-ratio: 3 / 4;
+  border: var(--frame-width) solid var(--color-yellow);
   border-radius: var(--radius-md);
-  background: linear-gradient(
-    90deg,
-    var(--color-surface) 0%,
-    var(--color-surface-2) 50%,
-    var(--color-surface) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.6s infinite;
-  /* Match carousel card width */
-  flex: 0 0 var(--carousel-card-w, 270px);
-  width: var(--carousel-card-w, 270px);
+  overflow: hidden;
+  transform: rotate(-4deg);
+  transition: transform var(--duration-slow) var(--ease-spring);
 }
+.about-me__portrait:hover { transform: rotate(0deg) scale(1.03); }
+.about-me__portrait img { width: 100%; height: 100%; object-fit: cover; }
 
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+@media (min-width: 900px) {
+  /* Centred in the empty band between the bio (left) and the
+     creature's neck (right, ~12vw from the edge) */
+  .about-me__portrait {
+    --bio-end: calc(var(--edge) + min(60ch, 50vw));
+    display: block;
+    left: calc(var(--bio-end) + (100vw - var(--bio-end) - 22vw) / 2 - var(--portrait-w) / 2);
+    top: 220px;
+  }
 
-.feed-error {
-  /* Error message spans a single "card" slot in the carousel */
-  flex: 0 0 min(520px, 80vw);
-  text-align: center;
-  color: var(--color-text-faint);
-  font-family: var(--font-heading);
-  font-size: var(--size-small);
-  padding: var(--space-lg);
-  scroll-snap-align: center;
-}
-
-/* ── About teaser ─────────────────────────────────────────── */
-
-.about-teaser {
-  padding: var(--space-xl) 0;
-}
-
-/* Centred bio paragraph */
-.about-teaser__body {
-  max-width: 640px;
-  margin: 0 auto var(--space-lg);
-  text-align: center;
-  color: var(--color-text-muted);
-  font-size: 1.05rem;
-  line-height: var(--leading-normal);
-}
-
-/* Two glass cards side-by-side, centred */
-.about-teaser__cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 420px));
-  gap: var(--space-md);
-  justify-content: center;
-}
-
-.about-teaser__panel {
-  padding: var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  align-items: center;
-  text-align: center;
-}
-
-.about-teaser__panel h3 {
-  font-size: var(--size-h3);
-}
-
-.about-teaser__panel p {
-  color: var(--color-text-muted);
-  line-height: var(--leading-normal);
-  font-size: var(--size-small);
-}
-
-.about-teaser__panel .section-label {
-  margin-bottom: 0;
-}
-
-/* ── Responsive ───────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-  .about-teaser__cards {
-    grid-template-columns: 1fr;
+  .about-me { min-height: max(100svh, 820px); padding-top: 96px; }
+  .about-me__title { margin-left: var(--edge); }
+  .about-me__body {
+    max-width: calc(var(--edge) + min(60ch, 50vw));
+    padding: 1.5rem 0 8rem var(--edge);
   }
 }
 
-/* Grid breakpoints removed — carousels handle mobile layout in components.css */
+/* ============================================================
+   SELECTED WORKS  (.orbit)  — Figma: iPhone 17 - 3 + carousel
+   Tall section + sticky stage. JS sets --orbit-stops (number
+   of projects) and --orbit-per-card (screens of scroll each).
+   ============================================================ */
+
+.orbit {
+  position: relative;
+  z-index: 1;
+  height: calc(100vh + var(--orbit-stops, 7) * var(--orbit-per-card, 0.6) * 100vh);
+}
+
+.orbit__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr minmax(320px, 440px);
+  grid-template-rows: auto 1fr auto;
+  padding: 116px clamp(1rem, 5vw, 5rem) 3rem var(--edge);   /* top: clears the face + pill */
+  column-gap: var(--space-lg);
+}
+
+.orbit__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  touch-action: pan-y;
+}
+/* Desktop: the card lives in the left part, the text on the right. */
+@media (min-width: 901px) {
+  /* Text + button stay above the creature in the lower-right corner */
+  .orbit__sticky { padding-bottom: clamp(2.5rem, 30svh - 120px, 30svh); }
+  .orbit__rail   { padding-right: clamp(40px, 5vw, 90px); }   /* clears the creature's neck */
+  .orbit__canvas {
+    /* Runs to the screen edge so leaving cards can glide off it;
+       projectWheel.js shifts the view so the resting card still
+       lines up with the title margin. */
+    left: 0;
+    width: calc(100% - min(440px, 34vw) - clamp(1rem, 5vw, 5rem));
+    /* Soft right edge (the 3rem gap before the text) so incoming cards
+       fade in instead of being sliced off by a hard edge */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent 100%);
+            mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent 100%);
+  }
+}
+
+.orbit__header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+.orbit__header .section-title { margin: 0; }
+.orbit__header { flex-wrap: wrap; }
+.orbit__wave {                     /* full-bleed: undo the stage's side padding */
+  flex: 0 0 100vw;
+  margin-left: calc(-1 * var(--edge));
+}
+
+.orbit__count {
+  font-weight: var(--weight-bold);
+  font-size: var(--size-small);
+  color: var(--color-yellow);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The rail holds one text block per project, stacked on top of
+   each other. Only the front project's block is visible; when the
+   ring moves on, the old block fades out and the new one fades in. */
+.orbit__rail {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  z-index: 1;
+  margin-top: 1.25rem;             /* always a gap below the wave */
+}
+
+.orbit__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.orbit__link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  row-gap: 0.9rem;
+  color: inherit;
+}
+
+.orbit__thumb { display: none; }   /* only used in the static fallback */
+
+.orbit__num {
+  grid-row: 1;
+  font-weight: var(--weight-bold);
+  font-size: 0.85rem;
+  color: var(--color-yellow);
+  padding-top: 0.6em;
+}
+
+.orbit__title {
+  grid-column: 2;
+  font-size: clamp(2.4rem, min(4.6vw, 6.5svh), 4.6rem);
+  line-height: 0.85;
+  color: var(--color-yellow);
+  display: -webkit-box;            /* long titles (Shorts) stop at 3 lines */
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding-top: 0.08em;             /* keeps Karantina's accents from clipping */
+}
+
+.orbit__desc {
+  grid-column: 2;
+  font-size: 0.92rem;
+  color: #fff;
+  display: -webkit-box;            /* long post texts stop at 5 lines */
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.orbit__chips {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── Cross-fade (3D mode only) ── */
+.orbit--live .orbit__list {
+  display: grid;
+  min-height: 100%;                /* fills the row, but grows if a block is taller */
+  align-items: center;             /* every block shares one cell, centred */
+}
+
+.orbit--live .orbit__item {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px);
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 260ms var(--ease-out),
+    visibility 0s linear 260ms;
+}
+.orbit--live .orbit__item.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  /* wait for the old block to fade before the new one arrives */
+  transition:
+    opacity 420ms var(--ease-out) 200ms,
+    transform 520ms var(--ease-spring) 200ms,
+    visibility 0s linear 0s;
+}
+/* The chips pop in one after another */
+.orbit--live .orbit__item .tag { opacity: 0; transform: translateY(8px); transition: opacity 200ms, transform 200ms; }
+.orbit--live .orbit__item.is-active .tag { opacity: 1; transform: none; transition: opacity 300ms 420ms, transform 400ms var(--ease-spring) 420ms; }
+.orbit--live .orbit__item.is-active .tag:nth-child(2) { transition-delay: 490ms; }
+.orbit--live .orbit__item.is-active .tag:nth-child(3) { transition-delay: 560ms; }
+
+/* "All projects" — a small outlined pill beside the "Selected Works"
+   title (up here it's clear of the creature and the card) */
+.orbit__all {
+  align-self: center;
+  margin: 0.35em auto 0 1.4rem;    /* auto pushes the counter to the right */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.45rem 0.95rem;
+  border: 2px solid var(--color-yellow);
+  border-radius: var(--radius-pill);
+  color: var(--color-yellow);
+  font-weight: var(--weight-bold);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: auto;            /* the header itself ignores the pointer */
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+.orbit__all span { display: inline-block; transition: transform var(--duration-normal) var(--ease-spring); }
+.orbit__all:hover { background: var(--color-yellow); color: var(--color-ink); }
+.orbit__all:hover span { transform: translateX(4px); }
+.orbit__all:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* ── Before JS / static fallback: a normal grid of framed cards ── */
+
+.orbit:not(.orbit--live) { height: auto; }
+.orbit:not(.orbit--live) .orbit__sticky {
+  position: relative;
+  height: auto;
+  display: block;
+  padding: var(--space-xl) var(--space-md);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.orbit:not(.orbit--live) .orbit__canvas,
+.orbit:not(.orbit--live) .orbit__count { display: none; }
+.orbit:not(.orbit--live) .orbit__header { margin-bottom: var(--space-md); }
+.orbit:not(.orbit--live) .orbit__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+.orbit--static .orbit__thumb {
+  display: block;
+  grid-column: 1 / -1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: var(--frame-width) solid var(--color-yellow);
+  border-radius: var(--radius-lg);
+}
+
+/* ── Phones / tablets: card centred, active title below ── */
+
+@media (max-width: 900px) {
+  /* Rows: title + wave / the card / the text / "All projects".
+     The card gets its own row (whatever space the text leaves),
+     so the text can never slide over it. */
+  .orbit__sticky {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    padding: 96px 2.4rem 1.5rem 1.25rem;   /* right: clears the creature's neck */
+  }
+  .orbit__header { grid-column: 1; }
+  .orbit__count { order: 3; margin-top: 6px; }   /* under the wave, clear of the creature's yellow head */
+  .orbit__wave { margin-left: -1.25rem; margin-top: 12px; height: 30px; }
+  .orbit__canvas {
+    position: relative;
+    grid-row: 2;
+    grid-column: 1;
+    inset: auto;
+    width: calc(100% + 1.25rem + 2.4rem);   /* full screen width */
+    height: 100%;
+    margin-left: -1.25rem;
+  }
+  .orbit__rail {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 0.5rem;            /* as tall as the tallest text block, so nothing overlaps */
+  }
+  .orbit__title { font-size: clamp(1.9rem, 5.2svh, 2.5rem); }
+  .orbit__desc {                   /* long post texts stop at 4 lines on phones */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* Phones: text block sits at the top of the rail, same cross-fade */
+  .orbit--live .orbit__list { align-items: start; }
+  /* Phones: the title fills the line, so the pill sits under the wave,
+     opposite the counter */
+  .orbit__count { margin-right: auto; }
+  .orbit__all { order: 4; margin: 6px 0 0; padding: 0.3rem 0.75rem; font-size: 0.72rem; }
+}
+
+/* Short phones: shorter text so the card keeps enough room */
+@media (max-width: 900px) and (max-height: 740px) {
+  .orbit__desc { -webkit-line-clamp: 2; }
+  .orbit__chips { display: none; }
+  .orbit__link { row-gap: 0.6rem; }
+  .orbit__short { margin-top: 0.7rem; }
+}
+
+/* ============================================================
+   YOUTUBE SHORTS — "Watch the Short" button + portrait player
+   (js/components/shorts.js)
+   ============================================================ */
+
+/* Button under a project's text on the wheel */
+.orbit__short {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1.1rem 0 0 calc(0.85rem + 1rem);   /* lines up with the title column */
+  padding: 5px 16px 5px 5px;
+  border: 3px solid var(--color-yellow);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast), transform var(--duration-fast) var(--ease-spring);
+}
+.orbit__short img {
+  width: 26px;
+  aspect-ratio: 9 / 16;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.orbit__short:hover { background: var(--color-yellow); color: var(--color-ink); transform: translateY(-2px) rotate(-1deg); }
+.orbit__item--short .orbit__short { display: none; }   /* the whole item already plays the Short */
