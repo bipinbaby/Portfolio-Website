@@ -49,6 +49,7 @@ export async function initScene(name, { awayWhile } = {}) {
 
   // Side bars (desktop) — the equaliser, same on every page
   initSideBars();
+  measureFixedGap();
 
   let svgText;
   try {
@@ -187,4 +188,58 @@ function pokeEyes(groups) {
     });
     eye.timer = setTimeout(() => eye.wraps.forEach(g => g.classList.remove('is-hurt')), POKE.hurtFor);
   });
+}
+
+// Phones: Safari (iOS 26) can place bottom: 0 above its floating
+// toolbar while the page itself runs down behind it, leaving a gap under
+// the creature. Measure it: a fixed probe from top to bottom vs the
+// window height. The difference goes into --fixed-gap (0 elsewhere).
+// Add ?debug to the address to see the numbers on the phone.
+function measureFixedGap() {
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;top:0;bottom:0;left:0;width:1px;visibility:hidden;pointer-events:none;' +
+                        'padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);box-sizing:border-box';
+  document.body.appendChild(probe);
+  const debug = /[?&]debug/.test(location.search) && document.createElement('pre');
+  if (debug) {
+    debug.style.cssText = 'position:fixed;left:8px;top:120px;z-index:999;margin:0;padding:8px;' +
+                          'background:rgba(0,0,0,.8);color:#0f0;font:11px/1.35 monospace;pointer-events:none;white-space:pre';
+    document.body.appendChild(debug);
+  }
+  const vh = unit => {
+    const d = document.createElement('div');
+    d.style.cssText = `position:absolute;height:100${unit};width:1px;visibility:hidden`;
+    document.body.appendChild(d);
+    const h = d.getBoundingClientRect().height;
+    d.remove();
+    return Math.round(h);
+  };
+  let lastGap = -1;
+  const update = () => {
+    const fixedH = probe.getBoundingClientRect().height;
+    const cs = getComputedStyle(probe);
+    const gap = Math.max(0, Math.round(window.innerHeight - fixedH));
+    if (gap !== lastGap) document.documentElement.style.setProperty('--fixed-gap', `${gap}px`);
+    lastGap = gap;
+    if (debug) {
+      const sc = document.querySelector('.scene')?.getBoundingClientRect();
+      debug.textContent = [
+        `innerHeight   ${window.innerHeight}`,
+        `fixed top→bot ${Math.round(fixedH)}`,
+        `clientHeight  ${document.documentElement.clientHeight}`,
+        `visualVP      ${Math.round(visualViewport?.height ?? 0)} (top ${Math.round(visualViewport?.offsetTop ?? 0)})`,
+        `screen        ${screen.width}x${screen.height}`,
+        `safe top/bot  ${cs.paddingTop} / ${cs.paddingBottom}`,
+        `svh/lvh/dvh   ${vh('svh')} / ${vh('lvh')} / ${vh('dvh')}`,
+        `--fixed-gap   ${gap}px`,
+        `scene bottom  ${sc ? Math.round(sc.bottom) : '-'}`,
+        `scrollY       ${Math.round(window.scrollY)}`,
+      ].join('\n');
+    }
+  };
+  update();
+  setTimeout(update, 1500);             // again once the creature has loaded
+  window.addEventListener('resize', update);
+  visualViewport?.addEventListener('resize', update);
+  window.addEventListener('scroll', update, { passive: true });
 }

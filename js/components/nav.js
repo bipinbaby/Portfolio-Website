@@ -178,6 +178,12 @@ export function initFaces() {
   face.innerHTML = `<span class="face__bar"></span>${eyeHTML('l')}${eyeHTML('r')}`;
   document.body.appendChild(face);
 
+  // Phones: yellow strip across the top (.status-strip in components.css)
+  const strip = document.createElement('div');
+  strip.className = 'status-strip';
+  strip.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(strip);
+
   // Fade band under the face once the page has scrolled (.face::before)
   const onScroll = () => face.classList.toggle('is-scrolled', window.scrollY > 40);
   window.addEventListener('scroll', onScroll, { passive: true });
