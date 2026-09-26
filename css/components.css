@@ -265,6 +265,30 @@
 }
 .face.is-scrolled::before { opacity: 1; }
 
+/* Poke an eye (nav.js): the pupil becomes an ✕ for a moment */
+.face__eye {
+  pointer-events: auto;          /* the rest of the face ignores the pointer */
+  cursor: pointer;
+}
+.face__iris::before,
+.face__iris::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 115%;
+  height: 26%;
+  border-radius: 999px;
+  background: var(--color-ink);
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(45deg) scaleX(0.3);
+  transition: opacity 120ms, transform 260ms var(--ease-spring);
+}
+.face__iris::after { transform: translate(-50%, -50%) rotate(-45deg) scaleX(0.3); }
+.face__iris { transition: background 120ms; }
+.face__eye.is-hurt .face__iris { background: transparent; }
+.face__eye.is-hurt .face__iris::before { opacity: 1; transform: translate(-50%, -50%) rotate(45deg); }
+.face__eye.is-hurt .face__iris::after  { opacity: 1; transform: translate(-50%, -50%) rotate(-45deg); }
+
 /* Hidden before JS runs */
 .face:not(.is-open) .face__bar,
 .face:not(.is-open) .face__eye { visibility: hidden; }

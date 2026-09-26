@@ -165,6 +165,7 @@ const FACE = {
   offsetEvery: 3,       // every 3rd blink is staggered (0 = never)
   offsetMin: 250,       // ms the second eye lags on those blinks
   offsetMax: 450,
+  hurtFor: 1500,        // ms the pupil stays an ✕ after the eye is clicked
 };
 
 export function initFaces() {
@@ -185,6 +186,24 @@ export function initFaces() {
   const irises = [...face.querySelectorAll('.face__iris')];
   const pill   = () => document.querySelector('.nav-bar');   // the red pill
 
+  // Poke an eye: the pupil turns into an ✕ ("ow!"), the eye winces,
+  // then it recovers after FACE.hurtFor ms
+  face.querySelectorAll('.face__eye').forEach(eye => {
+    let timer = null;
+    eye.addEventListener('click', () => {
+      clearTimeout(timer);
+      eye.classList.add('is-hurt');
+      eye.animate([
+        { transform: 'scale(1) rotate(0deg)' },
+        { transform: 'scale(1.12, 0.82) rotate(-8deg)', offset: 0.2 },
+        { transform: 'scale(0.95, 1.06) rotate(6deg)',  offset: 0.45 },
+        { transform: 'scale(1.02, 0.98) rotate(-3deg)', offset: 0.7 },
+        { transform: 'scale(1) rotate(0deg)' },
+      ], { duration: 520, easing: 'ease-out' });
+      timer = setTimeout(() => eye.classList.remove('is-hurt'), FACE.hurtFor);
+    });
+  });
+
   // Random blinking: the black pupils only
   let blinks = 0;
   function blink() {
@@ -193,7 +212,7 @@ export function initFaces() {
       const staggered = FACE.offsetEvery > 0 && blinks % FACE.offsetEvery === 0;
       const lag = staggered ? FACE.offsetMin + Math.random() * (FACE.offsetMax - FACE.offsetMin) : 0;
       const order = Math.random() < 0.5 ? irises : [...irises].reverse();
-      const once = delay => order.forEach((el, i) => el.animate(
+      const once = delay => order.forEach((el, i) => el.closest('.is-hurt') || el.animate(
         [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.08)' }, { transform: 'scaleY(1)' }],
         { duration: FACE.blinkDuration, delay: delay + i * lag, easing: 'ease-in-out' }));
       once(0);
