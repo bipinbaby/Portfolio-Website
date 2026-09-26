@@ -9,6 +9,10 @@
    ============================================================ */
 
 :root {
+  /* Height of the phone status bar (time / battery). 0 on desktop.
+     Needs viewport-fit=cover in the <meta name="viewport">. */
+  --safe-top: env(safe-area-inset-top, 0px);
+
   /* Left page gutter. Desktop clears the yellow side bars (33 + 79 px). */
   --edge: clamp(1rem, 5vw, 5rem);
 

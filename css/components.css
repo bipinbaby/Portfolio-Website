@@ -16,7 +16,7 @@
   --pill-w: 64px;                 /* Figma phone: 64 × 33 at y=40 */
   --pill-h: 33px;
   position: fixed;
-  top: var(--pill-top, 40px);
+  top: calc(var(--pill-top, 40px) + var(--safe-top));
   left: 50%;
   transform: translateX(-50%);
   z-index: 150;
@@ -179,9 +179,20 @@
   --eye-y: 28px;                 /* centre of the eyes */
   --pupil: 24px;
   position: fixed;
-  inset: 0;
+  inset: var(--safe-top) 0 0;    /* starts below the phone status bar */
   z-index: 140;                  /* just under the nav pill (150) */
   pointer-events: none;
+}
+
+/* Phones: the status bar strip (time / battery) is solid yellow, so the
+   face's bar hangs from it and scrolling content never shows through */
+.face::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 100%;
+  height: var(--safe-top);
+  background: var(--color-yellow);
 }
 
 .face__bar {
@@ -281,7 +292,8 @@
   .scene {
     --s: calc(var(--ms) * min(calc(100vw / 402), calc(100svh / 874)));
     right:  calc(var(--mr) * var(--s) / var(--ms));
-    bottom: calc(var(--mb) * var(--s) / var(--ms));
+    bottom: auto;
+    top: calc(100lvh - var(--h) * var(--s) - var(--mb) * var(--s) / var(--ms));
   }
 }
 .scene.is-away { opacity: 0; translate: 0 30%; }

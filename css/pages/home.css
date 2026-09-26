@@ -410,7 +410,7 @@
   .orbit__sticky {
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr) auto auto;
-    padding: 96px 2.4rem 1.5rem 1.25rem;   /* right: clears the creature's neck */
+    padding: calc(96px + var(--safe-top)) 2.4rem 1.5rem 1.25rem;   /* right: clears the creature's neck */
   }
   .orbit__header { grid-column: 1; }
   .orbit__count { order: 3; margin-top: 6px; }   /* under the wave, clear of the creature's yellow head */

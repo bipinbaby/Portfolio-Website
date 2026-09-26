@@ -18,6 +18,7 @@ html {
 }
 
 body {
+  padding-top: var(--safe-top);    /* page starts below the phone status bar */
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
