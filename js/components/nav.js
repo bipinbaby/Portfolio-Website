@@ -291,7 +291,7 @@ export function initEyes() {
 export function blinkEyes(els) {
   (function blink() {
     if (!document.hidden) {
-      const once = delay => els.forEach(el => el.animate(
+      const once = delay => els.forEach(el => el.classList.contains('is-hurt') || el.animate(
         [{ scale: '1 1' }, { scale: '1 0.08' }, { scale: '1 1' }],
         { duration: FACE.blinkDuration, delay, easing: 'ease-in-out' }));
       once(0);

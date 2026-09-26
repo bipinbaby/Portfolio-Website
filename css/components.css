@@ -312,6 +312,19 @@
   transition: opacity 500ms var(--ease-out), translate 700ms var(--ease-out);
 }
 .scene svg { display: block; width: 100%; height: auto; }
+
+/* Poked creature eye (scene.js): the pupil swaps for an ✕ */
+.scene .eye-x {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform: scale(0.3);
+  transition: opacity 120ms, transform 260ms var(--ease-spring);
+}
+.scene g.is-hurt > .eye-x { opacity: 1; transform: none; }
+.scene g > circle, .scene g > ellipse { transition: opacity 120ms; }
+.scene g.is-hurt > circle, .scene g.is-hurt > ellipse { opacity: 0; }
+html.eye-hover, html.eye-hover * { cursor: pointer; }
 @media (max-width: 899px) {
   .scene {
     --s: calc(var(--ms) * min(calc(100vw / 402), calc(100svh / 874)));

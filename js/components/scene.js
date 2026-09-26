@@ -24,6 +24,12 @@ const LOOK = {
   reach: 300,           // cursor distance (screen px) for a full glance
 };
 
+// Poke a creature's eye: the pupil turns into an ✕ for a moment
+const POKE = {
+  hurtFor: 1500,        // ms before it recovers
+  reach: 16,            // px around the eye that still counts as a poke
+};
+
 const SCENES = {
   home:     { r: 0, b: 0,  ms: 1,     mr: 3,  mb: -155 },   // the long-necked one
   about:    { r: 0, b: 13, ms: 0.672, mr: -95, mb: 0 },     // the rabbit
@@ -66,7 +72,7 @@ export async function initScene(name, { awayWhile } = {}) {
 
   // The eye: black circles. Figma sometimes has a copy stacked on the
   // same spot, so circles at the same place blink together.
-  const eyes = [];
+  const eyes = [], pokeable = [];
   const byPlace = new Map();
   svg.querySelectorAll('circle[fill="black"], ellipse[fill="black"]').forEach(c => {
     const key = `${c.getAttribute('cx')},${c.getAttribute('cy')}`;
@@ -86,8 +92,10 @@ export async function initScene(name, { awayWhile } = {}) {
     });
     blinkEyes(wraps);
     eyes.push(...wraps);
+    pokeable.push(wraps);
   });
   followCursor(eyes);
+  pokeEyes(pokeable);
 
   // Phones: step aside while e.g. the home hero is on screen
   const away = awayWhile && document.querySelector(awayWhile);
@@ -127,4 +135,56 @@ function followCursor(eyes) {
       });
     });
   }, { passive: true });
+}
+
+// Poke an eye: the creature sits behind the page, so clicks never reach
+// it directly. Instead any click near an eye (that isn't on a link,
+// button or form field) counts: the pupil becomes an ✕, the eye winces,
+// then it recovers. `groups` = one array of stacked copies per eye.
+function pokeEyes(groups) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const eyes = groups.map(wraps => {
+    wraps.forEach(g => {
+      // The ✕ lives inside the eye's wrapper, so it follows the cursor too
+      const b = g.getBBox();
+      const cx = b.x + b.width / 2, cy = b.y + b.height / 2, r = Math.max(b.width, b.height) / 2;
+      const x = document.createElementNS(NS, 'path');
+      x.setAttribute('class', 'eye-x');
+      x.setAttribute('d', `M${cx - r} ${cy - r}L${cx + r} ${cy + r}M${cx + r} ${cy - r}L${cx - r} ${cy + r}`);
+      x.setAttribute('stroke', 'black');
+      x.setAttribute('stroke-width', (r * 0.6).toFixed(2));
+      x.setAttribute('stroke-linecap', 'round');
+      g.appendChild(x);
+    });
+    return { wraps, timer: null };
+  });
+
+  const hit = (x, y) => eyes.find(({ wraps }) => {
+    const r = wraps[0].getBoundingClientRect();
+    return Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)) <= r.width / 2 + POKE.reach;
+  });
+
+  // Pointer cursor when hovering an eye
+  window.addEventListener('pointermove', e => {
+    if (e.pointerType === 'touch') return;
+    document.documentElement.classList.toggle('eye-hover', !!hit(e.clientX, e.clientY));
+  }, { passive: true });
+
+  document.addEventListener('click', e => {
+    if (e.target.closest?.('a, button, input, textarea, select, label, .nav, .face__eye')) return;
+    const eye = hit(e.clientX, e.clientY);
+    if (!eye) return;
+    clearTimeout(eye.timer);
+    eye.wraps.forEach(g => {
+      g.classList.add('is-hurt');
+      g.animate([
+        { transform: 'scale(1) rotate(0deg)' },
+        { transform: 'scale(1.3, 0.7) rotate(-12deg)', offset: 0.2 },
+        { transform: 'scale(0.9, 1.12) rotate(9deg)',  offset: 0.45 },
+        { transform: 'scale(1.04, 0.96) rotate(-4deg)', offset: 0.7 },
+        { transform: 'scale(1) rotate(0deg)' },
+      ], { duration: 520, easing: 'ease-out' });
+    });
+    eye.timer = setTimeout(() => eye.wraps.forEach(g => g.classList.remove('is-hurt')), POKE.hurtFor);
+  });
 }
