@@ -46,19 +46,36 @@ export function initNav() {
   // A slow pulse every few seconds that says "I'm clickable".
   // Run from JS (not a CSS animation) so it can ease out smoothly
   // when the pill is pressed, instead of snapping mid-breath.
-  let breathe = null, breatheTimer = null;
+  // PULSE: tune the size / timing here
+  const PULSE = {
+    every: 2800,                 // ms per breath
+    grow: [1.16, 1.22],          // how big the breath gets (width, height)
+    ring: 16,                    // px the red ripple ring spreads out
+  };
+  let breathe = null, ripple = null, breatheTimer = null;
   const startBreathing = () => {
     if (breathe || navEl.classList.contains('is-open')) return;
+    const [gx, gy] = PULSE.grow;
     breathe = bar.animate([
       { transform: 'scale(1, 1)',       offset: 0 },
-      { transform: 'scale(1, 1)',       offset: 0.62 },
-      { transform: 'scale(1.08, 1.1)',  offset: 0.74 },   // breathe in
-      { transform: 'scale(0.98, 0.97)', offset: 0.86 },   // settle
+      { transform: 'scale(1, 1)',       offset: 0.55 },
+      { transform: `scale(${gx}, ${gy})`, offset: 0.7 },  // breathe in
+      { transform: 'scale(0.96, 0.94)', offset: 0.84 },   // settle
       { transform: 'scale(1, 1)',       offset: 1 },
-    ], { duration: 3600, iterations: Infinity, easing: 'ease-in-out' });
+    ], { duration: PULSE.every, iterations: Infinity, easing: 'ease-in-out' });
+    // A soft red ring ripples out from the pill on each breath
+    ripple = bar.animate([
+      { boxShadow: '0 0 0 0 rgba(255, 56, 60, 0)',    offset: 0 },
+      { boxShadow: '0 0 0 0 rgba(255, 56, 60, 0)',    offset: 0.6 },
+      { boxShadow: '0 0 0 0 rgba(255, 56, 60, 0.6)',  offset: 0.66 },
+      { boxShadow: `0 0 0 ${PULSE.ring}px rgba(255, 56, 60, 0)`, offset: 0.95 },
+      { boxShadow: `0 0 0 ${PULSE.ring}px rgba(255, 56, 60, 0)`, offset: 1 },
+    ], { duration: PULSE.every, iterations: Infinity, easing: 'ease-out' });
   };
   const stopBreathing = () => {
     clearTimeout(breatheTimer);
+    ripple?.cancel();
+    ripple = null;
     if (!breathe) return;
     const now = getComputedStyle(bar).transform;       // wherever the breath is right now
     breathe.cancel();
