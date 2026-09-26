@@ -218,7 +218,15 @@ function measureFixedGap() {
   const update = () => {
     const fixedH = probe.getBoundingClientRect().height;
     const cs = getComputedStyle(probe);
-    const gap = Math.max(0, Math.round(window.innerHeight - fixedH));
+    // iPhone Safari 26: the page area ends where the floating toolbar
+    // starts and reports that shorter height, while the screen runs on
+    // underneath. Hidden strip = screen height - page height - status bar
+    // (~54-68 px; the lower guess errs on pushing the art a bit further).
+    const iphone = /iPhone/.test(navigator.userAgent) && window.innerWidth < 900;
+    const screenH = window.innerHeight > window.innerWidth
+      ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+    const toolbarGap = iphone ? screenH - window.innerHeight - 54 : 0;
+    const gap = Math.max(0, Math.round(window.innerHeight - fixedH), Math.round(toolbarGap));
     if (gap !== lastGap) document.documentElement.style.setProperty('--fixed-gap', `${gap}px`);
     lastGap = gap;
     if (debug) {
@@ -231,6 +239,7 @@ function measureFixedGap() {
         `screen        ${screen.width}x${screen.height}`,
         `safe top/bot  ${cs.paddingTop} / ${cs.paddingBottom}`,
         `svh/lvh/dvh   ${vh('svh')} / ${vh('lvh')} / ${vh('dvh')}`,
+        `toolbar gap   ${Math.round(toolbarGap)} (iPhone ${iphone})`,
         `--fixed-gap   ${gap}px`,
         `scene bottom  ${sc ? Math.round(sc.bottom) : '-'}`,
         `scrollY       ${Math.round(window.scrollY)}`,
