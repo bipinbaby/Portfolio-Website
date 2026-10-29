@@ -23,4 +23,8 @@ export const SHORT_OVERRIDES = {
     title: "Joystick Controller",          // YouTube title says "Conttoller"
   },
 
+  "tApvxRlm22E": {
+    title: "F1 Digital Twin: 2026 British GP",   // YouTube title: "A F1 digital twin"
+  },
+
 };

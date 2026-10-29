@@ -57,6 +57,8 @@ const TAG_NAMES = {
   unrealengine: 'Unreal Engine', python: 'Python', mediapipe: 'Computer Vision',
   opencv: 'Computer Vision', computervision: 'Computer Vision', handtracking: 'Computer Vision',
   robotics: 'Robotics', controlrig: 'Control Rig', techart: 'Tech Art',
+  digitaltwin: 'Digital Twin', ue5: 'Unreal Engine',
+  datavisualization: 'Data Viz', dataviz: 'Data Viz', physicalcomputing: 'Physical Computing',
 };
 export function tagsFromPost(s, max = 3) {
   const hashtags = `${s.title ?? ''} ${s.description ?? ''}`.match(/#[\p{L}\p{N}_]+/gu) ?? [];

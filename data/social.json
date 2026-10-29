@@ -1,8 +1,17 @@
 {
-  "updated": "2026-09-25T18:54:52.631Z",
+  "updated": "2026-10-29T12:52:40.167Z",
   "source": "shorts",
   "channelId": "UCuiD_quHBSP3BjCEiO0qFTg",
   "items": [
+    {
+      "id": "tApvxRlm22E",
+      "title": "A F1 digital twin",
+      "date": "2026-10-29T09:39:49+00:00",
+      "description": "I rebuilt the 2026 British Grand Prix as a digital twin\n\nAll 22 cars are there from open timing data at 10 frames a second, across three things at once:\nI used Unreal Engine 5.7 on the real Silverstone,\nTouchDesigner for the live dashboard: timing tower, map, telemetry, along physical set up using an @arduino.cc UNO R4: speed needle, shift lights, team colours, flag lights, LED matrix with a mini track map, and a hand-wave sensor to switch views\n\nThere’s no public battery data for the 2026 cars, so I built an estimate from speed, throttle and braking. It can detect when a car runs out of electric power at the end of the straights.\n\nNon-commercial fan project, not affiliated with Formula 1. Data: OpenF1.\n\n#creativetechnology #digitaltwin #unrealengine #touchdesigner #arduino #f1 #formula1 #silverstone #datavisualization #creativecoding #physicalcomputing #cesium #ue5 #interactiveart #madewithunreal",
+      "url": "https://www.youtube.com/shorts/tApvxRlm22E",
+      "embedUrl": "https://www.youtube.com/embed/tApvxRlm22E",
+      "thumb": "assets/social/tApvxRlm22E.jpg"
+    },
     {
       "id": "SwsGbn0EbLg",
       "title": "Joystick Conttoller #touchdesigner #arduino #coding #immersiveart #interactive",
