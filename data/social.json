@@ -1,8 +1,17 @@
 {
-  "updated": "2026-10-29T12:52:40.167Z",
+  "updated": "2026-11-05T14:34:37.160Z",
   "source": "shorts",
   "channelId": "UCuiD_quHBSP3BjCEiO0qFTg",
   "items": [
+    {
+      "id": "GS9W9vQtcW8",
+      "title": "Creating visuals for my room #arduinoproject #touchdesigner #arduino",
+      "date": "2026-11-05T13:55:21+00:00",
+      "description": "I had a Max7219 LED board lying around so I hooked it up using my Arduino board to Touchdesigner to create these visuals. Since it’s a 32x8 LED board with no brightness control (it’s either on or off) the things I could do in terms of visuals is limited but I did come up with pretty neat animations that’s fits a such a low resolution \n\n#creativetechnology #touchdesigner #arduino #creativecoding #interactiveart",
+      "url": "https://www.youtube.com/shorts/GS9W9vQtcW8",
+      "embedUrl": "https://www.youtube.com/embed/GS9W9vQtcW8",
+      "thumb": "assets/social/GS9W9vQtcW8.jpg"
+    },
     {
       "id": "tApvxRlm22E",
       "title": "A F1 digital twin",
